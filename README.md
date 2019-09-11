@@ -1,4 +1,4 @@
-## worqlyfe
+## worqlyfe (4 person)
 
 # Flask Template
 
