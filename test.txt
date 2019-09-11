@@ -1,7 +1,3 @@
 " This is Hong's test text"
+" Next is Ruby's test la"
 
-
-
-
-
-Raymond
