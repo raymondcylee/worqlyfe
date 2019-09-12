@@ -1,8 +1,9 @@
 from models.base_model import BaseModel
 import peewee as pw
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 
-class User(BaseModel):
+class User(BaseModel, UserMixin):
     name = pw.CharField(unique=False, null=False)
     password = pw.CharField(null=False)
     email = pw.CharField(unique=True, null=False)
