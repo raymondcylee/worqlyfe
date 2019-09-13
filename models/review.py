@@ -4,7 +4,7 @@ from models.user import User
 
 
 class Review(BaseModel):
-    manager_notes = pw.CharField(unique=False, null=False)
-    executive_notes = pw.CharField(unique=False, null=False)
-    review_date = pw.DateTimeField(null=True)
+    manager_notes = pw.CharField(unique=False, null=True)
+    executive_notes = pw.CharField(unique=False, null=True)
+    review_date = pw.DateField(null=True)
     executive = pw.ForeignKeyField(User, backref="reviews")

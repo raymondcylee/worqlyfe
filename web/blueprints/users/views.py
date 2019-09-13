@@ -1,7 +1,9 @@
-from flask import Blueprint, render_template, redirect, request, jsonify
+from flask import Blueprint, render_template, redirect, request, jsonify, url_for
 from models.user import User
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
+from models.review import Review
+from app import login_manager
 
 users_blueprint = Blueprint('users',
                             __name__,
@@ -71,3 +73,29 @@ def department(department):
     print([user.name for user in User.select().where(
         User.department == department, User.is_manager == True)])
     return jsonify([user.name for user in User.select().where(User.department == department, User.is_manager == True)])
+@users_blueprint.route('/review/<id>', methods=['GET'])
+def show_review(id):
+    user = User.get_by_id(3)
+    manager = User.get_or_none(User.id == user.manager_id)
+    executive_note = Review.select().where((Review.executive_id == 3) & (Review.executive_notes.is_null(False)))
+    manager_note = Review.select().where((Review.executive_id == 3) & (Review.manager_notes.is_null(False)) )
+    return render_template('users/review.html', user=user, manager=manager, executive_notes=executive_note, manager_notes=manager_note)
+
+
+@users_blueprint.route('/create_manager_review/<id>', methods=['POST'])
+def create_manager_notes(id):
+    user = User.get_by_id(3)
+    manager = User.get_or_none(User.id == user.manager_id)
+    comments = request.form.get("manager_notes")
+    review_date = request.form.get("review_date")
+    Review(manager_notes=comments, executive_id=user.id, review_date=review_date).save()
+    return redirect(url_for('users.show_review', user=user, manager=manager, id=user.id))
+
+@users_blueprint.route('/create_my_notes/<id>', methods=['POST'])
+def create_my_notes(id):
+    user = User.get_by_id(3)
+    manager = User.get_or_none(User.id == user.manager_id)
+    comments = request.form.get("my_notes")
+    review_date = request.form.get("review_date")
+    Review(executive_notes=comments, executive_id=user.id, review_date=review_date).save()
+    return redirect(url_for('users.show_review', user=user, manager=manager, id=user.id))
