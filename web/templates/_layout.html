@@ -1,40 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    {% assets "home_css" %}
-      <link rel="stylesheet" href="{{ ASSET_URL }}">
-    {% endassets %}
+  <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
 
-    {% assets "home_js" %}
-      <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-    {% endassets %}
+  {% assets "home_css" %}
+  <link rel="stylesheet" href="{{ ASSET_URL }}">
+  {% endassets %}
 
-    {% block header %}{% endblock %}
-    <title>{% block title %}{% endblock %}</title>
-  </head>
-  <body>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" href="#">Worqlyfe</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-item nav-link" href="#">Sign Up</a>
-              <a class="nav-item nav-link" href="#">Sign In</a>
-            </div>
-          </div>
-        </nav>
-    {% block content %}
-    {% endblock %}
-    <footer id="sticky-footer" class="py-4 bg-light">
-        <div class="container text-center">
-          <small>Copyright &copy; Your Website</small>
-        </div>
-  </body>
+  {% assets "home_js" %}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+
+  {% block header %}{% endblock %}
+  {% from "sessions/new.html" import log_in_modal %}
+
+  <title>{% block title %}{% endblock %}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap 4 DateTimePicker</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Worqlyfe</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        {% if current_user.is_authenticated %}
+        <form id = "sign-out-form" action="{{ url_for('users.destroy') }}" method="post">
+          <a onclick="document.getElementById('sign-out-form').submit()" style="cursor: pointer" class="nav-item nav-link">Sign Out</a>
+        </form>
+        <a class="nav-item nav-link" href="/users/review/{{current_user.id}}">Temporary button to personal review
+          page</a>
+        {% else %}
+        <a class="nav-item nav-link" href="/users/new">Sign Up</a>
+        <a class="nav-item nav-link" href="" data-toggle="modal" data-target="#signIn">Sign In</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  {{ log_in_modal() }}
+  {% block content %}
+  {% endblock %}
+  <footer id="sticky-footer" class="py-4 bg-light">
+    <div class="container text-center">
+      <small>Copyright &copy; Your Website</small>
+    </div>
+</body>
+
 </html>
