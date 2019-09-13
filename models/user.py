@@ -1,6 +1,7 @@
 from models.base_model import BaseModel
 import peewee as pw
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from playhouse.hybrid import hybrid_property
 
 
 class User(BaseModel, UserMixin):
@@ -13,3 +14,4 @@ class User(BaseModel, UserMixin):
     is_manager = pw.BooleanField(null=True)
     is_executive = pw.BooleanField(null=True)
     manager_id = pw.IntegerField(null=True)
+

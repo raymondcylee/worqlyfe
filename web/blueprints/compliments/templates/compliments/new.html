@@ -1,0 +1,141 @@
+{% extends "_layout.html" %}
+{% block content %}
+<!-- Header -->
+<h1>Wall of Fame</h1>
+
+<!-- New Compliments -->
+<h3>New Compliment</h3>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#complimentModal">
+  Compliment someone!
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="complimentModal" tabindex="-1" role="dialog" aria-labelledby="complimentModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="complimentLabel">New Compliment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('compliments.create') }}" method="POST">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="badgeMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Choose a badge
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    
+                    {% for badge in badges %}
+                  <li onclick="displayBadge(this)">
+                    <a href="#">
+                      <img alt="{{ badge.badge_caption }}" src="{{ badge.badge }}" width="50px" value="{{ badge.id }}" />{{ badge.badge_caption }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+              </div>
+              <!-- Badge Container -->
+              <div id="badgeResult">
+                  <input type="hidden" name="badgeId" id="badgeId">
+                  <img name="badge" id="displayBadgePic" width="50px">
+                  <div name="badge_text" id="badgeText"></div>
+                </div>
+
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="recipientMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Choose a recipient
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                {% for u in users %}
+                {% if u.id != 2 %}
+                  <li onclick="displayRecipient(this)">
+                    <a href="#" value="{{ u.id }}">{{ u.name }}</a>
+                  </li>
+                {% endif %}
+                {% endfor %}
+                </ul>
+                <!-- Recipient Container -->
+                <div id="recipientResult">
+                    <input type="hidden" name="recipientList" id="recipientList">
+                    <div name="recipient_name" id="recipientText"></div>
+                </div>
+
+              </div>
+            <div class="form-group">
+              <label for="complimentFormControlTextarea1">Comment:</label>
+              <textarea class="form-control" id="complimentFormControlTextarea1" rows="5" name="comment"></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Compliment!</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Individual Compliments -->
+<h3>My Compliments</h3>
+{% for compliment in compliments %}
+{% if compliment.recipient_id == 2 %}
+<div class="card" style="width: 20rem;">
+    <h4>{{ compliment.badge.badge_caption }}</h4>
+    <div>
+        <img src="{{ compliment.recipient.profile_picture }}" class="card-img-top" style="width: 150px;height: 150px;object-fit: cover;border-radius: 50%">
+        <img src="{{ compliment.badge.badge }}" class="card-img-top" style="width: 150px;height: 150px;object-fit: contain;border-radius: 50%">
+    </div>
+    <div class="card-body">
+        <p class="card-text">{{ compliment.compliment }}</p>
+    </div>
+    <div>
+        <p>Complimented by:</p>
+        <p>{{ compliment.sender.name }}</p>
+        <img src="{{ compliment.sender.profile_picture }}" style="width: 30px;height: 30px;object-fit: cover;border-radius: 50%">
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+<!-- All Compliments -->
+<h3>All Compliments</h3>
+
+{% for compliment in compliments %}
+<div class="card" style="width: 20rem;">
+    <h4>{{ compliment.badge.badge_caption }}</h4>
+    <div>
+        <img src="{{ compliment.recipient.profile_picture }}" class="card-img-top" style="width: 150px;height: 150px;object-fit: cover;border-radius: 50%">
+        <img src="{{ compliment.badge.badge }}" class="card-img-top" style="width: 150px;height: 150px;object-fit: contain;border-radius: 50%">
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ compliment.compliment }}</p>
+    </div>
+    <div>
+        <p>Complimented by:</p>
+        <p>{{ compliment.sender.name }}</p>
+        <img src="{{ compliment.sender.profile_picture }}" style="width: 30px;height: 30px;object-fit: cover;border-radius: 50%">
+    </div>
+</div>
+{% endfor %}
+
+<script>
+function displayBadge(list) {
+    let showBadge = document.getElementById('displayBadgePic')
+    let showText = document.getElementById('badgeText')
+    let get_id = document.getElementById('badgeId')
+    showBadge.src = list.querySelector('img').src
+    showText.innerHTML = list.querySelector('img').alt
+    get_id.value = list.querySelector('img').getAttribute('value')
+}
+
+function displayRecipient(list) {
+    let showRecipient = document.getElementById('recipientText')
+    let get_recipientId = document.getElementById('recipientList')
+    showRecipient.innerHTML = list.querySelector('a').innerHTML
+    get_recipientId.value = list.querySelector('a').getAttribute('value')
+}
+
+</script>
+{% endblock %}
