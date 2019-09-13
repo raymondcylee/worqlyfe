@@ -50,7 +50,7 @@
                 </button>
                 <ul class="dropdown-menu">
                 {% for u in users %}
-                {% if u.id != 2 %}
+                {% if u.id != current_user.id %}
                   <li onclick="displayRecipient(this)">
                     <a href="#" value="{{ u.id }}">{{ u.name }}</a>
                   </li>
@@ -81,7 +81,7 @@
 <!-- Individual Compliments -->
 <h3>My Compliments</h3>
 {% for compliment in compliments %}
-{% if compliment.recipient_id == 2 %}
+{% if compliment.recipient_id == current_user.id %}
 <div class="card" style="width: 20rem;">
     <h4>{{ compliment.badge.badge_caption }}</h4>
     <div>

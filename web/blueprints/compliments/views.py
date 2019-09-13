@@ -20,7 +20,7 @@ def create():
     compliment_badge = request.form['badgeId']
     compliment_recipient = request.form['recipientList']
     compliment_comment = request.form['comment']
-    new_compliment = Compliment(compliment=compliment_comment, sender_id=2, recipient_id=compliment_recipient, badge_id=compliment_badge)
+    new_compliment = Compliment(compliment=compliment_comment, sender_id=current_user.id, recipient_id=compliment_recipient, badge_id=compliment_badge)
     new_compliment.save()
     return redirect(url_for('compliments.new'))
 
