@@ -22,7 +22,7 @@ def create():
 
     user = User.get_or_none(User.email == email)
 
-    breakpoint()
+
 
     if user and (user.password == password):
         print("LOGIN SUCCESFULLY")

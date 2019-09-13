@@ -15,10 +15,10 @@
     <div>
         {% for x in manager_notes %}
         <div class="card" style="width: 18rem;">
-            <h5 class="card-header">Manager's comment:</h5>
-            <div class="card-body">
-                <h6 class="card-title">{{ x.review_date }}</h6>
-                <p class="card-text">{{ x.manager_notes }}</p>
+                <h5 class="card-header">Manager's comment:</h5>
+                <div class="card-body">
+                    <h6 class="card-title">{{ x.review_date }}</h6>
+                    <p class="card-text">{{ x.manager_notes }}</p>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
     {% endfor %}
 </div>
 
-
+{% if user.is_manager and current_user != user and current_user.department == user.department%}
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
     Manager's Comments
@@ -75,7 +75,7 @@
         </div>
     </div>
 </div>
-
+{% endif %}
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong2">
     My Notes
@@ -95,12 +95,14 @@
             <form id="my_form" action="{{ url_for('users.create_my_notes', id=user.id) }}" method="post">
                 <div class="modal-body">
                     <div class="form-group">
-                        <input name="review_date" id="datepicker2" width="276" />
-                        <script>
-                            $('#datepicker2').datepicker({
-                                uiLibrary: 'bootstrap4'
-                            });
-                        </script>
+                            <input id="input" width="234" />
+                            <script>
+                                $('#input').datetimepicker({
+                                    uiLibrary: 'bootstrap4',
+                                    modal: true,
+                                    footer: true
+                                });
+                            </script>
                         <label for="comment">Comment:</label>
                         <textarea form="my_form" name="my_notes" class="form-control" rows="5" id="comment2"></textarea>
                     </div>
