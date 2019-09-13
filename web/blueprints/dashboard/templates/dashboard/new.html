@@ -1,0 +1,67 @@
+{% extends "_layout.html" %}
+{% block content %}
+
+
+<div class="container">
+    <div class="personal-details">
+        <img width="400" height="400" src="{{user.profile_picture}}" alt="profile_picture" />
+        <h1>{{user.name}}</h1>
+        <ul>
+            <li><span style="font-weight: bold;">Department:</span> {{user.department}}</li>
+            <li><span style="font-weight: bold;">Position:</span> {{user.role}}</li>
+            <li><span style="font-weight: bold;">Contact:</span> {{user.email}}</li>
+        </ul>
+    </div>
+    {% if user.is_manager %}
+    <div class="team">
+        <h1>Project Team:</h1>
+        <ul>
+            {% for department in departments %}
+            {% if not department.is_manager %}
+            <li>{{department.name}}, {{department.role}}</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    <div class="compliments">
+        <h1 style="text-decoration: underline">My Compliments</h1>
+        <ul>
+            <h3>Compliments Given:</h3>
+            {% for compliment in compliments %}
+            {% if compliment.sender_id == user.id %}
+            <li>{{compliment.compliment}}</li>
+            <p style="font-family: monospace;">-<span style="font-weight: bold;">For</span>
+                {{compliment.recipient.name}}
+            </p>
+            {% endif %}
+            {% endfor %}
+
+            <h3>Compliments Received:</h3>
+            {% for compliment in compliments %}
+            {% if compliment.recipient_id == user.id %}
+            <li>{{compliment.compliment}}</li>
+            <p style="font-family: monospace;">-<span style="font-weight: bold;">From</span> {{compliment.sender.name}}
+            </p>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="objectives">
+        <h1 style="text-decoration: underline;">Objectives</h1>
+        <ul>
+            {% for objective in objectives %}
+            <li>{{objective.objective}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="calendar">
+        <iframe
+            src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKuala_Lumpur&amp;src=aGFja2luZ3Byb2R1Y3Rpdml0eUBnbWFpbC5jb20&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4ubWFsYXlzaWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23039BE5&amp;color=%2333B679&amp;color=%230B8043&amp;title=Worqlyfe"
+            style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    </div>
+</div>
+
+
+
+{% endblock %}
