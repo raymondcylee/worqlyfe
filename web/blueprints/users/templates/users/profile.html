@@ -1,0 +1,87 @@
+{% extends "_layout.html" %} {% block content %}
+<h4>Completed Objectives</h4>
+{% for objective in user.completed_objective %}
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input
+        checked
+        type="checkbox"
+        aria-label="Checkbox for following text input"
+      />
+    </div>
+  </div>
+  <input
+    type="text"
+    class="form-control"
+    aria-label="Text input with checkbox"
+    value="{{ objective }}"
+  />
+</div>
+{% endfor %}
+
+<h4>Incomplete Objectives</h4>
+{% for objective in user.incomplete_objective %}
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="checkbox" aria-label="Checkbox for following text input" />
+    </div>
+  </div>
+  <input
+    type="text"
+    class="form-control"
+    aria-label="Text input with checkbox"
+    value="{{ objective }}"
+  />
+</div>
+{% endfor %}
+
+<!-- <iframe
+  src="https://calendar.google.com/calendar/embed?src=45l700l2a18d7d031ov7diqftc%40group.calendar.google.com&ctz=Asia%2FKuala_Lumpur"
+  style="border: 0"
+  width="800"
+  height="600"
+  frameborder="0"
+  scrolling="no"
+></iframe> -->
+
+<div class="calendar">
+  <iframe
+    src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKuala_Lumpur&amp;src=aGFja2luZ3Byb2R1Y3Rpdml0eUBnbWFpbC5jb20&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4ubWFsYXlzaWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23039BE5&amp;color=%2333B679&amp;color=%230B8043&amp;title=Worqlyfe"
+    style="border-width:0"
+    width="800"
+    height="600"
+    frameborder="0"
+    scrolling="no"
+  ></iframe>
+  <form action="/" method="POST">
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input
+        name="event-title"
+        type="text"
+        class="form-control"
+        id="event-title"
+        aria-describedby="title"
+        placeholder="Enter event title..."
+      />
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1">Description:</label>
+      <textarea
+        name="event-details"
+        class="form-control"
+        placeholder="Enter event details...."
+        id="event-details"
+        rows="2"
+      ></textarea>
+    </div>
+    Starting Date and Time of event:
+    <input type="datetime-local" name="startdaytime" /> Ending Date and Time of
+    event: <input type="datetime-local" name="enddaytime" />
+    <button class="btn btn-primary" type="submit">Create Event</button>
+  </form>
+</div>
+
+{% endblock %}

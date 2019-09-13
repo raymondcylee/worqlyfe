@@ -9,9 +9,6 @@ sessions_blueprint = Blueprint('sessions',
 
 @sessions_blueprint.route('/new', methods=['GET'])
 def new():
-    # jsonify({
-    #     'success': True,
-    # })
     return render_template('sessions/new.html')
 
 
@@ -21,8 +18,6 @@ def create():
     password = request.form.get('password')
 
     user = User.get_or_none(User.email == email)
-
-
 
     if user and (user.password == password):
         print("LOGIN SUCCESFULLY")

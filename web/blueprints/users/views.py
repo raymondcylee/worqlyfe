@@ -43,14 +43,19 @@ def create():
     #     return render_template("users/new.html", errors=create_user.errors)
     # return render_template("users/new.html", errors=["Password and confirm password doesn't match"])
 
+
 @users_blueprint.route('/logout', methods=["POST"])
 def destroy():
     logout_user()
     return render_template('home.html')
-    
+
+
 @users_blueprint.route('/<username>', methods=["GET"])
 def show(username):
-    return "<h1></h1>"
+    user = User.get_or_none(User.name == username)
+
+    if user:
+        return render_template("users/profile.html", user=user)
 
 
 @users_blueprint.route('/', methods=["GET"])
@@ -78,12 +83,15 @@ def department(department):
         User.department == department, User.is_manager == True)])
     return jsonify([user.name for user in User.select().where(User.department == department, User.is_manager == True)])
 
+
 @users_blueprint.route('/review/<id>', methods=['GET'])
 def show_review(id):
     user = User.get_or_none(User.id == id)
     manager = User.get_or_none(User.id == user.manager_id)
-    executive_note = Review.select().where((Review.executive_id == user.id) & (Review.executive_notes.is_null(False)))
-    manager_note = Review.select().where((Review.executive_id == user.id) & (Review.manager_notes.is_null(False)) )
+    executive_note = Review.select().where((Review.executive_id == user.id)
+                                           & (Review.executive_notes.is_null(False)))
+    manager_note = Review.select().where((Review.executive_id == user.id)
+                                         & (Review.manager_notes.is_null(False)))
     return render_template('users/review.html', user=user, manager=manager, executive_notes=executive_note, manager_notes=manager_note)
 
 
@@ -93,8 +101,10 @@ def create_manager_notes(id):
     manager = User.get_or_none(User.id == user.manager_id)
     comments = request.form.get("manager_notes")
     review_date = request.form.get("review_date")
-    Review(manager_notes=comments, executive_id=user.id, review_date=review_date).save()
+    Review(manager_notes=comments, executive_id=user.id,
+           review_date=review_date).save()
     return redirect(url_for('users.show_review', user=user, manager=manager, id=user.id))
+
 
 @users_blueprint.route('/create_my_notes/<id>', methods=['POST'])
 def create_my_notes(id):
@@ -102,5 +112,6 @@ def create_my_notes(id):
     manager = User.get_or_none(User.id == user.manager_id)
     comments = request.form.get("my_notes")
     review_date = request.form.get("review_date")
-    Review(executive_notes=comments, executive_id=user.id, review_date=review_date).save()
+    Review(executive_notes=comments, executive_id=user.id,
+           review_date=review_date).save()
     return redirect(url_for('users.show_review', user=user, manager=manager, id=user.id))
