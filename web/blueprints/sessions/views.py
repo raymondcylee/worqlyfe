@@ -30,4 +30,4 @@ def create():
         return redirect(url_for('dashboard.index', username=user.name))
     else:
         print("NOT LOGIN")
-        return redirect(url_for('users.show', username=user.name))
+        return redirect(url_for('home', username=user.name))
