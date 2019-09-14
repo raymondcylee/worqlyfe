@@ -1,7 +1,7 @@
 {% extends "_layout.html" %} {% block content %}
 
 <form
-  action="{{url_for( 'objectives.create', username = user.name)}}"
+  action="{{url_for('objectives.create', username = user.name)}}"
   method="POST"
 >
   <div class="input-group mb-3">
