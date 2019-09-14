@@ -4,15 +4,15 @@
 
 <div class="container">
     <div class="personal-details">
-        <img width="400" height="400" src="{{user.profile_picture}}" alt="profile_picture" />
-        <h1>{{user.name}}</h1>
+        <img width="400" height="400" src="{{current_user.profile_picture}}" alt="profile_picture" />
+        <h1>{{current_user.name}}</h1>
         <ul>
-            <li><span style="font-weight: bold;">Department:</span> {{user.department}}</li>
-            <li><span style="font-weight: bold;">Position:</span> {{user.role}}</li>
-            <li><span style="font-weight: bold;">Contact:</span> {{user.email}}</li>
+            <li><span style="font-weight: bold;">Department:</span> {{current_user.department}}</li>
+            <li><span style="font-weight: bold;">Position:</span> {{current_user.role}}</li>
+            <li><span style="font-weight: bold;">Contact:</span> {{current_user.email}}</li>
         </ul>
     </div>
-    {% if user.is_manager %}
+    {% if current_user.is_manager %}
     <div class="team">
         <h1>Project Team:</h1>
         <ul>
@@ -29,7 +29,7 @@
         <ul>
             <h3>Compliments Given:</h3>
             {% for compliment in compliments %}
-            {% if compliment.sender_id == user.id %}
+            {% if compliment.sender_id == current_user.id %}
             <li>{{compliment.compliment}}</li>
             <p style="font-family: monospace;">-<span style="font-weight: bold;">For</span>
                 {{compliment.recipient.name}}
@@ -39,7 +39,7 @@
 
             <h3>Compliments Received:</h3>
             {% for compliment in compliments %}
-            {% if compliment.recipient_id == user.id %}
+            {% if compliment.recipient_id == current_user.id %}
             <li>{{compliment.compliment}}</li>
             <p style="font-family: monospace;">-<span style="font-weight: bold;">From</span> {{compliment.sender.name}}
             </p>
