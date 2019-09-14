@@ -9,4 +9,3 @@ class Compliment(BaseModel):
     sender = pw.ForeignKeyField(User, backref='recipients')
     recipient = pw.ForeignKeyField(User, backref='senders')
     badge = pw.ForeignKeyField(Badge, backref='badges')
-

@@ -6,3 +6,4 @@ from models.user import User
 class Objective(BaseModel):
     objective = pw.CharField(unique=False, null=False)
     user = pw.ForeignKeyField(User, backref="objectives")
+    done = pw.BooleanField(default=False)
