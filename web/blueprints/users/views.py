@@ -1,9 +1,20 @@
-from flask import Blueprint, render_template, redirect, request, jsonify, url_for
-from models.user import User
+from __future__ import print_function
+from flask import Blueprint, render_template, redirect, request, jsonify, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-
+from models.user import User
 from models.review import Review
-from app import login_manager
+from models.compliment import Compliment
+from models.objective import Objective
+from googleapiclient.discovery import build
+import os
+import datetime
+import pickle
+import os.path
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+
+SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 users_blueprint = Blueprint('users',
                             __name__,
@@ -115,3 +126,47 @@ def create_my_notes(id):
     Review(executive_notes=comments, executive_id=user.id,
            review_date=review_date).save()
     return redirect(url_for('users.show_review', user=user, manager=manager, id=user.id))
+
+
+@users_blueprint.route('/https://www.googleapis.com/calendar/v3/calendars/primary/events/<username>', methods=['POST'])
+def calender(username):
+    creds = None
+
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+
+    service = build('calendar', 'v3', credentials=creds)
+    title = request.form.get('event-title')
+    description = request.form.get('event-details')
+    startdatetime = request.form.get('startdaytime')
+    enddatetime = request.form.get('enddaytime')
+    GMT_OFF = '+08:00'
+    event = {
+        'summary': title,
+        'description': description,
+        'start': {
+            'dateTime': startdatetime + ':00' + GMT_OFF
+        },
+        'end': {
+            'dateTime': enddatetime + ':00' + GMT_OFF
+        }}
+    create_event = service.events().insert(
+        calendarId='primary', body=event).execute()
+    if create_event:
+        flash('Event created')
+    else:
+        flash('Failed')
+
+    return redirect(url_for('users.show', username=username))
