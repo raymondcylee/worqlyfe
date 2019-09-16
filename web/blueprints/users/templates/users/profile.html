@@ -117,7 +117,7 @@
     if ($(this).is(":checked")) {
       console.log("Box is NOW checked");
       $.ajax({
-        url: `/objectives/${id}`,
+        url: `/objectives/update/${id}`,
         method: "POST",
         success: function(response) {
           console.log(response);
@@ -129,7 +129,7 @@
     } else {
       console.log("Box is now unchecked");
       $.ajax({
-        url: `/objectives/${id}`,
+        url: `/objectives/update/${id}`,
         method: "POST",
         success: function(response) {
           console.log(response);

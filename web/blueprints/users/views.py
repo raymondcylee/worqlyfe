@@ -99,14 +99,21 @@ def department(department):
 def show_review(id):
     user = User.get_or_none(User.id == id)
     manager = User.get_or_none(User.id == user.manager_id)
-    executive_note = Review.select().where((Review.executive_id == user.id)
+    completed_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == True))
+    incomplete_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == False))
+    try:
+        progress = (completed_objectives.count()/(completed_objectives.count()+incomplete_objectives.count()))
+    except ZeroDivisionError:
+        progress = 0
+    progress_percentage = "{:.0%}".format(progress)
+    executive_notes = Review.select().where((Review.executive_id == user.id)
                                            & (Review.executive_notes.is_null(False)))
-    manager_note = Review.select().where((Review.executive_id == user.id)
+    manager_notes = Review.select().where((Review.executive_id == user.id)
                                          & (Review.manager_notes.is_null(False)))
-    return render_template('users/review.html', user=user, manager=manager, executive_notes=executive_note, manager_notes=manager_note)
+    return render_template('users/review.html', user=user, manager=manager, executive_notes=executive_notes, manager_notes=manager_notes, completed_objectives=completed_objectives, incomplete_objectives=incomplete_objectives, progress_percentage=progress_percentage)
 
 
-@users_blueprint.route('/create_manager_review/<id>', methods=['POST'])
+@users_blueprint.route('/create-manager-review/<id>', methods=['POST'])
 def create_manager_notes(id):
     user = User.get_or_none(User.id == id)
     manager = User.get_or_none(User.id == user.manager_id)
@@ -117,7 +124,7 @@ def create_manager_notes(id):
     return redirect(url_for('users.show_review', user=user, manager=manager, id=user.id))
 
 
-@users_blueprint.route('/create_my_notes/<id>', methods=['POST'])
+@users_blueprint.route('/create-my-notes/<id>', methods=['POST'])
 def create_my_notes(id):
     user = User.get_or_none(User.id == id)
     manager = User.get_or_none(User.id == user.manager_id)
