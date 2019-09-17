@@ -8,6 +8,8 @@ from models.objective import Objective
 from models.compliment import Compliment
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from models.medal import Medal
+
 
 
 dashboard_blueprint = Blueprint('dashboard',
@@ -15,13 +17,29 @@ dashboard_blueprint = Blueprint('dashboard',
                                 template_folder='templates')
 
 
-@dashboard_blueprint.route('/')
-def index():
+@dashboard_blueprint.route('/<id>')
+def index(id):
     objective = Objective.select().where(Objective.user_id == current_user.id)
     compliments = Compliment.select()
     departments = User.select().where(User.department == current_user.department)
     all_users = User.select()
-    return render_template('dashboard/new.html', objectives=objective, compliments=compliments, departments=departments, all_users=all_users)
+    compliments_received = Compliment.select().where(Compliment.recipient_id == current_user.id).count()
+    compliments_given = Compliment.select().where(Compliment.sender_id == current_user.id).count()
+    user = User.get_or_none(User.id == id)
+    star = Medal.select().where(Medal.medal_caption == "Star").get()
+    gold = Medal.select().where(Medal.medal_caption == "Gold").get()
+    silver = Medal.select().where(Medal.medal_caption == "Silver").get()
+    bronze = Medal.select().where(Medal.medal_caption == "Bronze").get()
+    
+    completed_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == True))
+    incomplete_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == False))
+    try:
+        progress = (completed_objectives.count()/(completed_objectives.count()+incomplete_objectives.count()))
+    except ZeroDivisionError:
+        progress = 0
+    progress_percentage = "{:.0%}".format(progress)
+
+    return render_template('dashboard/new.html', objectives=objective, compliments=compliments, departments=departments, ,all_users=all_users, user=user, progress_percentage=progress_percentage, progress=progress, compliments_received=compliments_received, compliments_given=compliments_given, gold=gold, silver=silver, bronze=bronze, star=star)
 
 
 @dashboard_blueprint.route('/feedback/<id>', methods=['POST'])
