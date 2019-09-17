@@ -3,11 +3,11 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from models.user import User
 import os
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from models.user import User
 from models.objective import Objective
 from models.compliment import Compliment
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-
 
 
 dashboard_blueprint = Blueprint('dashboard',
@@ -29,10 +29,10 @@ def feedback(id):
     recipient = User.get_by_id(id)
 
     message = Mail(
-    from_email='worqlyfe@example.com',
-    to_emails=recipient.email,
-    subject='Feedback Form Notification',
-    html_content=current_user.name + ' sent you a feedback form.')
+        from_email='worqlyfe@example.com',
+        to_emails=recipient.email,
+        subject='Feedback Form Notification',
+        html_content=current_user.name + ' sent you a feedback form.')
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)
@@ -46,3 +46,27 @@ def feedback(id):
         'success': True
     }
     return jsonify(resp)
+
+
+@dashboard_blueprint.route('/upload', methods=['POST'])
+def upload():
+    file = request.files.get('user_image')
+    try:
+
+        s3.upload_fileobj(
+            file,
+            app.config['S3_BUCKET'],
+            file.filename,
+            ExtraArgs={
+                "ACL": "public-read",
+                "ContentType": file.content_type
+            }
+        )
+
+        User.update(profile_picture=file.filename).where(
+            User.id == current_user.id).execute()
+
+    except Exception as e:
+        flash(str(e))
+
+    return redirect(url_for('dashboard.index'))

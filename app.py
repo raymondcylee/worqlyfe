@@ -1,5 +1,7 @@
 import os
 import config
+import boto3
+import botocore
 from flask import Flask
 from models.base_model import db
 from flask_login import LoginManager
@@ -13,6 +15,12 @@ app = Flask('worqlyfe', root_path=web_dir)
 app.secret_key = os.environ.get('SECRET_KEY')
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+s3 = boto3.client(
+    "s3",
+    aws_access_key_id=os.environ.get("S3_KEY"),
+    aws_secret_access_key=os.environ.get("S3_SECRET")
+)
 
 if os.getenv('FLASK_ENV') == 'production':
     app.config.from_object("config.ProductionConfig")

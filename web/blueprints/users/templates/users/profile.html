@@ -1,143 +1,165 @@
-{% extends "_layout.html" %} {% block content %}
-
-<form
-  action="{{url_for('objectives.create', username = user.name)}}"
-  method="POST"
->
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-default"
-        >Objective:
-      </span>
-    </div>
-    <input
-      name="objective"
-      type="text"
-      class="form-control"
-      aria-label="Sizing example input"
-      aria-describedby="inputGroup-sizing-default"
+{% extends "_layout.html" %} {% block content %} {% if
+current_user.is_authenticated %} {% if current_user.is_manager %}
+<div class="container">
+  <div class="personal-details">
+    <img
+      width="400"
+      height="400"
+      src="{{ current_user.profile_image }}"
+      alt="profile_picture"
     />
-    <button type="submit" class="btn btn-outline-secondary" id="button-addon2">
-      Submit
-    </button>
   </div>
-</form>
-
-<h4>Completed Objectives</h4>
-{% for obs in user.completed_objective %}
-<div class="completed-objective-{{ obs.id }} input-group mb-3">
-  <div class="input-group-prepend">
-    <div class="input-group-text">
-      <input
-        checked
-        class="checkbox-input"
-        id="objective-{{ obs.id }}"
-        type="checkbox"
-        aria-label="Checkbox for following text input"
-      />
-    </div>
-  </div>
-  <input
-    type="text"
-    class="form-control"
-    aria-label="Text input with checkbox"
-    value="{{ obs.objective }}"
-  />
-</div>
-{% endfor %}
-
-<h4>Incomplete Objectives</h4>
-{% for obs in user.incomplete_objective %}
-<div class="incomplete-objective-{{ obs.id }} input-group mb-3">
-  <div class="input-group-prepend">
-    <div class="input-group-text">
-      <input
-        class="checkbox-input"
-        id="objective-{{ obs.id }}"
-        type="checkbox"
-        aria-label="Checkbox for following text input"
-      />
-    </div>
-  </div>
-  <input
-    type="text"
-    class="form-control"
-    aria-label="Text input with checkbox"
-    value="{{ obs.objective }}"
-  />
-</div>
-{% endfor %}
-
-<div class="calendar">
-  <iframe
-    src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKuala_Lumpur&amp;src=aGFja2luZ3Byb2R1Y3Rpdml0eUBnbWFpbC5jb20&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4ubWFsYXlzaWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23039BE5&amp;color=%2333B679&amp;color=%230B8043&amp;title=Worqlyfe"
-    style="border-width:0"
-    width="800"
-    height="600"
-    frameborder="0"
-    scrolling="no"
-  ></iframe>
   <form
-    action="{{ url_for('users.calender', username = user.name) }}"
+    action="{{url_for('objectives.create', username = user.name)}}"
     method="POST"
   >
-    <div class="form-group">
-      <label for="title">Title:</label>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-default"
+          >Objective:
+        </span>
+      </div>
       <input
-        name="event-title"
+        name="objective"
         type="text"
         class="form-control"
-        id="event-title"
-        aria-describedby="title"
-        placeholder="Enter event title..."
+        aria-label="Sizing example input"
+        aria-describedby="inputGroup-sizing-default"
+      />
+      <button
+        type="submit"
+        class="btn btn-outline-secondary"
+        id="button-addon2"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+  {% endif%}
+
+  <h4>Completed Objectives</h4>
+  <div class="completed-objective">
+    {% for obs in user.completed_objective %}
+    <div class="objective-{{ obs.id }} input-group mb-3">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <input
+            checked
+            class="checkbox-input"
+            id="objective-{{ obs.id }}"
+            type="checkbox"
+            aria-label="Checkbox for following text input"
+          />
+        </div>
+      </div>
+      <input
+        type="text"
+        class="form-control"
+        aria-label="Text input with checkbox"
+        value="{{ obs.objective }}"
       />
     </div>
-    <div class="form-group">
-      <label for="exampleFormControlTextarea1">Description:</label>
-      <textarea
-        name="event-details"
+    {% endfor %}
+  </div>
+
+  <h4>Incomplete Objectives</h4>
+  <div class="incomplete-objective">
+    {% for obs in user.incomplete_objective %}
+    <div class="objective-{{ obs.id }} input-group mb-3">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <input
+            class="checkbox-input"
+            id="objective-{{ obs.id }}"
+            type="checkbox"
+            aria-label="Checkbox for following text input"
+          />
+        </div>
+      </div>
+      <input
+        type="text"
         class="form-control"
-        placeholder="Enter event details...."
-        id="event-details"
-        rows="2"
-      ></textarea>
+        aria-label="Text input with checkbox"
+        value="{{ obs.objective }}"
+      />
     </div>
-    Starting Date and Time of event:
-    <input type="datetime-local" name="startdaytime" /> Ending Date and Time of
-    event: <input type="datetime-local" name="enddaytime" />
-    <button class="btn btn-primary" type="submit">Create Event</button>
-  </form>
+    {% endfor %}
+  </div>
+
+  <div class="calendar">
+    <iframe
+      src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKuala_Lumpur&amp;src=aGFja2luZ3Byb2R1Y3Rpdml0eUBnbWFpbC5jb20&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4ubWFsYXlzaWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23039BE5&amp;color=%2333B679&amp;color=%230B8043&amp;title=Worqlyfe"
+      style="border-width:0"
+      width="800"
+      height="600"
+      frameborder="0"
+      scrolling="no"
+    ></iframe>
+    <form
+      action="{{ url_for('users.calender', username = user.name) }}"
+      method="POST"
+    >
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input
+          name="event-title"
+          type="text"
+          class="form-control"
+          id="event-title"
+          aria-describedby="title"
+          placeholder="Enter event title..."
+        />
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Description:</label>
+        <textarea
+          name="event-details"
+          class="form-control"
+          placeholder="Enter event details...."
+          id="event-details"
+          rows="2"
+        ></textarea>
+      </div>
+      Starting Date and Time of event:
+      <input type="datetime-local" name="startdaytime" /> Ending Date and Time
+      of event: <input type="datetime-local" name="enddaytime" />
+      <button class="btn btn-primary" type="submit">Create Event</button>
+    </form>
+  </div>
+  {% endif %}
 </div>
 
-<script>
-  $(".checkbox-input").on("click", function(event) {
-    id = event.target.id.split("-")[1];
-    // $("[.^='Tom']")
+  <script>
+    $(document).on("click", ".checkbox-input", function(event) {
+      id = event.target.id.split("-")[1];
 
-    if ($(this).is(":checked")) {
-      console.log("Box is NOW checked");
-      $.ajax({
-        url: `/objectives/update/${id}`,
-        method: "POST",
-        success: function(response) {
-          console.log(response);
-          if (response.success) {
-            $(`.incomplete-objective-${id}`).remove();
+      if ($(this).is(":checked")) {
+        console.log("Box is NOW checked");
+        $.ajax({
+          url: `/objectives/update/${id}`,
+          method: "POST",
+          success: function(response) {
+            console.log(response);
+            completedObjective = $(`.objective-${id}`);
+            completedObjective.remove();
+            $(".completed-objective").append(completedObjective);
           }
-        }
-      });
-    } else {
-      console.log("Box is now unchecked");
-      $.ajax({
-        url: `/objectives/update/${id}`,
-        method: "POST",
-        success: function(response) {
-          console.log(response);
-          $(`.incomplete-objective-${id}`).remove();
-        }
-      });
-    }
-  });
-</script>
+        });
+      } else {
+        console.log("Box is now unchecked");
+        $.ajax({
+          url: `/objectives/update/${id}`,
+          method: "POST",
+          success: function(response) {
+            console.log(response);
+            incompleteObjective = $(`.objective-${id}`);
+            incompleteObjective.remove();
+            $(".incomplete-objective").append(incompleteObjective);
+          }
+        });
+      }
+    });
+  </script>
 
-{% endblock %}
+  {% endblock %}
+</div>
