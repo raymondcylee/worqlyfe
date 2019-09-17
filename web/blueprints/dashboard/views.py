@@ -1,10 +1,12 @@
 from __future__ import print_function
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from models.user import User
 import os
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from models.objective import Objective
 from models.compliment import Compliment
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 
 
@@ -18,6 +20,29 @@ def index():
     objective = Objective.select().where(Objective.user_id == current_user.id)
     compliments = Compliment.select()
     departments = User.select().where(User.department == current_user.department)
-    return render_template('dashboard/new.html', objectives=objective, compliments=compliments, departments=departments)
+    all_users = User.select()
+    return render_template('dashboard/new.html', objectives=objective, compliments=compliments, departments=departments, all_users=all_users)
 
 
+@dashboard_blueprint.route('/feedback/<id>', methods=['POST'])
+def feedback(id):
+    recipient = User.get_by_id(id)
+
+    message = Mail(
+    from_email='worqlyfe@example.com',
+    to_emails=recipient.email,
+    subject='Feedback Form Notification',
+    html_content=current_user.name + ' sent you a feedback form.')
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(str(e))
+
+    resp = {
+        'success': True
+    }
+    return jsonify(resp)
