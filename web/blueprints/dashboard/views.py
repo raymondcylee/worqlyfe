@@ -39,7 +39,7 @@ def index(id):
         progress = 0
     progress_percentage = "{:.0%}".format(progress)
 
-    return render_template('dashboard/new.html', objectives=objective, compliments=compliments, departments=departments, ,all_users=all_users, user=user, progress_percentage=progress_percentage, progress=progress, compliments_received=compliments_received, compliments_given=compliments_given, gold=gold, silver=silver, bronze=bronze, star=star)
+    return render_template('dashboard/new.html', objectives=objective, compliments=compliments, departments=departments ,all_users=all_users, user=user, progress_percentage=progress_percentage, progress=progress, compliments_received=compliments_received, compliments_given=compliments_given, gold=gold, silver=silver, bronze=bronze, star=star)
 
 
 @dashboard_blueprint.route('/feedback/<id>', methods=['POST'])
