@@ -48,4 +48,7 @@ class User(BaseModel, UserMixin):
     #     receivers_ids = [feedback.receiver_id for feedback in current_user.receivers]
     #     return [user for user in User.select().where(User.id << receivers_ids)]
 
-    
+    @hybrid_property
+    def unread_notification(self):
+        from models.notification import Notification
+        return [notifications for notifications in Notification.select().where((Notification.recipient_id == self.id) & (Notification.read == False))]

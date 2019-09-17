@@ -12,20 +12,24 @@
   <link rel="stylesheet" href="{{ ASSET_URL }}">
   {% endassets %}
 
+  {% block header %}{% endblock %}
+  {% from "sessions/new.html" import log_in_modal %}
+  
   {% assets "home_js" %}
   <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {% endassets %}
-
-  {% block header %}{% endblock %}
-  {% from "sessions/new.html" import log_in_modal %}
-
+  
   <title>{% block title %}{% endblock %}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< master
   
   <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+=======
+  <title>Bootstrap 4 DateTimePicker</title>
+>>>>>>> Notification feature added
   <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-</head>
+</head>  
 
 <body>
 <div class="home">
@@ -47,6 +51,13 @@
           <a class="nav-item nav-link" href="" data-toggle="modal" data-target="#signIn">Sign In</a>
           {% endif %}
       </div>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Notification
+          <span id="unread-notification" style="font-size:100%; background-color: red">{{current_user.unread_notification | length }}</span>
+        </button>
+        {% include 'notification.html' %}
     </div>
   </nav>
 
@@ -85,6 +96,20 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
       });
+
+
+      $(".dropdown").click(function(e){
+        $.ajax({
+          url:`/users/notification`,
+          method: "POST",
+          success: function(response) {
+            console.log(response)
+          },
+          complete: function() {
+            $("#unread-notification").html("0")
+          }
+        })
+      })
     });
   </script>
 

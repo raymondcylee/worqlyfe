@@ -5,6 +5,7 @@ from models.user import User
 from models.review import Review
 from models.compliment import Compliment
 from models.objective import Objective
+from models.notification import Notification
 from googleapiclient.discovery import build
 import os
 import datetime
@@ -28,11 +29,11 @@ def new():
 
 @users_blueprint.route('/', methods=['POST'])
 def create():
-    name = request.form.get('name')
-    email = request.form.get('email')
+    name = request.form.get('name').strip()
+    email = request.form.get('email').strip()
     password = request.form.get('password')
     confirmPassword = request.form.get('confirmPassword')
-    role = request.form.get('role')
+    role = request.form.get('role').strip()
     department = request.form.get('department')
     is_manager = request.form.get('isManager')
     is_executive = request.form.get('isExecutive')
@@ -64,7 +65,6 @@ def destroy():
 @users_blueprint.route('/<username>', methods=["GET"])
 def show(username):
     user = User.get_or_none(User.name == username)
-
     if user:
         return render_template("users/profile.html", user=user)
 
@@ -79,9 +79,15 @@ def edit(id):
     pass
 
 
-@users_blueprint.route('/<id>', methods=['POST'])
-def update(id):
-    pass
+@users_blueprint.route('/notification', methods=['POST'])
+def update():
+    Notification.update(read=True).where(
+        Notification.recipient_id == current_user.id).execute()
+    response = {
+        "success": True,
+        "read": True
+    }
+    return jsonify(response)
 
 
 @users_blueprint.route('/department/<department>', methods=['GET'])
@@ -99,17 +105,20 @@ def department(department):
 def show_review(id):
     user = User.get_or_none(User.id == id)
     manager = User.get_or_none(User.id == user.manager_id)
-    completed_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == True))
-    incomplete_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == False))
+    completed_objectives = Objective.select().where(
+        (Objective.user_id == user.id) & (Objective.done == True))
+    incomplete_objectives = Objective.select().where(
+        (Objective.user_id == user.id) & (Objective.done == False))
     try:
-        progress = (completed_objectives.count()/(completed_objectives.count()+incomplete_objectives.count()))
+        progress = (completed_objectives.count() /
+                    (completed_objectives.count()+incomplete_objectives.count()))
     except ZeroDivisionError:
         progress = 0
     progress_percentage = "{:.0%}".format(progress)
     executive_notes = Review.select().where((Review.executive_id == user.id)
-                                           & (Review.executive_notes.is_null(False)))
+                                            & (Review.executive_notes.is_null(False)))
     manager_notes = Review.select().where((Review.executive_id == user.id)
-                                         & (Review.manager_notes.is_null(False)))
+                                          & (Review.manager_notes.is_null(False)))
     return render_template('users/review.html', user=user, manager=manager, executive_notes=executive_notes, manager_notes=manager_notes, completed_objectives=completed_objectives, incomplete_objectives=incomplete_objectives, progress_percentage=progress_percentage)
 
 

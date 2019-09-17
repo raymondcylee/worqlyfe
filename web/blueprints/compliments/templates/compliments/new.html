@@ -1,5 +1,4 @@
-{% extends "_layout.html" %}
-{% block content %}
+{% extends "_layout.html" %} {% block content %}
 <div class="compliments">
   <!-- Header -->
   <h1>Wall of Fame</h1>
@@ -28,11 +27,11 @@
           <form action="{{ url_for('compliments.create') }}" method="POST">
             <div class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" id="badgeMenu" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="true">Choose a badge
+                aria-haspopup="true" aria-expanded="true">
+                Choose a badge
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu">
-
                 {% for badge in badges %}
                 <li onclick="displayBadge(this)">
                   <a href="#">
@@ -44,39 +43,41 @@
             </div>
             <!-- Badge Container -->
             <div id="badgeResult">
-              <input type="hidden" name="badgeId" id="badgeId">
-              <img name="badge" id="displayBadgePic" width="50px">
+              <input type="hidden" name="badgeId" id="badgeId" />
+              <img name="badge" id="displayBadgePic" width="50px" />
               <div name="badge_text" id="badgeText"></div>
             </div>
 
             <div class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" id="recipientMenu" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="true">Choose a recipient
+                aria-haspopup="true" aria-expanded="true">
+                Choose a recipient
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu">
-                {% for u in users %}
-                {% if u.id != current_user.id %}
+                {% for u in users %} {% if u.id != current_user.id %}
                 <li onclick="displayRecipient(this)">
                   <a href="#" value="{{ u.id }}">{{ u.name }}</a>
                 </li>
-                {% endif %}
-                {% endfor %}
+                {% endif %} {% endfor %}
               </ul>
               <!-- Recipient Container -->
               <div id="recipientResult">
-                <input type="hidden" name="recipientList" id="recipientList">
+                <input type="hidden" name="recipientList" id="recipientList" />
                 <div name="recipient_name" id="recipientText"></div>
               </div>
-
             </div>
             <div class="form-group">
               <label for="complimentFormControlTextarea1">Comment:</label>
               <textarea class="form-control" id="complimentFormControlTextarea1" rows="5" name="comment"></textarea>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button id="submit-btn" type="submit" class="btn btn-primary">Compliment!</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                Cancel
+              </button>
+              <button id="submit-btn" type="submit" class="btn btn-primary">
+                Compliment!
+              </button>
             </div>
           </form>
         </div>
@@ -95,8 +96,8 @@
           <div class="card" style="width: 20rem;">
             <h4>{{ compliment.badge.badge_caption }}</h4>
             <div class="img-container">
-              <img src="{{ compliment.recipient.profile_picture }}" class="card-img-top">
-              <img src="{{ compliment.badge.badge }}" class="card-img-top">
+              <img src="{{ compliment.recipient.profile_image }}" class="card-img-top" />
+              <img src="{{ compliment.badge.badge }}" class="card-img-top" />
             </div>
             <div class="card-body">
               <p class="card-text">{{ compliment.compliment }}</p>
@@ -104,15 +105,14 @@
             <div class="sender">
               <p>Complimented by:</p>
               <div class="sender-container">
-                <img src="{{ compliment.sender.profile_picture }}"
-                  style="width: 30px;height: 30px;object-fit: cover;border-radius: 50%">
+                <img src="{{ compliment.sender.profile_image }}"
+                  style="width: 30px;height: 30px;object-fit: cover;border-radius: 50%" />
                 <p>{{ compliment.sender.name }}</p>
               </div>
             </div>
           </div>
         </div>
-        {% endif %}
-        {% endfor %}
+        {% endif %} {% endfor %}
       </div>
     </div>
   </div>
@@ -126,8 +126,8 @@
           <div class="card" style="width: 20rem;">
             <h4>{{ compliment.badge.badge_caption }}</h4>
             <div class="img-container">
-              <img src="{{ compliment.recipient.profile_picture }}" class="card-img-top">
-              <img src="{{ compliment.badge.badge }}" class="card-img-top">
+              <img src="{{ compliment.recipient.profile_image }}" class="card-img-top" />
+              <img src="{{ compliment.badge.badge }}" class="card-img-top" />
             </div>
             <div class="card-body">
               <p class="card-text">{{ compliment.compliment }}</p>
@@ -135,8 +135,8 @@
             <div class="sender">
               <p>Complimented by:</p>
               <div class="sender-container">
-                <img src="{{ compliment.sender.profile_picture }}"
-                  style="width: 30px;height: 30px;object-fit: cover;border-radius: 50%">
+                <img src="{{ compliment.sender.profile_image }}"
+                  style="width: 30px;height: 30px;object-fit: cover;border-radius: 50%" />
                 <p>{{ compliment.sender.name }}</p>
               </div>
             </div>
@@ -147,7 +147,7 @@
     </div>
   </div>
 </div>
-</div>
+
 <script>
   function displayBadge(list) {
     let showBadge = document.getElementById('displayBadgePic')
@@ -164,6 +164,7 @@
     showRecipient.innerHTML = list.querySelector('a').innerHTML
     get_recipientId.value = list.querySelector('a').getAttribute('value')
   }
+
 
 </script>
 {% endblock %}
