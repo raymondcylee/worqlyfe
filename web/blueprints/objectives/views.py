@@ -16,6 +16,12 @@ def create(username):
     return redirect(url_for('users.show', username=username))
 
 
+@objectives_blueprint.route('/team')
+def show():
+    users = User.select().where(User.manager_id == current_user.id)
+    return render_template('objectives/new.html', users=users)
+
+
 @objectives_blueprint.route('/<id>/edit', methods=['GET'])
 def edit(id):
     pass
@@ -25,7 +31,6 @@ def edit(id):
 def update(id):
 
     obj = Objective.get_by_id(id)
-
     if obj.done:
         Objective.update(done=False).where(Objective.id == obj.id).execute()
         response = {
