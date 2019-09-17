@@ -60,6 +60,7 @@
       <div class="sidebar-heading">Navigate</div>
       <div class="list-group list-group-flush">
         <a href="/dashboard/" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+        <a href="/users/feed" class="list-group-item list-group-item-action bg-light">Feed</a>
         <a href="/users/{{current_user.name}}" class="list-group-item list-group-item-action bg-light">Objectives</a>
         <a href="/users/review/{{current_user.id}}" class="list-group-item list-group-item-action bg-light">Reviews</a>
         <a href="/compliments/new" class="list-group-item list-group-item-action bg-light">Compliments</a>
@@ -75,10 +76,10 @@
     </div>
   </div>
 
-  <footer id="sticky-footer" class="py-4 bg-light">
-    <div class="container text-center">
-      <small>Copyright &copy; Your Website</small>
-    </div>
+  <footer id="sticky-footer" class="py-4">
+      <div class="container text-center">
+        <small>Copyright &copy; Your Website</small>
+      </div>
   </footer>
 
   <script>
@@ -89,10 +90,7 @@
       });
     });
   </script>
-  <footer id="sticky-footer" class="py-4">
-    <div class="container text-center">
-      <small>Copyright &copy; Your Website</small>
-    </div>
+
 </div>
 </body>
 

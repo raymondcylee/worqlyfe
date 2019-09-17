@@ -1,0 +1,54 @@
+.dashboard {
+    h1 {
+        font-weight: 700;
+    }
+    .personal-details {
+        display: flex;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        background-color: $secondary-accent;
+        margin-bottom: 10px;
+        img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+        }
+        .personal-details-container {
+            margin-left: 50px;
+        }
+        ul {
+            list-style-type: none;
+            padding-inline-start: 0;
+        }
+    }
+    .item-container {
+        display: flex;
+        justify-content: space-between;
+        padding-left: 50px;
+        padding-right: 50px;
+        .compliments {
+            h1 {
+                padding-left: 0;
+            }
+            ul {
+                padding-inline-start: 20px;
+            }
+        }
+    }
+    .objectives {
+        padding-left: 50px;
+        padding-right: 50px;
+        margin-bottom: 50px;
+        h1 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        ul {
+            padding-inline-start: 20px;
+        }
+    }
+}

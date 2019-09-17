@@ -177,3 +177,7 @@ def calender(username):
         flash('Failed')
 
     return redirect(url_for('users.show', username=username))
+
+@users_blueprint.route('/feed', methods=["GET"])
+def show_feed():
+    return render_template('users/feed.html')
