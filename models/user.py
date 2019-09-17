@@ -16,6 +16,14 @@ class User(BaseModel, UserMixin):
     manager_id = pw.IntegerField(null=True)
 
     @hybrid_property
+    def profile_image(self):
+        from app import app
+        if self.profile_picture:
+            return f"{app.config['S3_LOCATION']}" + self.profile_picture
+        else:
+            return "https://api.adorable.io/avatars/285/abott@adorable.png"
+
+    @hybrid_property
     def completed_objective(self):
         from models.objective import Objective
         return [obs for obs in Objective.select().where((Objective.user_id == self.id) & (Objective.done == True)).order_by(Objective.id.desc())]

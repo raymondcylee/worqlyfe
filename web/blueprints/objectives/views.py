@@ -36,13 +36,11 @@ def update(id):
         response = {
             "success": True,
             "done": False
-
         }
     else:
         Objective.update(done=True).where(Objective.id == obj.id).execute()
         response = {
             "success": True,
             "done": True
-
         }
     return jsonify(response)

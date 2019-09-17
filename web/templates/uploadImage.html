@@ -1,0 +1,52 @@
+{% macro upload_image(user) %}
+
+<div
+  class="modal"
+  id="uploadImageModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="uploadImageModalTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="uploadImageModalTitle">Upload Image</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form
+        action="{{ url_for('dashboard.upload') }}"
+        method="POST"
+        enctype="multipart/form-data"
+        class="mb-4"
+      >
+        <div class="modal-body">
+          <div class="d-flex flex-column align-items-center">
+            <img
+              class="preview_image_box w-50 h-50"
+              id="preview_image"
+              alt="previewImage"
+              src="{{ user.profile_image }}"
+            />
+            <label for="image"></label>
+            <input type="file" name="user_image" accept="image/*" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endmacro %}

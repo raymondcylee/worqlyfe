@@ -1,0 +1,5 @@
+.personal-details {
+  display: inline-flex;
+  width: 400px;
+  flex-wrap: wrap;
+}
