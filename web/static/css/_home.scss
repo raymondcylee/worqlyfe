@@ -1,0 +1,30 @@
+.home {
+    font-family: $primary-font;
+    .navbar {
+        background-color: $primary-accent;
+        color: white;
+        font-weight: 700;
+        a {
+            color: white;
+        }
+        .navbar-toggler {
+            border-color: white;
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+        }
+    }
+    .jumbotron {
+        background-color: $secondary-accent;
+        h1 {
+            color: $primary-accent;
+        }
+        .btn {
+            background-color: $primary-accent;
+            border: 2px solid white;
+        }
+    }
+    #sticky-footer {
+        background-color: $secondary-accent;
+    }
+}
