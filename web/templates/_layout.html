@@ -30,6 +30,7 @@
 </head>
 
 <body>
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">Worqlyfe</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -39,25 +40,54 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         {% if current_user.is_authenticated %}
-        <form id = "sign-out-form" action="{{ url_for('users.destroy') }}" method="post">
-          <a onclick="document.getElementById('sign-out-form').submit()" style="cursor: pointer" class="nav-item nav-link">Sign Out</a>
-        </form>
-        <a class="nav-item nav-link" href="/users/review/{{current_user.id}}">Temporary button to personal review
-          page</a>
-        {% else %}
-        <a class="nav-item nav-link" href="/users/new">Sign Up</a>
-        <a class="nav-item nav-link" href="" data-toggle="modal" data-target="#signIn">Sign In</a>
-        {% endif %}
+        <a class="nav-item nav-link" href="" id="menu-toggle">Navigate</a>
+        <form id="sign-out-form" action="{{ url_for('users.destroy') }}" method="post">
+          <a onclick="document.getElementById('sign-out-form').submit()" style="cursor: pointer"
+            class="nav-item nav-link">Sign Out</a>
+          {% else %}
+          <a class="nav-item nav-link" href="/users/new">Sign Up</a>
+          <a class="nav-item nav-link" href="" data-toggle="modal" data-target="#signIn">Sign In</a>
+          {% endif %}
       </div>
     </div>
   </nav>
-  {{ log_in_modal() }}
-  {% block content %}
-  {% endblock %}
+
+  <div class="d-flex toggled" id="wrapper">
+    {% if current_user.is_authenticated %}
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Navigate</div>
+      <div class="list-group list-group-flush">
+        <a href="/dashboard/" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+        <a href="/users/{{current_user.name}}" class="list-group-item list-group-item-action bg-light">Objectives</a>
+        <a href="/users/review/{{current_user.id}}" class="list-group-item list-group-item-action bg-light">Reviews</a>
+        <a href="/compliments/new" class="list-group-item list-group-item-action bg-light">Compliments</a>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      {{ log_in_modal() }}
+      {% block content %}
+      {% endblock %}
+    </div>
+  </div>
+
   <footer id="sticky-footer" class="py-4 bg-light">
     <div class="container text-center">
       <small>Copyright &copy; Your Website</small>
     </div>
+  </footer>
+
+  <script>
+    $(document).ready(function () {
+      $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+      });
+    });
+  </script>
 </body>
 
 </html>

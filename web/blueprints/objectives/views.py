@@ -21,7 +21,7 @@ def edit(id):
     pass
 
 
-@objectives_blueprint.route('/<id>', methods=['POST'])
+@objectives_blueprint.route('/update/<id>', methods=['POST'])
 def update(id):
 
     obj = Objective.get_by_id(id)
@@ -29,14 +29,14 @@ def update(id):
     if obj.done:
         Objective.update(done=False).where(Objective.id == obj.id).execute()
         response = {
-            "sucess": True,
+            "success": True,
             "done": False
 
         }
     else:
         Objective.update(done=True).where(Objective.id == obj.id).execute()
         response = {
-            "sucess": True,
+            "success": True,
             "done": True
 
         }
