@@ -1,16 +1,18 @@
 {% extends "_layout.html" %}
 {% block content %}
+<div class="compliments">
 <!-- Header -->
 <h1>Wall of Fame</h1>
 
 <!-- New Compliments -->
+<div class="new-compliments">
 <h3>New Compliment</h3>
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#complimentModal">
   Compliment someone!
 </button>
-
+</div>
 <!-- Modal -->
 <div class="modal fade" id="complimentModal" tabindex="-1" role="dialog" aria-labelledby="complimentModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -70,7 +72,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary">Compliment!</button>
+              <button id="submit-btn" type="submit" class="btn btn-primary">Compliment!</button>
             </div>
         </form>
       </div>
@@ -79,46 +81,65 @@
 </div>
 
 <!-- Individual Compliments -->
+<div class="compliments-cards">
 <h3>My Compliments</h3>
+<div class="container">
+    <div class="row">
 {% for compliment in compliments %}
 {% if compliment.recipient_id == current_user.id %}
-<div class="card" style="width: 20rem;">
-    <h4>{{ compliment.badge.badge_caption }}</h4>
-    <div>
-        <img src="{{ compliment.recipient.profile_picture }}" class="card-img-top" style="width: 150px;height: 150px;object-fit: cover;border-radius: 50%">
-        <img src="{{ compliment.badge.badge }}" class="card-img-top" style="width: 150px;height: 150px;object-fit: contain;border-radius: 50%">
-    </div>
-    <div class="card-body">
-        <p class="card-text">{{ compliment.compliment }}</p>
-    </div>
-    <div>
-        <p>Complimented by:</p>
-        <p>{{ compliment.sender.name }}</p>
-        <img src="{{ compliment.sender.profile_picture }}" style="width: 30px;height: 30px;object-fit: cover;border-radius: 50%">
-    </div>
-</div>
+        <div class="col-4">
+            <div class="card" style="width: 20rem;">
+                <h4>{{ compliment.badge.badge_caption }}</h4>
+                <div class="img-container">
+                    <img src="{{ compliment.recipient.profile_picture }}" class="card-img-top">
+                    <img src="{{ compliment.badge.badge }}" class="card-img-top">
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ compliment.compliment }}</p>
+                </div>
+                <div class="sender">
+                    <p>Complimented by:</p>
+                    <div class="sender-container">
+                        <img src="{{ compliment.sender.profile_picture }}" style="width: 30px;height: 30px;object-fit: cover;border-radius: 50%">
+                        <p>{{ compliment.sender.name }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 {% endif %}
 {% endfor %}
-<!-- All Compliments -->
-<h3>All Compliments</h3>
-
-{% for compliment in compliments %}
-<div class="card" style="width: 20rem;">
-    <h4>{{ compliment.badge.badge_caption }}</h4>
-    <div>
-        <img src="{{ compliment.recipient.profile_picture }}" class="card-img-top" style="width: 150px;height: 150px;object-fit: cover;border-radius: 50%">
-        <img src="{{ compliment.badge.badge }}" class="card-img-top" style="width: 150px;height: 150px;object-fit: contain;border-radius: 50%">
-    </div>
-    <div class="card-body">
-      <p class="card-text">{{ compliment.compliment }}</p>
-    </div>
-    <div>
-        <p>Complimented by:</p>
-        <p>{{ compliment.sender.name }}</p>
-        <img src="{{ compliment.sender.profile_picture }}" style="width: 30px;height: 30px;object-fit: cover;border-radius: 50%">
     </div>
 </div>
+</div>
+<!-- All Compliments -->
+<div class="compliments-cards">
+<h3>All Compliments</h3>
+<div class="container">
+        <div class="row">
+{% for compliment in compliments %}
+            <div class="col-4">
+                <div class="card" style="width: 20rem;">
+                    <h4>{{ compliment.badge.badge_caption }}</h4>
+                    <div class="img-container">
+                        <img src="{{ compliment.recipient.profile_picture }}" class="card-img-top">
+                        <img src="{{ compliment.badge.badge }}" class="card-img-top">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ compliment.compliment }}</p>
+                    </div>
+                    <div class="sender">
+                        <p>Complimented by:</p>
+                        <div class="sender-container">
+                            <img src="{{ compliment.sender.profile_picture }}" style="width: 30px;height: 30px;object-fit: cover;border-radius: 50%">
+                            <p>{{ compliment.sender.name }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 {% endfor %}
+        </div>
+</div>
+</div>
 
 <script>
 function displayBadge(list) {

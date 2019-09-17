@@ -1,0 +1,67 @@
+.compliments {
+    h1 {
+        font-weight: 700;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding-left: 10px;
+    }
+    .modal-header {
+        background-color: $secondary-accent;
+        h5 {
+            color: $primary-accent;
+            font-weight: 700;
+        }
+    }
+    .modal-footer {
+        #submit-btn {
+            background-color: $primary-accent;
+        }
+    }
+    .new-compliments {
+        padding-top: 30px;
+        padding-bottom: 30px;
+        padding-left: 10px;
+        background-color: $secondary-accent;
+        .btn {
+            background-color: $primary-accent;
+        }
+    }
+    .compliments-cards {
+        padding-top: 30px;
+        padding-left: 10px;
+        .card {
+            padding: 10px;
+            box-shadow: 5px 10px 8px #888888;
+            background-image: linear-gradient($secondary-accent, white);
+            margin-bottom: 20px;
+            border-radius: 10px;
+            height: 400px;
+            h4 {
+                text-align: center;
+                font-weight: 700;
+            }
+            .card-img-top {
+                width: 125px;
+                height: 125px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 2px solid black;
+            }
+            .img-container {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .sender {
+                p {
+                    margin-bottom: 0;
+                }
+                .sender-container {
+                    display: flex;
+                    img {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

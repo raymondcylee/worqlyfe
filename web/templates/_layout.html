@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap" rel="stylesheet">
 
   {% assets "home_css" %}
   <link rel="stylesheet" href="{{ ASSET_URL }}">
@@ -30,9 +31,9 @@
 </head>
 
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">Worqlyfe</a>
+<div class="home">
+  <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">worqlyfe.</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -88,6 +89,11 @@
       });
     });
   </script>
+  <footer id="sticky-footer" class="py-4">
+    <div class="container text-center">
+      <small>Copyright &copy; Your Website</small>
+    </div>
+</div>
 </body>
 
 </html>

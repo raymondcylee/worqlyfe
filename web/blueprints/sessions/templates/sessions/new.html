@@ -1,5 +1,5 @@
 {% macro log_in_modal() %}
-
+<div class="signin">
 <div
   class="modal fade"
   id="signIn"
@@ -54,11 +54,12 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Close
         </button>
-        <button form="sign-in-form" type="submit" class="btn btn-primary">
+        <button id="submit-btn" form="sign-in-form" type="submit" class="btn btn-primary">
           Submit
         </button>
       </div>
     </div>
   </div>
+</div>
 </div>
 {% endmacro %}

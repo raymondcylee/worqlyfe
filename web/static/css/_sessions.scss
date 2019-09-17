@@ -1,0 +1,19 @@
+.signup {
+    background-color: $secondary-accent;
+    padding-top: 2em;
+}
+
+.signin {
+    .modal-header {
+        background-color: $secondary-accent;
+        color: $primary-accent;
+        h5 {
+            font-weight: 700;
+        }
+    }
+    .modal-footer {
+        #submit-btn {
+            background-color: $primary-accent;
+        }
+    }
+}
