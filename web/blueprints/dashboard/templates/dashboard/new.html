@@ -1,9 +1,7 @@
 {% extends "_layout.html" %} {% from "uploadImage.html" import upload_image %}
 {% block content %}
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-3">
+<div class="dashboard">
       <div class="personal-details" style="cursor:pointer">
         <img
           width="400px"
@@ -15,7 +13,7 @@
 
         {% if current_user.is_authenticated %} {{ upload_image(current_user) }}
         {% endif %}
-
+        <div class="personal-details-container">
         <h1>{{ current_user.name }}</h1>
         <ul>
           <li>
@@ -32,6 +30,7 @@
           </li>
         </ul>
       </div>
+    </div>
       <div class="compliments">
         <h1>
           <a
@@ -180,7 +179,7 @@
       {% endif %}
     </div>
   </div>
-</div>
+
 
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
