@@ -17,15 +17,15 @@ dashboard_blueprint = Blueprint('dashboard',
                                 template_folder='templates')
 
 
-@dashboard_blueprint.route('/<id>')
-def index(id):
+@dashboard_blueprint.route('/')
+def index():
     objective = Objective.select().where(Objective.user_id == current_user.id)
     compliments = Compliment.select()
     departments = User.select().where(User.department == current_user.department)
     all_users = User.select()
     compliments_received = Compliment.select().where(Compliment.recipient_id == current_user.id).count()
     compliments_given = Compliment.select().where(Compliment.sender_id == current_user.id).count()
-    user = User.get_or_none(User.id == id)
+    user = User.get_or_none(User.id == current_user.id)
     star = Medal.select().where(Medal.medal_caption == "Star").get()
     gold = Medal.select().where(Medal.medal_caption == "Gold").get()
     silver = Medal.select().where(Medal.medal_caption == "Silver").get()
