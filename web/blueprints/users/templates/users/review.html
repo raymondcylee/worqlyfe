@@ -24,8 +24,8 @@
                 <p class="card-text">{{ x.manager_notes }}</p>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
     <div>
         {% for x in executive_notes %}
         <div class="card" style="width: 18rem;">
@@ -35,8 +35,8 @@
                 <p class="card-text">{{ x.executive_notes }}</p>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 {% endif %}
 
