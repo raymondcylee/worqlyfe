@@ -47,6 +47,7 @@
             {% endif %}
         </div>
       </div>
+      {% if current_user.is_authenticated %}
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
@@ -56,6 +57,7 @@
         </button>
         {% include 'notification.html' %}
       </div>
+      {% endif %}
     </nav>
 
     <div class="d-flex toggled" id="wrapper">
