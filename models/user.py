@@ -32,3 +32,20 @@ class User(BaseModel, UserMixin):
     def incomplete_objective(self):
         from models.objective import Objective
         return [obs for obs in Objective.select().where((Objective.user_id == self.id) & (Objective.done == False)).order_by(Objective.id.asc())]
+
+    # @hybrid_property
+    # def all_requesters(self):
+    #     from models.feedback import Feedback
+    #     requesters_ids = [feedback.requester_id for feedback in current_user.requesters]
+    #     if requesters_ids:
+    #         return [user for user in User.select().where(User.id << requesters_ids)]
+    #     else:
+    #         return False
+
+    # @hybrid_property
+    # def all_receivers(self):
+    #     from models.feedback import Feedback
+    #     receivers_ids = [feedback.receiver_id for feedback in current_user.receivers]
+    #     return [user for user in User.select().where(User.id << receivers_ids)]
+
+    
