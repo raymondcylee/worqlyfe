@@ -1,17 +1,17 @@
 from __future__ import print_function
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from models.user import User
 from models.feedback import Feedback
 from models.replies import Replies
-import os
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from models.user import User
 from models.objective import Objective
 from models.compliment import Compliment
+from models.medal import Medal
+from models.notification import Notification
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-from models.medal import Medal
 from app import s3, app
+import os
 
 
 
@@ -55,6 +55,7 @@ def feedback(id):
     feedback_message = request.form.get('formMessage')
     
     Feedback(subject=feedback_subject,message=feedback_message,requester_id=current_user.id,receiver_id=recipient.id,answered=False).save()
+    Notification(notification_type=3, sender=current_user.id, recipient=recipient.id).save()
 
     message = Mail(
         from_email='worqlyfe@example.com',
