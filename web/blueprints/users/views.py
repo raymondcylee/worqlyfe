@@ -130,6 +130,7 @@ def create_manager_notes(id):
     review_date = request.form.get("review_date")
     Review(manager_notes=comments, executive_id=user.id,
            review_date=review_date).save()
+    Notification(notification_type=4, sender=current_user.id, recipient=user.id).save()
     return redirect(url_for('users.show_review', user=user, manager=manager, id=user.id))
 
 

@@ -14,80 +14,79 @@
 
   {% block header %}{% endblock %}
   {% from "sessions/new.html" import log_in_modal %}
-  
+
   {% assets "home_js" %}
   <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {% endassets %}
-  
+
   <title>{% block title %}{% endblock %}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<<<<<<< master
-  
-  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-=======
-  <title>Bootstrap 4 DateTimePicker</title>
->>>>>>> Notification feature added
+
   <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-</head>  
+</head>
 
 <body>
-<div class="home">
-  <nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" href="/">worqlyfe.</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        {% if current_user.is_authenticated %}
-        <a class="nav-item nav-link" href="" id="menu-toggle">Navigate</a>
-        <form id="sign-out-form" action="{{ url_for('users.destroy') }}" method="post">
-          <a onclick="document.getElementById('sign-out-form').submit()" style="cursor: pointer"
-            class="nav-item nav-link">Sign Out</a>
-          {% else %}
-          <a class="nav-item nav-link" href="/users/new">Sign Up</a>
-          <a class="nav-item nav-link" href="" data-toggle="modal" data-target="#signIn">Sign In</a>
-          {% endif %}
+  <div class="home">
+    <nav class="navbar navbar-expand-lg">
+      <a class="navbar-brand" href="/">worqlyfe.</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          {% if current_user.is_authenticated %}
+          <a class="nav-item nav-link" href="" id="menu-toggle">Navigate</a>
+          <form id="sign-out-form" action="{{ url_for('users.destroy') }}" method="post">
+            <a onclick="document.getElementById('sign-out-form').submit()" style="cursor: pointer"
+              class="nav-item nav-link">Sign Out</a>
+            {% else %}
+            <a class="nav-item nav-link" href="/users/new">Sign Up</a>
+            <a class="nav-item nav-link" href="" data-toggle="modal" data-target="#signIn">Sign In</a>
+            {% endif %}
+        </div>
       </div>
-    </div>
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
           Notification
-          <span id="unread-notification" style="font-size:100%; background-color: red">{{current_user.unread_notification | length }}</span>
+          <span id="unread-notification"
+            style="font-size:100%; background-color: red">{{current_user.unread_notification | length }}</span>
         </button>
         {% include 'notification.html' %}
-    </div>
-  </nav>
-
-  <div class="d-flex toggled" id="wrapper">
-    {% if current_user.is_authenticated %}
-    <!-- Sidebar -->
-    <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">Navigate</div>
-      <div class="list-group list-group-flush">
-        <a href="/dashboard/" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-        <a href="/users/feed" class="list-group-item list-group-item-action bg-light">Feed</a>
-        <a href="/users/{{current_user.name}}" class="list-group-item list-group-item-action bg-light">Objectives</a>
-        <a href="/users/review/{{current_user.id}}" class="list-group-item list-group-item-action bg-light">Reviews</a>
-        <a href="/compliments/new" class="list-group-item list-group-item-action bg-light">Compliments</a>
       </div>
-    </div>
-    {% endif %}
+    </nav>
 
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-      {{ log_in_modal() }}
-      {% block content %}
-      {% endblock %}
+    <div class="d-flex toggled" id="wrapper">
+      {% if current_user.is_authenticated %}
+      <!-- Sidebar -->
+      <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Navigate</div>
+        <div class="list-group list-group-flush">
+          <a href="/dashboard/" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+          <a href="/users/feed" class="list-group-item list-group-item-action bg-light">Feed</a>
+          <a href="/users/{{current_user.name}}" class="list-group-item list-group-item-action bg-light">Objectives</a>
+          <a href="/users/review/{{current_user.id}}"
+            class="list-group-item list-group-item-action bg-light">Reviews</a>
+          <a href="/compliments/new" class="list-group-item list-group-item-action bg-light">Compliments</a>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        {{ log_in_modal() }}
+        {% block content %}
+        {% endblock %}
+      </div>
     </div>
   </div>
 
   <footer id="sticky-footer" class="py-4">
-      <div class="container text-center">
-        <small>Copyright &copy; Your Website</small>
-      </div>
+    <div class="container text-center">
+      <small>Copyright &copy; Your Website</small>
+    </div>
   </footer>
 
   <script>
@@ -98,14 +97,14 @@
       });
 
 
-      $(".dropdown").click(function(e){
+      $(".dropdown").click(function (e) {
         $.ajax({
-          url:`/users/notification`,
+          url: `/users/notification`,
           method: "POST",
-          success: function(response) {
+          success: function (response) {
             console.log(response)
           },
-          complete: function() {
+          complete: function () {
             $("#unread-notification").html("0")
           }
         })
@@ -113,7 +112,7 @@
     });
   </script>
 
-</div>
+  </div>
 </body>
 
 </html>

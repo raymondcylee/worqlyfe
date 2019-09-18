@@ -7,7 +7,7 @@ from models.replies import Replies
 from models.objective import Objective
 from models.compliment import Compliment
 from models.medal import Medal
-from models.user import User
+from models.notification import Notification
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from app import s3, app
@@ -55,6 +55,7 @@ def feedback(id):
     feedback_message = request.form.get('formMessage')
     
     Feedback(subject=feedback_subject,message=feedback_message,requester_id=current_user.id,receiver_id=recipient.id,answered=False).save()
+    Notification(notification_type=3, sender=current_user.id, recipient=recipient.id).save()
 
     message = Mail(
         from_email='worqlyfe@example.com',
