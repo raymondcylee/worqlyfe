@@ -15,6 +15,13 @@ class User(BaseModel, UserMixin):
     is_executive = pw.BooleanField(null=True)
     manager_id = pw.IntegerField(null=True)
 
+
+    @hybrid_property
+    def my_replies(self):
+        from models.replies import Replies
+        from models.feedback import Feedback
+        return Replies.select().join(Feedback).where(Feedback.requester_id == self.id)
+
     @hybrid_property
     def profile_image(self):
         from app import app

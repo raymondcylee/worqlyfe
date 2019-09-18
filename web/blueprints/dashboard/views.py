@@ -29,6 +29,9 @@ def index():
     compliments_received = Compliment.select().where(Compliment.recipient_id == current_user.id).count()
     compliments_given = Compliment.select().where(Compliment.sender_id == current_user.id).count()
     user = User.get_or_none(User.id == current_user.id)
+
+    rep = Feedback.select().where(Feedback.requester_id == current_user.id)
+
     feedback_exist = Feedback.select().where((Feedback.receiver_id == current_user.id) & (Feedback.answered == False))
     star = Medal.select().where(Medal.medal_caption == "Star").get()
     gold = Medal.select().where(Medal.medal_caption == "Gold").get()
@@ -43,7 +46,7 @@ def index():
         progress = 0
     progress_percentage = "{:.0%}".format(progress)
 
-    return render_template('dashboard/new.html', objectives=objective, compliments=compliments, departments=departments ,all_users=all_users, user=user, progress_percentage=progress_percentage, progress=progress, compliments_received=compliments_received, compliments_given=compliments_given, gold=gold, silver=silver, bronze=bronze, star=star, feedback_exist=feedback_exist)
+    return render_template('dashboard/new.html', objectives=objective, compliments=compliments, departments=departments ,all_users=all_users, user=user, progress_percentage=progress_percentage, progress=progress, compliments_received=compliments_received, compliments_given=compliments_given, gold=gold, silver=silver, bronze=bronze, star=star, feedback_exist=feedback_exist, rep=rep)
 
 
 

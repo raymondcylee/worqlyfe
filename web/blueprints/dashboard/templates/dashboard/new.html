@@ -2,303 +2,324 @@
 
 
 <div class="dashboard">
-  <div class="personal-details" style="cursor:pointer">
-    <img width="400px" src="{{ current_user.profile_image }}" alt="profile_picture" data-toggle="modal"
-      data-target="#uploadImageModal" />
+    <div class="personal-details" style="cursor:pointer">
+        <img width="400px" src="{{ current_user.profile_image }}" alt="profile_picture" data-toggle="modal"
+            data-target="#uploadImageModal" />
 
-    {% if current_user.is_authenticated %} {% from "uploadImage.html" import
+        {% if current_user.is_authenticated %} {% from "uploadImage.html" import
         upload_image %}
-    {{ upload_image(current_user) }}
-    {% endif %}
-    <div class="personal-details-container">
-      <h1><a style="text-decoration: none"
-          href="{{url_for('users.show',username=current_user.name)}}">{{ current_user.name }}</a></h1>
-      <ul>
-        <li>
-          <span style="font-weight: bold;">Department:</span>
-          {{ current_user.department }}
-        </li>
-        <li>
-          <span style="font-weight: bold;">Position:</span>
-          {{ current_user.role }}
-        </li>
-        <li>
-          <span style="font-weight: bold;">Contact:</span>
-          {{ current_user.email }}
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="compliments">
-    <h1>
-      <a style="text-decoration: none" href="{{ url_for('compliments.new') }}">My Compliments</a>
-    </h1>
-
-    <div class="medals">
-      <div>Objectives completion: {{ progress_percentage }}
-        {% if progress == 1.0 %}
-        <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
-
-        {% elif progress < 0.99 and progress >=0.5 %}
-        <img src="{{ silver.medal }}" style="width: 50px; height:50px">
-
-        {% elif progress >0 and progress <=0.5 %}
-        <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
-
-        {% else %}
-        No medal
-
+        {{ upload_image(current_user) }}
         {% endif %}
-      </div>
-
-      <div>Compliments Received: {{ compliments_received }}
-        {% if compliments_received >= 10 %}
-        <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
-
-        {% elif compliments_received < 10 and compliments_received >=5 %}
-        <img src="{{ silver.medal }}" style="width: 50px; height:50px">
-
-        {% elif compliments_received < 5 and compliments_received > 0 %}
-        <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
-
-        {% else %}
-        No medal
-
-        {% endif %}
-      </div>
-
-      <div> Compliments Given: {{ compliments_given }}
-        {% if compliments_given >= 10 %}
-        <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
-
-        {% elif compliments_given < 10 and compliments_given >=5 %}
-        <img src="{{ silver.medal }}" style="width: 50px; height:50px">
-
-        {% elif compliments_given < 5 and compliments_given > 0 %}
-        <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
-
-        {% else %}
-        No medal
-
-        {% endif %}
-      </div>
-
-      <div>
-        {% if progress == 1.0 and compliments_received >= 10 and compliments_given >= 10 %}
-        You are a star!
-        <img src="{{ star.medal }}" style="width: 50px; height: 50px">
-        {% endif %}
-      </div>
-    </div>
-    {% if current_user.is_manager %}
-    <div class="team">
-      <h1>Project Team:</h1>
-      <ul>
-        <h3>Compliments Given:</h3>
-        {% for compliment in compliments %} {% if compliment.sender_id ==
-          current_user.id %}
-        <li>{{ compliment.compliment }}</li>
-        <p style="font-family: monospace;">
-          -<span style="font-weight: bold;">For</span>
-          {{ compliment.recipient.name }}
-        </p>
-        {% endif %} {% endfor %}
-
-        <h3>Compliments Received:</h3>
-        {% for compliment in compliments %} {% if compliment.recipient_id ==
-          current_user.id %}
-        <li>{{ compliment.compliment }}</li>
-        <p style="font-family: monospace;">
-          -<span style="font-weight: bold;">From</span>
-          {{ compliment.sender.name }}
-        </p>
-        {% endif %} {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
-  </div>
-  <div class="col-md-6">
-    <div class="objectives">
-      <h1>
-        <a style="text-decoration: none" href="{{ url_for('objectives.show') }}">Objectives</a>
-      </h1>
-      <ul>
-        {% for objective in objectives %}
-        <li>{{ objective.objective }}</li>
-        {% endfor %}
-      </ul>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedbackForm">
-        Request Feedback
-      </button>
-      <div class="modal fade" id="feedbackForm" tabindex="-1" role="dialog" aria-labelledby="feedbackForm"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="reply-modalTitle">
-                Request Feedback Form
-              </h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form id="request-feedback-form">
-                <div class="form-group">
-                  <label for="sel1">Select recipient</label>
-                  <select class="form-control" id="sel1">
-                    {% for user in all_users %} {% if not user == current_user %}
-                    <option value="{{ user.id }}">{{ user.name }}, {{ user.role }}</option>
-                    {% endif %} {% endfor %}
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="formSubject">Subject</label>
-                  <input name="formSubject" type="text" class="form-control" id="formSubject"
-                    placeholder="Enter subject..." />
-                </div>
-                <div class="form-group">
-                  <label for="formMessage">Message</label>
-                  <textarea name="formMessage" class="form-control" id="formMessage" rows="2"></textarea>
-                </div>
-              </form>
-              <div class="modal-footer">
-                <button id="close-modal-btn" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button form="request-feedback-form" type="submit" class="btn btn-primary feedbackbtn">Request
-                  Feedback</button>
-              </div>
-            </div>
-          </div>
+        <div class="personal-details-container">
+            <h1><a style="text-decoration: none"
+                    href="{{url_for('users.show',username=current_user.name)}}">{{ current_user.name }}</a></h1>
+            <ul>
+                <li>
+                    <span style="font-weight: bold;">Department:</span>
+                    {{ current_user.department }}
+                </li>
+                <li>
+                    <span style="font-weight: bold;">Position:</span>
+                    {{ current_user.role }}
+                </li>
+                <li>
+                    <span style="font-weight: bold;">Contact:</span>
+                    {{ current_user.email }}
+                </li>
+            </ul>
         </div>
-      </div>
     </div>
-    <div class="calendar">
-      <iframe
-        src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKuala_Lumpur&amp;src=aGFja2luZ3Byb2R1Y3Rpdml0eUBnbWFpbC5jb20&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4ubWFsYXlzaWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23039BE5&amp;color=%2333B679&amp;color=%230B8043&amp;title=Worqlyfe"
-        style="border-width:0" width="600" height="400" frameborder="0" scrolling="no"></iframe>
-      <div class="col-md-3">
-        {% if current_user.is_manager %}
+    <div class="compliments">
+        <h1>
+            <a style="text-decoration: none" href="{{ url_for('compliments.new') }}">My Compliments</a>
+        </h1>
+
+        <div class="medals">
+            <div>Objectives completion: {{ progress_percentage }}
+                {% if progress == 1.0 %}
+                <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+
+                {% elif progress < 0.99 and progress >=0.5 %}
+                <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+
+                {% elif progress >0 and progress <=0.5 %}
+                <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+
+                {% else %}
+                No medal
+
+                {% endif %}
+            </div>
+
+            <div>Compliments Received: {{ compliments_received }}
+                {% if compliments_received >= 10 %}
+                <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+
+                {% elif compliments_received < 10 and compliments_received >=5 %}
+                <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+
+                {% elif compliments_received < 5 and compliments_received > 0 %}
+                <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+
+                {% else %}
+                No medal
+
+                {% endif %}
+            </div>
+
+            <div> Compliments Given: {{ compliments_given }}
+                {% if compliments_given >= 10 %}
+                <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+
+                {% elif compliments_given < 10 and compliments_given >=5 %}
+                <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+
+                {% elif compliments_given < 5 and compliments_given > 0 %}
+                <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+
+                {% else %}
+                No medal
+
+                {% endif %}
+            </div>
+            <div>
+                {% if progress == 1.0 and compliments_received >= 10 and compliments_given >= 10 %}
+                You are a star!
+                <img src="{{ star.medal }}" style="width: 50px; height: 50px">
+                {% endif %}
+            </div>
+
+            <div>
+                {% if progress == 1.0 and compliments_received >= 10 and compliments_given >= 10 %}
+                You are a star!
+                <img src="{{ star.medal }}" style="width: 50px; height: 50px">
+                {% endif %}
+            </div>
+        </div>
         <div class="team">
-          <h1>Project Team:</h1>
-          <ul>
-            {% for department in departments %}
-            {% if not department.is_manager %}
-            <li>{{department.name}}, {{department.role}}</li>
-            {% endif %}
-            {% endfor %}
-          </ul>
+            <ul>
+                <h3>Compliments Given:</h3>
+                {% for compliment in compliments %} {% if compliment.sender_id ==
+          current_user.id %}
+                <li>{{ compliment.compliment }}</li>
+                <p style="font-family: monospace;">
+                    -<span style="font-weight: bold;">For</span>
+                    {{ compliment.recipient.name }}
+                </p>
+                {% endif %} {% endfor %}
+
+                <h3>Compliments Received:</h3>
+                {% for compliment in compliments %} {% if compliment.recipient_id ==
+          current_user.id %}
+                <li>{{ compliment.compliment }}</li>
+                <p style="font-family: monospace;">
+                    -<span style="font-weight: bold;">From</span>
+                    {{ compliment.sender.name }}
+                </p>
+                {% endif %} {% endfor %}
+            </ul>
         </div>
-        {% endif %}
-        <div class="feedback">
-          <h1>Feedback Section</h1>
-          {% if not feedback_exist %}
-          <h5>No Feedback Message</h5>
-          {% endif %}
-          <ul>
-            {% for subs in current_user.requesters %}
-            {% if not subs.answered %}
-            <li id="list-{{subs.id}}"><button class="btn btn-light subs-btn" className="subs-btn"
-                id="subject-{{subs.id}}" data-toggle="modal" data-target="#reply-modal-{{subs.id}}"
-                value="{{subs.id}}">{{ subs.subject }}</button></li>
-            <div class="modal fade" id="reply-modal-{{subs.id}}" tabindex="-1" role="dialog"
-              aria-labelledby="reply-modalTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="subject-title">{{subs.subject}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <label for="subject-message">Message:</label>
-                    <h5 id="subject-message">{{ subs.message }}</h5>
-                    <hr>
-                    <form class="feedback-forms" id="{{subs.id}}">
-                      <input type="hidden" name="subsId" value="{{subs.id}}" />
-                      <div class="form-group">
-                        <label for="formReply">Your reply:</label>
-                        <textarea name="formReply" class="form-control" rows="2"></textarea>
-                      </div>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button form="{{subs.id}}" type="submit" class="btn btn-primary send-btn">Send
-                      Feedback</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {% endif %}
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
     </div>
-  </div>
+    <div class="col-md-6">
+        <div class="objectives">
+            <h1>
+                <a style="text-decoration: none" href="{{ url_for('objectives.show') }}">Objectives</a>
+            </h1>
+            <ul>
+                {% for objective in objectives %}
+                <li>{{ objective.objective }}</li>
+                {% endfor %}
+            </ul>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedbackForm">
+                Request Feedback
+            </button>
+            <div class="modal fade" id="feedbackForm" tabindex="-1" role="dialog" aria-labelledby="feedbackForm"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="reply-modalTitle">
+                                Request Feedback Form
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="request-feedback-form">
+                                <div class="form-group">
+                                    <label for="sel1">Select recipient</label>
+                                    <select class="form-control" id="sel1">
+                                        {% for user in all_users %} {% if not user == current_user %}
+                                        <option value="{{ user.id }}">{{ user.name }}, {{ user.role }}</option>
+                                        {% endif %} {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formSubject">Subject</label>
+                                    <input name="formSubject" type="text" class="form-control" id="formSubject"
+                                        placeholder="Enter subject..." />
+                                </div>
+                                <div class="form-group">
+                                    <label for="formMessage">Message</label>
+                                    <textarea name="formMessage" class="form-control" id="formMessage"
+                                        rows="2"></textarea>
+                                </div>
+                            </form>
+                            <div class="modal-footer">
+                                <button id="close-modal-btn" type="button" class="btn btn-secondary"
+                                    data-dismiss="modal">Close</button>
+                                <button form="request-feedback-form" type="submit"
+                                    class="btn btn-primary feedbackbtn">Request
+                                    Feedback</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="calendar">
+            <iframe
+                src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKuala_Lumpur&amp;src=aGFja2luZ3Byb2R1Y3Rpdml0eUBnbWFpbC5jb20&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4ubWFsYXlzaWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23039BE5&amp;color=%2333B679&amp;color=%230B8043&amp;title=Worqlyfe"
+                style="border-width:0" width="600" height="400" frameborder="0" scrolling="no"></iframe>
+            <div class="col-md-3">
+                {% if current_user.is_manager %}
+                <div class="team">
+                    <h1>Project Team:</h1>
+                    <ul>
+                        {% for person in departments %}
+                        {% if not person.is_manager %}
+                        <li><a href="{{ url_for('users.show',username=person.name)}}">{{person.name}}</a>,
+                            {{person.role}}</li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                <div class="feedback">
+                    <h1>Feedback Section</h1>
+                    <div class="feedback-replies">
+                        <h3>Feedback replies:</h3>
+                        <ul>
+                            {% for r in current_user.my_replies %}
+                            <li>{{ r.reply_message }} from subject {{r.feedback_replied.subject}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="feedback-received">
+                        <h3>Feedback received:</h3>
+                        {% if not feedback_exist %}
+                        <h5>No feedback message received</h5>
+                        {% endif %}
+                        <ul>
+                            {% for subs in current_user.requesters %}
+                            {% if not subs.answered %}
+                            <li id="list-{{subs.id}}"><button class="btn btn-light subs-btn" className="subs-btn"
+                                    id="subject-{{subs.id}}" data-toggle="modal" data-target="#reply-modal-{{subs.id}}"
+                                    value="{{subs.id}}">{{ subs.subject }}</button></li>
+                            <div class="modal fade" id="reply-modal-{{subs.id}}" tabindex="-1" role="dialog"
+                                aria-labelledby="reply-modalTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="subject-title">{{subs.subject}}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <label for="subject-message">Message:</label>
+                                            <h5 id="subject-message">{{ subs.message }}</h5>
+                                            <hr>
+                                            <form class="feedback-forms" id="{{subs.id}}">
+                                                <input type="hidden" name="subsId" value="{{subs.id}}" />
+                                                <div class="form-group">
+                                                    <label for="formReply">Your reply:</label>
+                                                    <textarea name="formReply" class="form-control" rows="2"></textarea>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <button form="{{subs.id}}" type="submit"
+                                                class="btn btn-primary send-btn">Send
+                                                Feedback</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
-  <script>
+<script>
 
     $('#request-feedback-form').on('submit', function (e) {
-      e.preventDefault()
-      const id = $('#sel1').val()
-      $.ajax({
-        url: `/dashboard/feedback/${id}`,
-        method: "POST",
-        data: $(this).serialize(),
-        success: function (resp) {
-          $("#feedbackForm").modal('hide')
-          // $('.modal-backdrop').remove()
-        }
-      })
+        e.preventDefault()
+        const id = $('#sel1').val()
+        $.ajax({
+            url: `/dashboard/feedback/${id}`,
+            method: "POST",
+            data: $(this).serialize(),
+            success: function (resp) {
+                $("#feedbackForm").modal('hide')
+                // $('.modal-backdrop').remove()
+            }
+        })
     })
 
     $("input[type='file']").on("change", function (event) {
-      let url = URL.createObjectURL(event.target.files[0]);
-      console.log("url: ", url);
-      $("#preview_image").attr("src", url);
+        let url = URL.createObjectURL(event.target.files[0]);
+        console.log("url: ", url);
+        $("#preview_image").attr("src", url);
     });
 
     $('.subs-btn').on('click', function (e) {
-      const id = e.target.id.split('-')[1]
-      $('#subject-title').html($(`#subject-${id}`).html())
-      $.ajax({
-        url: `/dashboard/message/${id}`,
-        method: "GET",
-        success: function (resp) {
-          $('#subject-message').html(resp)
-        }
-      })
+        const id = e.target.id.split('-')[1]
+        $('#subject-title').html($(`#subject-${id}`).html())
+        $.ajax({
+            url: `/dashboard/message/${id}`,
+            method: "GET",
+            success: function (resp) {
+                $('#subject-message').html(resp)
+            }
+        })
     })
 
     $('.feedback-forms').on('submit', function (e) {
-      e.preventDefault()
-      const formId = $(this).attr('id')
-      $.ajax({
-        url: `/dashboard/replies/${formId}`,
-        method: 'post',
-        data: $(this).serialize(),
-        success: function (resp) {
-          console.log(resp)
-          $(`#reply-modal-${formId}`).modal('hide')
-          $(`#list-${formId}`).remove()
-          Toastify({
-            text: "Feedback successfully answered.",
-            duration: 3000,
-            close: true,
-            gravity: "top", // `top` or `bottom`
-            position: 'right', // `left`, `center` or `right`
-            backgroundColor: "linear-gradient(to right, #6b85e9, #a45be5)",
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-          }).showToast()
-          if (!resp.any_feedback_left) {
-            $('.feedback').append('<h5>No Feedback Message</h5>')
-          }
-        }
-      })
+        e.preventDefault()
+        const formId = $(this).attr('id')
+        $.ajax({
+            url: `/dashboard/replies/${formId}`,
+            method: 'post',
+            data: $(this).serialize(),
+            success: function (resp) {
+                console.log(resp)
+                $(`#reply-modal-${formId}`).modal('hide')
+                $(`#list-${formId}`).remove()
+                Toastify({
+                    text: "Feedback successfully answered.",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: 'right', // `left`, `center` or `right`
+                    backgroundColor: "linear-gradient(to right, #6b85e9, #a45be5)",
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                }).showToast()
+                if (!resp.any_feedback_left) {
+                    $('.feedback').append('<h5>No Feedback Message</h5>')
+                }
+            }
+        })
     })
 
     // function replyFunc(e) {
@@ -334,6 +355,6 @@
     //         }
     //     })
     // })
-  </script>
+</script>
 
-  {% endblock %}
+{% endblock %}
