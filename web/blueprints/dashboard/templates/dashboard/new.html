@@ -1,6 +1,7 @@
 {% extends "_layout.html" %} {% from "uploadImage.html" import upload_image %}
 {% block content %}
 
+
 <div class="dashboard">
     <div class="personal-details" style="cursor:pointer">
         <img width="400px" src="{{ current_user.profile_image }}" alt="profile_picture" data-toggle="modal"
@@ -9,7 +10,8 @@
         {% if current_user.is_authenticated %} {{ upload_image(current_user) }}
         {% endif %}
         <div class="personal-details-container">
-            <h1>{{ current_user.name }}</h1>
+            <h1><a style="text-decoration: none"
+                href="{{url_for('users.show',username=current_user.name)}}">{{ current_user.name }}</a></h1>
             <ul>
                 <li>
                     <span style="font-weight: bold;">Department:</span>
@@ -132,7 +134,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">
+                            <h5 class="modal-title" id="reply-modalTitle">
                                 Request Feedback Form
                             </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -140,33 +142,30 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form id="request-feedback-form">
                                 <div class="form-group">
                                     <label for="sel1">Select recipient</label>
                                     <select class="form-control" id="sel1">
-                                        {% for user in all_users %} {% if not user == current_user
-                      %}
+                                        {% for user in all_users %} {% if not user == current_user %}
                                         <option value="{{ user.id }}">{{ user.name }}, {{ user.role }}</option>
                                         {% endif %} {% endfor %}
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="formSubject">Subject</label>
-                                    <input type="text" class="form-control" id="formSubject"
+                                    <input name="formSubject" type="text" class="form-control" id="formSubject"
                                         placeholder="Enter subject..." />
                                 </div>
                                 <div class="form-group">
                                     <label for="formMessage">Message</label>
-                                    <textarea class="form-control" id="formMessage" rows="2"></textarea>
+                                    <textarea name="formMessage" class="form-control" id="formMessage" rows="2"></textarea>
                                 </div>
                             </form>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                    Close
-                                </button>
-                                <button type="button" class="btn btn-primary feedbackbtn">
-                                    Request Feedback
-                                </button>
+                                <button id="close-modal-btn" type="button" class="btn btn-secondary"
+                                    data-dismiss="modal">Close</button>
+                                <button form="request-feedback-form" type="submit"
+                                    class="btn btn-primary feedbackbtn">Request Feedback</button>
                             </div>
                         </div>
                     </div>
@@ -177,43 +176,164 @@
             <iframe
                 src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKuala_Lumpur&amp;src=aGFja2luZ3Byb2R1Y3Rpdml0eUBnbWFpbC5jb20&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4ubWFsYXlzaWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23039BE5&amp;color=%2333B679&amp;color=%230B8043&amp;title=Worqlyfe"
                 style="border-width:0" width="600" height="400" frameborder="0" scrolling="no"></iframe>
+        <div class="col-md-3">
+            {% if current_user.is_manager %}
+            <div class="team">
+                <h1>Project Team:</h1>
+                <ul>
+                    {% for department in departments %}
+                    {% if not department.is_manager %}
+                    <li>{{department.name}}, {{department.role}}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <div class="feedback">
+                <h1>Feedback Section</h1>
+                {% if not feedback_exist %}
+                <h5>No Feedback Message</h5>
+                {% endif %}
+                <ul>
+                    {% for subs in current_user.requesters %}
+                    {% if not subs.answered %}
+                    <li id="list-{{subs.id}}"><button class="btn btn-light subs-btn" className="subs-btn"
+                            id="subject-{{subs.id}}" data-toggle="modal" data-target="#reply-modal-{{subs.id}}"
+                            value="{{subs.id}}">{{ subs.subject }}</button></li>
+                    <div class="modal fade" id="reply-modal-{{subs.id}}" tabindex="-1" role="dialog"
+                        aria-labelledby="reply-modalTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="subject-title">{{subs.subject}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label for="subject-message">Message:</label>
+                                    <h5 id="subject-message">{{ subs.message }}</h5>
+                                    <hr>
+                                    <form class="feedback-forms" id="{{subs.id}}">
+                                        <input type="hidden" name="subsId" value="{{subs.id}}" />
+                                        <div class="form-group">
+                                            <label for="formReply">Your reply:</label>
+                                            <textarea name="formReply" class="form-control" rows="2"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button form="{{subs.id}}" type="submit" class="btn btn-primary send-btn">Send
+                                        Feedback</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-    </div>
-    <div class="col-md-3">
-        {% if current_user.is_manager %}
-        <div class="team">
-            <h1>Project Team:</h1>
-            <ul>
-                {% for department in departments %} {% if not department.is_manager %}
-                <li>{{ department.name }}, {{ department.role }}</li>
-                {% endif %} {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
     </div>
 </div>
 
 
 
-
 <script>
-    $(".feedbackbtn").on("click", function (e) {
-        id = $("#sel1").val();
+
+    $('#request-feedback-form').on('submit', function (e) {
+        e.preventDefault()
+        const id = $('#sel1').val()
         $.ajax({
             url: `/dashboard/feedback/${id}`,
             method: "POST",
+            data: $(this).serialize(),
             success: function (resp) {
-                $("#feedbackForm").modal("hide");
-                console.log(resp);
+                $("#feedbackForm").modal('hide')
+                // $('.modal-backdrop').remove()
             }
-        });
-    });
+        })
+    })
 
     $("input[type='file']").on("change", function (event) {
         let url = URL.createObjectURL(event.target.files[0]);
         console.log("url: ", url);
         $("#preview_image").attr("src", url);
     });
+
+    $('.subs-btn').on('click', function (e) {
+        const id = e.target.id.split('-')[1]
+        $('#subject-title').html($(`#subject-${id}`).html())
+        $.ajax({
+            url: `/dashboard/message/${id}`,
+            method: "GET",
+            success: function (resp) {
+                $('#subject-message').html(resp)
+            }
+        })
+    })
+
+    $('.feedback-forms').on('submit', function (e) {
+        e.preventDefault()
+        const formId = $(this).attr('id')
+        $.ajax({
+            url: `/dashboard/replies/${formId}`,
+            method: 'post',
+            data: $(this).serialize(),
+            success: function (resp) {
+                console.log(resp)
+                $(`#reply-modal-${formId}`).modal('hide')
+                $(`#list-${formId}`).remove()
+                Toastify({
+                    text: "Feedback successfully answered.",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: 'right', // `left`, `center` or `right`
+                    backgroundColor: "linear-gradient(to right, #6b85e9, #a45be5)",
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                }).showToast()
+                if (!resp.any_feedback_left) {
+                    $('.feedback').append('<h5>No Feedback Message</h5>')
+                }
+            }
+        })
+    })
+
+    // function replyFunc(e) {
+    //     e.preventDefault()
+    //     const id = e.target.children[0].value
+    //     debugger
+    //     // console.log(subForm)
+    //     $.ajax({
+    //         url: `/dashboard/replies/${id}`,
+    //         method: "POST",
+    //         data: $(this).serialize(),
+    //         success: function (resp) {
+    //             $('#reply-modal').modal('hide')
+    //         }
+    //     })
+    // }
+
+    // using contentType method, inefficient for large forms
+    // $('#request-feedback-form').on('submit', function(e) {
+    //     e.preventDefault()
+    //     const id = $('#sel1').val()
+    //     $.ajax({
+    //         url: `/dashboard/feedback/${id}`,
+    //         method: "POST",
+    //         // contentType: 'application/json', <-- default to form
+    //         // data: JSON.stringify({
+    //         //     htaever: 'asdfasdf',
+    //         //     formSubject: $('formMessage').val()
+    //         // })
+    //         success: function (resp) {
+    //             $("#feedbackForm").modal('hide');
+    //             console.log(resp);
+    //         }
+    //     })
+    // })
 </script>
 
 {% endblock %}
