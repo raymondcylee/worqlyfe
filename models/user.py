@@ -52,3 +52,8 @@ class User(BaseModel, UserMixin):
     def unread_notification(self):
         from models.notification import Notification
         return [notifications for notifications in Notification.select().where((Notification.recipient_id == self.id) & (Notification.read == False))]
+
+    @hybrid_property
+    def sorted_notification(self):
+        from models.notification import Notification
+        return [notifications for notifications in Notification.select().where((Notification.recipient_id == self.id)).order_by(Notification.id.desc()).limit(5)]
