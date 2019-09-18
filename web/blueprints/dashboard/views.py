@@ -9,6 +9,7 @@ from models.compliment import Compliment
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from models.medal import Medal
+from app import s3, app
 
 
 
@@ -69,6 +70,7 @@ def feedback(id):
 @dashboard_blueprint.route('/upload', methods=['POST'])
 def upload():
     file = request.files.get('user_image')
+    
     try:
 
         s3.upload_fileobj(
