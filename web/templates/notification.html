@@ -1,41 +1,34 @@
-<div
-  class="dropdown-menu"
-  aria-labelledby="dropdownMenuButton"
-  style="background-color: Black"
->
-  {% for notification in current_user.sorted_notification %} {% if
-  notification.notification_type == 1 and notification.read == False %}
-  <a class="dropdown-item back" href="#" style="background-color: green"
-    >{{ notification.sender.name }} set a new objective for you</a
-  >
-  {% elif notification.notification_type == 2 and notification.read == False%}
-  <a class="dropdown-item" href="#" style="background-color: green"
-    >{{ notification.sender.name }} sent you a compliment</a
-  >
-  {% elif notification.notification_type == 3 and notification.read == False %}
-  <a class="dropdown-item" href="#" style="background-color: green"
-    >{{ notification.sender.name }} sent you a feedback</a
-  >
-  {% elif notification.notification_type == 4 and notification.read == False %}
-  <a class="dropdown-item" href="#" style="background-color: green"
-    >{{ notification.sender.name }} sent you a comment</a
-  >
+<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: Black">
+    {% if not current_user.sorted_notification  %}
+    <a class="dropdown-item back" href="#">No notification at this moment</a>
+    {% else %}
+    {% for notification in current_user.sorted_notification %}
+   
 
-  {% elif notification.notification_type == 1 and notification.read == True %}
-  <a class="dropdown-item back" href="#" style="background-color: blue"
-    >{{ notification.sender.name }} set a new objective for you</a
-  >
-  {% elif notification.notification_type == 2 and notification.read == True %}
-  <a class="dropdown-item" href="#" style="background-color: blue"
-    >{{ notification.sender.name }} sent you a compliment</a
-  >
-  {% elif notification.notification_type == 3 and notification.read == True %}
-  <a class="dropdown-item" href="#" style="background-color: blue"
-    >{{ notification.sender.name }} sent you a feedback</a
-  >
-  {% elif notification.notification_type == 4 and notification.read == True %}
-  <a class="dropdown-item" href="#" style="background-color: blue"
-    >{{ notification.sender.name }} sent you a comment</a
-  >
-  {% endif %} {% endfor %}
+    {% if notification.notification_type == 1 and notification.read == False %}
+    <a class="dropdown-item back" href="#" style="background-color: green">{{ notification.sender.name }} set a new
+        objective for you</a>
+    {% elif notification.notification_type == 2 and notification.read == False%}
+    <a class="dropdown-item" href="#" style="background-color: green">{{ notification.sender.name }} sent you a
+        compliment</a>
+    {% elif notification.notification_type == 3 and notification.read == False %}
+    <a class="dropdown-item" href="#" style="background-color: green">{{ notification.sender.name }} sent you a
+        feedback</a>
+    {% elif notification.notification_type == 4 and notification.read == False %}
+    <a class="dropdown-item" href="#" style="background-color: green">{{ notification.sender.name }} sent you a
+        comment</a>
+
+    {% elif notification.notification_type == 1 and notification.read == True %}
+    <a class="dropdown-item back" href="#" style="background-color: blue">{{ notification.sender.name }} set a new
+        objective for you</a>
+    {% elif notification.notification_type == 2 and notification.read == True %}
+    <a class="dropdown-item" href="#" style="background-color: blue">{{ notification.sender.name }} sent you a
+        compliment</a>
+    {% elif notification.notification_type == 3 and notification.read == True %}
+    <a class="dropdown-item" href="#" style="background-color: blue">{{ notification.sender.name }} sent you a
+        feedback</a>
+    {% elif notification.notification_type == 4 and notification.read == True %}
+    <a class="dropdown-item" href="#" style="background-color: blue">{{ notification.sender.name }} sent you a
+        comment</a>
+    {% endif %} {% endfor %} {% endif %}
 </div>
