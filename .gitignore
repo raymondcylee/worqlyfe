@@ -4,3 +4,4 @@
 *.env
 web/static/.webassets-cache
 web/static/gen
+config
