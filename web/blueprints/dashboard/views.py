@@ -60,9 +60,13 @@ def feedback(id):
 
     message = Mail(
         from_email='worqlyfe@example.com',
-        to_emails=recipient.email,
-        subject='Feedback Form Notification',
-        html_content=current_user.name + ' sent you a feedback form.')
+        to_emails='hackingproductivity@gmail.com',
+        subject=feedback_subject,
+        html_content=f'{feedback_message} <br /> <br /> From:{current_user.name}')
+
+    # The "to_emails" field above is hardcoded to "hackingproductivity@gmail.com"
+    # Please update it to "recipient.email" when the app is pushed to production. 
+
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)
