@@ -5,11 +5,11 @@
   <div class="personal-details">
     <img width="400" height="400" src="{{ user.profile_image }}" alt="profile_picture" />
     <div>
-        Objectives completion:
-        <div class="progress" style="width: 25rem">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
-                aria-valuemin="0" aria-valuemax="100" style="width: {{progress_percentage}}">{{progress_percentage}}</div>
-        </div>
+      Objectives completion:
+      <div class="progress" style="width: 25rem">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+          aria-valuemin="0" aria-valuemax="100" style="width: {{progress_percentage}}">{{progress_percentage}}</div>
+      </div>
     </div>
   </div>
   {% if current_user.is_manager and current_user.department == user.department %}
@@ -32,12 +32,14 @@
   <div class="completed-objective">
     {% for obs in user.completed_objective %}
     <div class="objective-{{ obs.id }} input-group mb-3">
+      {% if user == current_user or user.manager_id == current_user.id %}
       <div class="input-group-prepend">
         <div class="input-group-text">
           <input checked class="checkbox-input" id="objective-{{ obs.id }}" type="checkbox"
             aria-label="Checkbox for following text input" />
         </div>
       </div>
+      {% endif %}
       <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{ obs.objective }}" />
     </div>
     {% endfor %}
@@ -47,18 +49,20 @@
   <div class="incomplete-objective">
     {% for obs in user.incomplete_objective %}
     <div class="objective-{{ obs.id }} input-group mb-3">
+      {% if user == current_user or user.manager_id == current_user.id %}
       <div class="input-group-prepend">
         <div class="input-group-text">
           <input class="checkbox-input" id="objective-{{ obs.id }}" type="checkbox"
             aria-label="Checkbox for following text input" />
         </div>
       </div>
+      {% endif %}
       <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{ obs.objective }}" />
     </div>
     {% endfor %}
   </div>
 
-  {% if current_user.is_manager %}
+  {% if current_user.is_manager and user.manager_id == current_user.id %}
   <div class="calendar">
 
     {% include "dashboard/_calendar.html" %}
@@ -85,35 +89,43 @@
 {% endif %}
 
 <script>
-  $(document).on("click", ".checkbox-input", function (event) {
-    id = event.target.id.split("-")[1];
+  $(function (event) {
+    $(document).on("click", ".checkbox-input", function (event) {
+      id = event.target.id.split("-")[1];
 
-    if ($(this).is(":checked")) {
-      console.log("Box is NOW checked");
-      $.ajax({
-        url: `/objectives/update/${id}`,
-        method: "POST",
-        success: function (response) {
-          console.log(response);
-          completedObjective = $(`.objective-${id}`);
-          completedObjective.remove();
-          $(".completed-objective").append(completedObjective);
-        }
-      });
-    } else {
-      console.log("Box is now unchecked");
-      $.ajax({
-        url: `/objectives/update/${id}`,
-        method: "POST",
-        success: function (response) {
-          console.log(response);
-          incompleteObjective = $(`.objective-${id}`);
-          incompleteObjective.remove();
-          $(".incomplete-objective").append(incompleteObjective);
-        }
-      });
-    }
-  });
+      if ($(this).is(":checked")) {
+        console.log("Box is NOW checked");
+        $.ajax({
+          url: `/objectives/update/${id}`,
+          method: "POST",
+          success: function (response) {
+            console.log(response);
+            completedObjective = $(`.objective-${id}`);
+            completedObjective.remove();
+            $(".completed-objective").append(completedObjective);
+            $(".progress-bar").css('width', response.progress)
+            $(".progress-bar").html(response.progress)
+          }
+        });
+      } else {
+        console.log("Box is now unchecked");
+        $.ajax({
+          url: `/objectives/update/${id}`,
+          method: "POST",
+          success: function (response) {
+            console.log(response);
+            incompleteObjective = $(`.objective-${id}`);
+            incompleteObjective.remove();
+            $(".incomplete-objective").append(incompleteObjective);
+            $(".progress-bar").css('width', response.progress)
+            $(".progress-bar").html(response.progress)
+          }
+        });
+      }
+    })
+  })
+
+
 </script>
 
 {% endblock %}

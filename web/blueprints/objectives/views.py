@@ -34,16 +34,26 @@ def edit(id):
 def update(id):
 
     obj = Objective.get_by_id(id)
+
     if obj.done:
         Objective.update(done=False).where(Objective.id == obj.id).execute()
-        response = {
+        progress = len(Objective.select().where((Objective.user_id == current_user.id) & (Objective.done == True))) / (len(Objective.select().where((Objective.user_id ==                                                                                                                                                    current_user.id) & (Objective.done == True))) + len(Objective.select().where((Objective.user_id == current_user.id) & (Objective.done == False))))
+        progress = "{:.0%}".format(progress)
+        
+        response={
             "success": True,
-            "done": False
+            "done": False,
+            "progress": progress
         }
+        
     else:
         Objective.update(done=True).where(Objective.id == obj.id).execute()
-        response = {
+        progress = len(Objective.select().where((Objective.user_id == current_user.id) & (Objective.done == True))) / (len(Objective.select().where((Objective.user_id ==                                                                                                                                                    current_user.id) & (Objective.done == True))) + len(Objective.select().where((Objective.user_id == current_user.id) & (Objective.done == False))))
+        progress = "{:.0%}".format(progress)
+        response={
             "success": True,
-            "done": True
+            "done": True,
+            "progress": progress
+
         }
     return jsonify(response)
