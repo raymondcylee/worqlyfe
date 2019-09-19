@@ -32,12 +32,14 @@
   <div class="completed-objective">
     {% for obs in user.completed_objective %}
     <div class="objective-{{ obs.id }} input-group mb-3">
+      {% if user == current_user or user.manager_id == current_user.id %}
       <div class="input-group-prepend">
         <div class="input-group-text">
           <input checked class="checkbox-input" id="objective-{{ obs.id }}" type="checkbox"
             aria-label="Checkbox for following text input" />
         </div>
       </div>
+      {% endif %}
       <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{ obs.objective }}" />
     </div>
     {% endfor %}
@@ -47,12 +49,14 @@
   <div class="incomplete-objective">
     {% for obs in user.incomplete_objective %}
     <div class="objective-{{ obs.id }} input-group mb-3">
+      {% if user == current_user or user.manager_id == current_user.id %}
       <div class="input-group-prepend">
         <div class="input-group-text">
           <input class="checkbox-input" id="objective-{{ obs.id }}" type="checkbox"
             aria-label="Checkbox for following text input" />
         </div>
       </div>
+      {% endif %}
       <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{ obs.objective }}" />
     </div>
     {% endfor %}
