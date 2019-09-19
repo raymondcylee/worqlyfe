@@ -28,54 +28,10 @@
 
 <body>
   <div class="home">
-    <nav class="navbar navbar-expand-lg">
-      <a class="navbar-brand" href="/">worqlyfe.</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          {% if current_user.is_authenticated %}
-          <a class="nav-item nav-link" href="" id="menu-toggle">Navigate</a>
-          <form id="sign-out-form" action="{{ url_for('users.destroy') }}" method="post">
-            <a onclick="document.getElementById('sign-out-form').submit()" style="cursor: pointer"
-              class="nav-item nav-link">Sign Out</a>
-            {% else %}
-            <a class="nav-item nav-link" href="/users/new">Sign Up</a>
-            <a class="nav-item nav-link" href="" data-toggle="modal" data-target="#signIn">Sign In</a>
-            {% endif %}
-        </div>
-      </div>
-      {% if current_user.is_authenticated %}
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Notification
-          <span id="unread-notification"
-            style="font-size:100%; background-color: red">{{current_user.unread_notification | length }}</span>
-        </button>
-        {% include 'notification.html' %}
-      </div>
-      {% endif %}
-    </nav>
+    {% include "_navbar.html" %}
 
     <div class="d-flex toggled" id="wrapper">
-      {% if current_user.is_authenticated %}
-      <!-- Sidebar -->
-      <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading">Navigate</div>
-        <div class="list-group list-group-flush">
-          <a href="/dashboard/" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-          <a href="/users/feed" class="list-group-item list-group-item-action bg-light">Feed</a>
-          <a href="/users/{{current_user.name}}" class="list-group-item list-group-item-action bg-light">Objectives</a>
-          <a href="/users/review/{{current_user.id}}"
-            class="list-group-item list-group-item-action bg-light">Reviews</a>
-          <a href="/compliments/new" class="list-group-item list-group-item-action bg-light">Compliments</a>
-        </div>
-      </div>
-      {% endif %}
-
+      {% include "_sidebar.html" %}
       <!-- Page Content -->
       <div id="page-content-wrapper">
         {{ log_in_modal() }}
@@ -83,7 +39,6 @@
         {% endblock %}
       </div>
     </div>
-
 
     <footer id="sticky-footer" class="py-4">
       <div class="container text-center">
@@ -98,7 +53,6 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
       });
-
 
       $(".dropdown").click(function (e) {
         $.ajax({

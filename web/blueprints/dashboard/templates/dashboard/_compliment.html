@@ -1,0 +1,85 @@
+<div class="compliments">
+    <h1>
+        <a style="text-decoration: none" href="{{ url_for('compliments.new') }}">My Compliments</a>
+    </h1>
+
+    <div class="medals">
+        <div>Objectives completion: {{ progress_percentage }}
+            {% if progress == 1.0 %}
+            <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+
+            {% elif progress < 0.99 and progress >=0.5 %}
+            <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+
+            {% elif progress >0 and progress <=0.5 %}
+            <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+
+            {% else %}
+            No medal
+
+            {% endif %}
+        </div>
+
+        <div>Compliments Received: {{ compliments_received }}
+            {% if compliments_received >= 10 %}
+            <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+
+            {% elif compliments_received < 10 and compliments_received >=5 %}
+            <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+
+            {% elif compliments_received < 5 and compliments_received > 0 %}
+            <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+
+            {% else %}
+            No medal
+
+            {% endif %}
+        </div>
+
+        <div> Compliments Given: {{ compliments_given }}
+            {% if compliments_given >= 10 %}
+            <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+
+            {% elif compliments_given < 10 and compliments_given >=5 %}
+            <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+
+            {% elif compliments_given < 5 and compliments_given > 0 %}
+            <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+
+            {% else %}
+            No medal
+
+            {% endif %}
+        </div>
+
+        <div>
+            {% if progress == 1.0 and compliments_received >= 10 and compliments_given >= 10 %}
+            You are a star!
+            <img src="{{ star.medal }}" style="width: 50px; height: 50px">
+            {% endif %}
+        </div>
+
+    </div>
+
+    <div class="team">
+        <ul>
+            <h3>Compliments Given:</h3>
+            {% for compliment in compliments %} {% if compliment.sender_id == current_user.id %}
+            <li>{{ compliment.compliment }}</li>
+            <p style="font-family: monospace;">
+                -<span style="font-weight: bold;">For</span>
+                {{ compliment.recipient.name }}
+            </p>
+            {% endif %} {% endfor %}
+
+            <h3>Compliments Received:</h3>
+            {% for compliment in compliments %} {% if compliment.recipient_id == current_user.id %}
+            <li>{{ compliment.compliment }}</li>
+            <p style="font-family: monospace;">
+                -<span style="font-weight: bold;">From</span>
+                {{ compliment.sender.name }}
+            </p>
+            {% endif %} {% endfor %}
+        </ul>
+    </div>
+</div>

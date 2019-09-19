@@ -1,0 +1,13 @@
+{% if current_user.is_manager %}
+<div class="team">
+    <h1>Project Team:</h1>
+    <ul>
+        {% for person in departments %}
+        {% if not person.is_manager %}
+        <li><a href="{{ url_for('users.show',username=person.name)}}">{{person.name}}</a>,
+            {{person.role}}</li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}

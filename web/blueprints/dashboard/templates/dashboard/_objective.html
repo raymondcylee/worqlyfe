@@ -1,0 +1,10 @@
+<div class="objectives">
+    <h1>
+        <a style="text-decoration: none" href="{{ url_for('objectives.show') }}">Objectives</a>
+    </h1>
+    <ul>
+        {% for objective in objectives %}
+        <li>{{ objective.objective }}</li>
+        {% endfor %}
+    </ul>
+</div>
