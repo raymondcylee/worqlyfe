@@ -6,6 +6,7 @@ from models.review import Review
 from models.compliment import Compliment
 from models.objective import Objective
 from models.notification import Notification
+from models.medal import Medal
 from googleapiclient.discovery import build
 import os
 import datetime
@@ -65,8 +66,16 @@ def destroy():
 @users_blueprint.route('/<username>', methods=["GET"])
 def show(username):
     user = User.get_or_none(User.name == username)
+    completed_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == True))
+    incomplete_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == False))
+    try:
+        progress = (completed_objectives.count()/(completed_objectives.count()+incomplete_objectives.count()))
+    except ZeroDivisionError:
+        progress = 0
+    progress_percentage = "{:.0%}".format(progress)
+
     if user:
-        return render_template("users/profile.html", user=user)
+        return render_template("users/profile.html", user=user, completed_objectives=completed_objectives, incomplete_objectives=incomplete_objectives, progress=progress, progress_percentage=progress_percentage)
 
 
 @users_blueprint.route('/', methods=["GET"])
@@ -190,4 +199,20 @@ def calender(username):
 
 @users_blueprint.route('/feed', methods=["GET"])
 def show_feed():
-    return render_template('users/feed.html')
+    users = User.select()
+    user = User.get_or_none(User.id == current_user.id)
+    compliments_received = Compliment.select().where(Compliment.recipient_id == current_user.id).count()
+    compliments_given = Compliment.select().where(Compliment.sender_id == current_user.id).count()
+    star = Medal.select().where(Medal.medal_caption == "Star").get()
+    gold = Medal.select().where(Medal.medal_caption == "Gold").get()
+    silver = Medal.select().where(Medal.medal_caption == "Silver").get()
+    bronze = Medal.select().where(Medal.medal_caption == "Bronze").get()
+    completed_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == True))
+    incomplete_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == False))
+    try:
+        progress = (completed_objectives.count()/(completed_objectives.count()+incomplete_objectives.count()))
+    except ZeroDivisionError:
+        progress = 0
+    progress_percentage = "{:.0%}".format(progress)
+
+    return render_template('users/feed.html', users=users, user=user, compliments_received=compliments_received, compliments_given=compliments_given, star=star, gold=gold, silver=silver, bronze=bronze, completed_objectives=completed_objectives, incomplete_objectives=incomplete_objectives, progress=progress, progress_percentage=progress_percentage)
