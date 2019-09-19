@@ -27,6 +27,15 @@
             method: "POST",
             data: $(this).serialize(),
             success: function (resp) {
+                Toastify({
+                    text: "Feedback successfully requested.",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: 'right', // `left`, `center` or `right`
+                    backgroundColor: "linear-gradient(to right, #bbe1ee, #adf4e8)",
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                }).showToast()
                 $("#feedbackForm").modal('hide')
                 // $('.modal-backdrop').remove()
             }
@@ -59,7 +68,6 @@
             method: 'post',
             data: $(this).serialize(),
             success: function (resp) {
-                console.log(resp)
                 $(`#reply-modal-${formId}`).modal('hide')
                 $(`#list-${formId}`).remove()
                 Toastify({
