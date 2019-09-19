@@ -1,5 +1,6 @@
-{% extends "_layout.html" %} {% block content %} {% if
-current_user.is_authenticated %}
+{% extends "_layout.html" %}
+{% block content %}
+{% if current_user.is_authenticated %}
 <div class="container">
   <div class="personal-details">
     <img width="400" height="400" src="{{ user.profile_image }}" alt="profile_picture" />
@@ -50,10 +51,11 @@ current_user.is_authenticated %}
     {% endfor %}
   </div>
 
+  {% if current_user.is_manager %}
   <div class="calendar">
-    <iframe
-      src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKuala_Lumpur&amp;src=aGFja2luZ3Byb2R1Y3Rpdml0eUBnbWFpbC5jb20&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4ubWFsYXlzaWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23039BE5&amp;color=%2333B679&amp;color=%230B8043&amp;title=Worqlyfe"
-      style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+
+    {% include "dashboard/_calendar.html" %}
+
     <form action="{{ url_for('users.calender', username = user.name) }}" method="POST">
       <div class="form-group">
         <label for="title">Title:</label>
@@ -73,6 +75,7 @@ current_user.is_authenticated %}
   </div>
   {% endif %}
 </div>
+{% endif %}
 
 <script>
   $(document).on("click", ".checkbox-input", function (event) {
@@ -107,4 +110,3 @@ current_user.is_authenticated %}
 </script>
 
 {% endblock %}
-</div>

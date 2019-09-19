@@ -1,0 +1,45 @@
+<div class="feedback-received">
+    <h3>Feedback received:</h3>
+    {% if not feedback_exist %}
+    <h5>No feedback message received</h5>
+    {% endif %}
+    <ul>
+        {% for subs in current_user.requesters %}
+        {% if not subs.answered %}
+        <li id="list-{{subs.id}}"><button class="btn btn-light subs-btn" className="subs-btn" id="subject-{{subs.id}}"
+                data-toggle="modal" data-target="#reply-modal-{{subs.id}}"
+                value="{{subs.id}}">{{ subs.subject }}</button></li>
+        <div class="modal fade" id="reply-modal-{{subs.id}}" tabindex="-1" role="dialog"
+            aria-labelledby="reply-modalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="subject-title">{{subs.subject}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="subject-message">Message:</label>
+                        <h5 id="subject-message">{{ subs.message }}</h5>
+                        <hr>
+                        <form class="feedback-forms" id="{{subs.id}}">
+                            <input type="hidden" name="subsId" value="{{subs.id}}" />
+                            <div class="form-group">
+                                <label for="formReply">Your reply:</label>
+                                <textarea name="formReply" class="form-control" rows="2"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button form="{{subs.id}}" type="submit" class="btn btn-primary send-btn">Send
+                            Feedback</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>

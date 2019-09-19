@@ -1,0 +1,27 @@
+<div class="personal-details" style="cursor:pointer">
+    <img width="400px" src="{{ current_user.profile_image }}" alt="profile_picture" data-toggle="modal"
+        data-target="#uploadImageModal" />
+
+    {% if current_user.is_authenticated %}
+    {% from "uploadImage.html" import upload_image %}
+    {{ upload_image(current_user) }}
+    {% endif %}
+    <div class="personal-details-container">
+        <h1><a style="text-decoration: none"
+                href="{{url_for('users.show',username=current_user.name)}}">{{ current_user.name }}</a></h1>
+        <ul>
+            <li>
+                <span style="font-weight: bold;">Department:</span>
+                {{ current_user.department }}
+            </li>
+            <li>
+                <span style="font-weight: bold;">Position:</span>
+                {{ current_user.role }}
+            </li>
+            <li>
+                <span style="font-weight: bold;">Contact:</span>
+                {{ current_user.email }}
+            </li>
+        </ul>
+    </div>
+</div>

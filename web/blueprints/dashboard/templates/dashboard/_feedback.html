@@ -1,0 +1,16 @@
+<div class="feedback">
+    <h1>Feedback Section</h1>
+
+    <div class="feedback-replies">
+        <h3>Feedback replies:</h3>
+        <ul>
+            {% for r in current_user.my_replies %}
+            <li>{{ r.reply_message }} from subject {{r.feedback_replied.subject}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% include "dashboard/_feedbackReceived.html" %}
+
+{% include "dashboard/_feedbackBtn.html" %}
+</div>
