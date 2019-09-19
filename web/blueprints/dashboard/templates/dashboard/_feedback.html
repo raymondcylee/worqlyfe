@@ -3,14 +3,48 @@
 
     <div class="feedback-replies">
         <h3>Feedback replies:</h3>
+        {% if not current_user.my_replies %}
+        <h5>No Feedback Replies</h5>
+        {% endif %}
         <ul>
             {% for r in current_user.my_replies %}
-            <li>{{ r.reply_message }} from subject {{r.feedback_replied.subject}}</li>
+            <li id="list-{{r.id}}">{{ r.reply_message }} from subject {{r.feedback_replied.subject}}<button className
+                    id="reply-{{r.id}}" class="btn btn-danger del-btn">Delete</button></li>
             {% endfor %}
         </ul>
     </div>
 
-{% include "dashboard/_feedbackReceived.html" %}
+    {% include "dashboard/_feedbackReceived.html" %}
 
-{% include "dashboard/_feedbackBtn.html" %}
 </div>
+<div class="feedback-btn">
+    {% include "dashboard/_feedbackBtn.html" %}
+</div>
+
+<script>
+    $('.del-btn').on('click', function (e) {
+        const id = e.target.id.split('-')[1]
+        console.log(id)
+        $.ajax({
+            url: `/dashboard/replies/delete/${id}`,
+            method: 'POST',
+            success: function (response) {
+                if (response.success) {
+                    $(`#list-${id}`).remove()
+                    Toastify({
+                        text: "Reply deleted.",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'right', // `left`, `center` or `right`
+                        backgroundColor: "linear-gradient(to right, #ff7373, #ec1629)",
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                    }).showToast()
+                    if (!response.any_replies_left) {
+                        $('.feedback-replies').append('<h5>No Feedback Replies</h5>')
+                    }
+                }
+            }
+        })
+    })
+</script>

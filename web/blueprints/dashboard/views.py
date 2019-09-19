@@ -29,9 +29,7 @@ def index():
     compliments_received = Compliment.select().where(Compliment.recipient_id == current_user.id).count()
     compliments_given = Compliment.select().where(Compliment.sender_id == current_user.id).count()
     user = User.get_or_none(User.id == current_user.id)
-
     rep = Feedback.select().where(Feedback.requester_id == current_user.id)
-
     feedback_exist = Feedback.select().where((Feedback.receiver_id == current_user.id) & (Feedback.answered == False))
     star = Medal.select().where(Medal.medal_caption == "Star").get()
     gold = Medal.select().where(Medal.medal_caption == "Gold").get()
@@ -128,3 +126,16 @@ def reply(id):
         'any_feedback_left': any_feedback_left
     }
     return jsonify(resp)
+
+
+@dashboard_blueprint.route('/replies/delete/<id>', methods=["POST"])
+def destroy(id):
+    Replies.delete().where(Replies.id == id).execute()
+    any_replies_left = False
+    if current_user.my_replies:
+        any_replies_left = True
+    response = {
+        'success': True,
+        'any_replies_left': any_replies_left
+    }
+    return jsonify(response)
