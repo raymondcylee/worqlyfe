@@ -24,14 +24,14 @@
              </div>
             
              <div class="feed-medals">
-                    <div>Objectives completion: {{ progress_percentage }}
-                        {% if progress == 1.0 %}
+                    <div>Objectives completion: {{ 100*(user.complete_progress/(user.incomplete_progress+user.complete_progress))|round(1) }}%
+                        {% if user.complete_progress/(user.incomplete_progress+user.complete_progress) == 1.0 %}
                         <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
             
-                        {% elif progress < 0.99 and progress >=0.5 %}
+                        {% elif user.complete_progress/(user.incomplete_progress+user.complete_progress) < 1 and user.complete_progress/(user.incomplete_progress+user.complete_progress) >=0.5 %}
                         <img src="{{ silver.medal }}" style="width: 50px; height:50px">
             
-                        {% elif progress >0 and progress <=0.5 %}
+                        {% elif user.complete_progress/(user.incomplete_progress+user.complete_progress) >0 and user.complete_progress/(user.incomplete_progress+user.complete_progress) <=0.5 %}
                         <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
             
                         {% else %}
@@ -40,14 +40,14 @@
                         {% endif %}
                     </div>
             
-                    <div>Compliments Received: {{ compliments_received }}
-                        {% if compliments_received >= 10 %}
+                    <div>Compliments Received: {{ user.senders|length }}
+                        {% if user.senders|length >= 10 %}
                         <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
             
-                        {% elif compliments_received < 10 and compliments_received >=5 %}
+                        {% elif user.senders|length < 10 and user.senders|length >=5 %}
                         <img src="{{ silver.medal }}" style="width: 50px; height:50px">
             
-                        {% elif compliments_received < 5 and compliments_received > 0 %}
+                        {% elif user.senders|length < 5 and user.senders|length > 0 %}
                         <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
             
                         {% else %}
@@ -56,14 +56,14 @@
                         {% endif %}
                     </div>
             
-                    <div> Compliments Given: {{ compliments_given }}
-                        {% if compliments_given >= 10 %}
+                    <div> Compliments Given: {{ user.recipients|length }}
+                        {% if user.recipients|length >= 10 %}
                         <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
             
-                        {% elif compliments_given < 10 and compliments_given >=5 %}
+                        {% elif user.recipients|length < 10 and user.recipients|length >=5 %}
                         <img src="{{ silver.medal }}" style="width: 50px; height:50px">
             
-                        {% elif compliments_given < 5 and compliments_given > 0 %}
+                        {% elif user.recipients|length < 5 and user.recipients|length > 0 %}
                         <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
             
                         {% else %}
@@ -73,7 +73,7 @@
                     </div>
             
                     <div>
-                        {% if progress == 1.0 and compliments_received >= 10 and compliments_given >= 10 %}
+                        {% if user.complete_progress/(user.incomplete_progress+user.complete_progress) == 1.0 and user.senders|length >= 10 and user.recipients|length >= 10 %}
                         You are a star!
                         <img src="{{ star.medal }}" style="width: 50px; height: 50px">
                         {% endif %}
