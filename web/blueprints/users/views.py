@@ -207,12 +207,5 @@ def show_feed():
     gold = Medal.select().where(Medal.medal_caption == "Gold").get()
     silver = Medal.select().where(Medal.medal_caption == "Silver").get()
     bronze = Medal.select().where(Medal.medal_caption == "Bronze").get()
-    completed_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == True))
-    incomplete_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == False))
-    try:
-        progress = (completed_objectives.count()/(completed_objectives.count()+incomplete_objectives.count()))
-    except ZeroDivisionError:
-        progress = 0
-    progress_percentage = "{:.0%}".format(progress)
-
-    return render_template('users/feed.html', users=users, user=user, compliments_received=compliments_received, compliments_given=compliments_given, star=star, gold=gold, silver=silver, bronze=bronze, completed_objectives=completed_objectives, incomplete_objectives=incomplete_objectives, progress=progress, progress_percentage=progress_percentage)
+    
+    return render_template('users/feed.html', users=users, user=user, compliments_received=compliments_received, compliments_given=compliments_given, star=star, gold=gold, silver=silver, bronze=bronze)

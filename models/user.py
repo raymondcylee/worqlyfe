@@ -15,6 +15,27 @@ class User(BaseModel, UserMixin):
     is_executive = pw.BooleanField(null=True)
     manager_id = pw.IntegerField(null=True)
 
+    @hybrid_property
+    def incomplete_progress(self):
+        from models.objective import Objective
+        try:
+            progress = len([obj for obj in Objective.select().where(
+                (Objective.user_id == self.id) & (Objective.done == False))])
+        except ZeroDivisionError:
+            progress = 0
+
+        return progress
+
+    @hybrid_property
+    def complete_progress(self):
+        from models.objective import Objective
+        try:
+            progress = len([obj for obj in Objective.select().where(
+                (Objective.user_id == self.id) & (Objective.done == True))])
+        except ZeroDivisionError:
+            progress = 0
+
+        return progress
 
     @hybrid_property
     def my_replies(self):
