@@ -2,5 +2,86 @@
 {% block content %}
 <div class="feed">
     <h1>Feed</h1>
+    {% for user in users %}
+    <div class="feed-details" style="cursor:pointer">
+        <img width="400px" src="{{ user.profile_image }}" alt="profile_picture" data-toggle="modal" data-target="#uploadImageModal" />
+            <div class="personal-details-container">
+                <h1><a style="text-decoration: none" href="{{ url_for('users.show', username=user.name) }}">{{ user.name }}</a></h1>
+                    <ul>
+                        <li>
+                            <span style="font-weight: bold;">Department:</span>
+                            {{ user.department }}
+                        </li>
+                        <li>
+                            <span style="font-weight: bold;">Position:</span>
+                            {{ user.role }}
+                        </li>
+                        <li>
+                            <span style="font-weight: bold;">Contact:</span>
+                            {{ user.email }}
+                        </li>
+                    </ul>
+             </div>
+            
+             <div class="feed-medals">
+                    <div>Objectives completion: {{ progress_percentage }}
+                        {% if progress == 1.0 %}
+                        <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+            
+                        {% elif progress < 0.99 and progress >=0.5 %}
+                        <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+            
+                        {% elif progress >0 and progress <=0.5 %}
+                        <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+            
+                        {% else %}
+                        No medal
+            
+                        {% endif %}
+                    </div>
+            
+                    <div>Compliments Received: {{ compliments_received }}
+                        {% if compliments_received >= 10 %}
+                        <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+            
+                        {% elif compliments_received < 10 and compliments_received >=5 %}
+                        <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+            
+                        {% elif compliments_received < 5 and compliments_received > 0 %}
+                        <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+            
+                        {% else %}
+                        No medal
+            
+                        {% endif %}
+                    </div>
+            
+                    <div> Compliments Given: {{ compliments_given }}
+                        {% if compliments_given >= 10 %}
+                        <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+            
+                        {% elif compliments_given < 10 and compliments_given >=5 %}
+                        <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+            
+                        {% elif compliments_given < 5 and compliments_given > 0 %}
+                        <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+            
+                        {% else %}
+                        No medal
+            
+                        {% endif %}
+                    </div>
+            
+                    <div>
+                        {% if progress == 1.0 and compliments_received >= 10 and compliments_given >= 10 %}
+                        You are a star!
+                        <img src="{{ star.medal }}" style="width: 50px; height: 50px">
+                        {% endif %}
+                    </div>
+            
+                </div>
+    </div>
+    {% endfor %}
 </div>
+
 {% endblock %}
