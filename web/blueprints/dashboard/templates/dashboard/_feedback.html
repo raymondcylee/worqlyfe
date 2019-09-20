@@ -1,10 +1,14 @@
+<div class="feedback-header">
+<h1>My Feedback</h1>
+    <div class="feedback-btn">
+        {% include "dashboard/_feedbackBtn.html" %}
+    </div>
+</div>
 <div class="feedback">
-    <h1>Feedback Section</h1>
-
     <div class="feedback-replies">
         <h3>Feedback replies:</h3>
         {% if not current_user.my_replies %}
-        <h5>No Feedback Replies</h5>
+        <h5>You have no feedback replies at the moment</h5>
         {% endif %}
         <ul>
             {% for r in current_user.my_replies %}
@@ -16,9 +20,8 @@
 
     {% include "dashboard/_feedbackReceived.html" %}
 
-</div>
-<div class="feedback-btn">
-    {% include "dashboard/_feedbackBtn.html" %}
+
+
 </div>
 
 <script>

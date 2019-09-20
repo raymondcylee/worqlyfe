@@ -1,31 +1,36 @@
 .home {
     font-family: $primary-font;
+    background-color: $secondary-color;
     .navbar {
         background-color: $primary-accent;
-        color: white;
+        color: $secondary-color;
         font-weight: 700;
         a {
-            color: white;
+            color: $secondary-color;
         }
         .navbar-toggler {
-            border-color: white;
+            border-color: $secondary-color;
         }
         .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(244,235,219)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
         }
     }
     .jumbotron {
         background-color: $secondary-accent;
         h1 {
-            color: $primary-accent;
+            color: $primary-color;
+        }
+        p {
+          color: $secondary-color;
         }
         .btn {
             background-color: $primary-accent;
-            border: 2px solid white;
+            color: $secondary-color;
         }
     }
     #sticky-footer {
         background-color: $secondary-accent;
+        color: $primary-color;
     }
     body {
         overflow-x: hidden;
@@ -37,7 +42,7 @@
         -webkit-transition: margin .25s ease-out;
         -moz-transition: margin .25s ease-out;
         -o-transition: margin .25s ease-out;
-        tranasition: margin .25s ease-out;
+        transition: margin .25s ease-out;
       }
       
       #sidebar-wrapper .sidebar-heading {
