@@ -1,19 +1,32 @@
 .signup {
-    background-color: $secondary-accent;
+    background-color: white;
     padding-top: 2em;
+    padding-bottom: 2em;
+    color: $primary-accent;
+    #inputButton {
+        background-color: $primary-accent;
+        border-color: $primary-accent;
+        color: $secondary-color;
+    }
+
 }
 
 .signin {
+    color: $primary-accent;
     .modal-header {
-        background-color: $secondary-accent;
+        background-color: $secondary-color;
         color: $primary-accent;
         h5 {
             font-weight: 700;
         }
     }
     .modal-footer {
+        button {
+            color: $secondary-color;
+        }
         #submit-btn {
             background-color: $primary-accent;
+            border-color: $primary-accent;
         }
     }
 }

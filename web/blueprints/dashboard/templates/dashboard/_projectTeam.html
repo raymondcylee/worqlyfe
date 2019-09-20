@@ -1,6 +1,6 @@
 {% if current_user.is_manager %}
 <div class="team">
-    <h1>Project Team:</h1>
+    <h1>My Team:</h1>
     <ul>
         {% for person in departments %}
         {% if not person.is_manager %}

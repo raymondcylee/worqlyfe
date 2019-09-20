@@ -1,7 +1,7 @@
 <div class="feedback-received">
-    <h3>Feedback received:</h3>
+    <h3>Feedback request:</h3>
     {% if not feedback_exist %}
-    <h5>No feedback message received</h5>
+    <h5>You have no feedback requests at the moment</h5>
     {% endif %}
     <ul>
         {% for subs in current_user.requesters %}
