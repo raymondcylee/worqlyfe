@@ -4,7 +4,11 @@
     </h1>
     <ul>
         {% for objective in objectives %}
+        {% if objective.done %}
+        <li><strike>{{ objective.objective }}</strike></li>
+        {% else %}
         <li>{{ objective.objective }}</li>
+        {% endif %}
         {% endfor %}
     </ul>
 </div>
