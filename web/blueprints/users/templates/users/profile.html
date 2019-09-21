@@ -3,6 +3,7 @@
 {% if current_user.is_authenticated %}
 <div class="container">
   <div class="personal-details">
+    <a href="{{ url_for('users.show_review', id=user.id) }}">{{ user.name }}</a>
     <img width="400" height="400" src="{{ user.profile_image }}" alt="profile_picture" />
     <div>
       Objectives completion:
