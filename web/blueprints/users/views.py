@@ -147,7 +147,9 @@ def create_manager_notes(id):
     review_date = request.form.get("review_date")
     Review(manager_notes=comments, executive_id=user.id,
            review_date=review_date).save()
-    Notification(notification_type=4, sender=current_user.id, recipient=user.id).save()
+    if user.id != current_user.id:
+        Notification(notification_type=4, sender=current_user.id, recipient=user.id).save()
+        flash("Manager commment added")
     return redirect(url_for('users.show_review', user=user, manager=manager, id=user.id))
 
 
@@ -159,6 +161,7 @@ def create_my_notes(id):
     review_date = request.form.get("review_date")
     Review(executive_notes=comments, executive_id=user.id,
            review_date=review_date).save()
+    flash("My note added")
     return redirect(url_for('users.show_review', user=user, manager=manager, id=user.id))
 
 @users_blueprint.route('/delete-comment/<id>',methods=['POST'])

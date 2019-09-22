@@ -123,6 +123,9 @@
       </div>
       {% endif %}
       <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{ obs.objective }}" />
+      <div class="input-group-append">
+        <button class="delete-btn btn btn-outline-secondary" type="button" id="delete-btn-{{ obs.id }}">x</button>
+      </div>
     </div>
     {% endfor %}
   </div>
@@ -140,6 +143,9 @@
       </div>
       {% endif %}
       <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{ obs.objective }}" />
+      <div class="input-group-append">
+        <button class="delete-btn btn btn-outline-secondary" type="button" id="delete-btn-{{ obs.id }}">x</button>
+      </div>
     </div>
     {% endfor %}
   </div>
@@ -215,6 +221,22 @@
           }
         });
       }
+    })
+    $(document).on("click", ".delete-btn", function (event) {
+      id = event.target.id.split("-")[2];
+      console.log('delete-btn triggered ', id)
+      $.ajax({
+          url: `/objectives/delete/${id}`,
+          method: "POST",
+          success: function (response) {
+            console.log(response);
+            $(`.objective-${id}`).remove()
+            $(".progress-bar").css('width', response.progress)
+            $(".progress-bar").html(response.progress)
+          }
+        });
+      
+
     })
   })
 

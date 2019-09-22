@@ -106,6 +106,7 @@ def upload():
         flash(str(e))
 
     return redirect(url_for('dashboard.index'))
+
 @dashboard_blueprint.route('/message/<id>')
 def message(id):
     get_message = Feedback.get_by_id(id)

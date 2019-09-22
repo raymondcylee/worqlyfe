@@ -5,7 +5,6 @@ from web.blueprints.sessions.views import sessions_blueprint
 from web.blueprints.compliments.views import compliments_blueprint
 from web.blueprints.dashboard.views import dashboard_blueprint
 from web.blueprints.objectives.views import objectives_blueprint
-# from web.blueprints.notifications.views import notifications_blueprint
 from flask_assets import Environment, Bundle
 from .util.assets import bundles
 
@@ -17,7 +16,6 @@ app.register_blueprint(sessions_blueprint, url_prefix="/sessions")
 app.register_blueprint(compliments_blueprint, url_prefix="/compliments")
 app.register_blueprint(dashboard_blueprint, url_prefix="/dashboard")
 app.register_blueprint(objectives_blueprint, url_prefix="/objectives")
-# app.register_blueprint(notifications_blueprint, url_prefix="/notifications")
 
 
 @app.errorhandler(500)
