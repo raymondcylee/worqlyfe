@@ -13,8 +13,10 @@ compliments_blueprint = Blueprint('compliments',
 def new():
     users = User.select()
     badges = Badge.select()
+    compliments_received = Compliment.select().where(Compliment.recipient_id == current_user.id).count()
+    compliments_given = Compliment.select().where(Compliment.sender_id == current_user.id).count()
     compliments = Compliment.select().order_by(Compliment.id.desc())
-    return render_template('compliments/new.html', users=users, badges=badges, compliments=compliments)
+    return render_template('compliments/new.html', users=users, badges=badges, compliments=compliments, compliments_received=compliments_received, compliments_given=compliments_given)
 
 @compliments_blueprint.route('/newcompliment', methods=['POST'])
 def create():

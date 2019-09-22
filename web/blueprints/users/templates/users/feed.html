@@ -3,9 +3,10 @@
 <div class="feed">
     <h1>Employee Directory</h1>
     {% for user in users %}
-    <div class="feed-details" style="cursor:pointer">
+    <div class="feed-details">
         <img width="400px" src="{{ user.profile_image }}" alt="profile_picture" data-toggle="modal" data-target="#uploadImageModal" />
             <div class="personal-details-container">
+                <div class="details">
                 <h1><a style="text-decoration: none" href="{{ url_for('users.show', username=user.name) }}">{{ user.name }}</a></h1>
                     <ul>
                         <li>
@@ -21,9 +22,9 @@
                             {{ user.email }}
                         </li>
                     </ul>
-             </div>
+                </div>
             
-             <div class="feed-medals">
+             <div class="medals">
                     <div>Objectives completion: {{ 100*(user.progress)|round(1) }}%
                         
                         {% if user.progress == 1.0 %}
@@ -82,7 +83,9 @@
             
                 </div>
     </div>
+</div>
     {% endfor %}
+
 </div>
 
 {% endblock %}

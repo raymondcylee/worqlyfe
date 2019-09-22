@@ -1,0 +1,104 @@
+.profile {
+    h1 {
+        font-weight: 700;
+        a {
+            color: $primary-color;
+        }
+    }
+    .personal-details {
+        display: flex;
+        width: 100%;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        background-color: $secondary-accent;
+        margin-bottom: 20px;
+        img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid $secondary-color;
+        }
+        .personal-details-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            width: 100%;
+            margin-left: 50px;
+            .medals {
+                color: $primary-color;
+                text-align: right;
+                img {
+                    margin-bottom: 2px;
+                }
+            }
+        }
+        ul {
+            list-style-type: none;
+            padding-inline-start: 0;
+            li {
+                color: $primary-color;
+            }
+        }
+    }
+    .first-container {
+        margin-bottom: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-radius: 10px;
+        background-color: $secondary-accent;
+        color: $primary-color;
+        h1 {
+            color: $primary-color;
+        }
+        .progress {
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            color: $primary-color;
+        }
+        .input-group-text {
+            color: $primary-accent;
+            background-color: $secondary-color;
+        }
+        .input-group {
+            .btn-outline-secondary {
+                background-color: $primary-accent;
+                color: $secondary-color;
+            }
+        }
+    }
+    .nested-container {
+        display: flex;
+        justify-content: space-around;
+        color: $primary-accent;
+    }
+    .second-container {
+        margin-bottom: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-radius: 10px;
+        background-color: $secondary-accent;
+        color: $primary-color;
+        display: flex;
+        justify-content: space-around;
+        .review {
+            margin-top: 50px;
+        }
+        button {
+            background-color: $primary-accent;
+            border-color: $primary-accent;
+            color: $secondary-color;
+        }
+    }
+}

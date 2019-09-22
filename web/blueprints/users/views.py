@@ -66,6 +66,10 @@ def destroy():
 @users_blueprint.route('/<username>', methods=["GET"])
 def show(username):
     user = User.get_or_none(User.name == username)
+    star = Medal.select().where(Medal.medal_caption == "Star").get()
+    gold = Medal.select().where(Medal.medal_caption == "Gold").get()
+    silver = Medal.select().where(Medal.medal_caption == "Silver").get()
+    bronze = Medal.select().where(Medal.medal_caption == "Bronze").get()
     completed_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == True))
     incomplete_objectives = Objective.select().where((Objective.user_id == user.id) & (Objective.done == False))
     try:
@@ -75,7 +79,7 @@ def show(username):
     progress_percentage = "{:.0%}".format(progress)
 
     if user:
-        return render_template("users/profile.html", user=user, completed_objectives=completed_objectives, incomplete_objectives=incomplete_objectives, progress=progress, progress_percentage=progress_percentage)
+        return render_template("users/profile.html", user=user, star=star, gold=gold, silver=silver, bronze=bronze, completed_objectives=completed_objectives, incomplete_objectives=incomplete_objectives, progress=progress, progress_percentage=progress_percentage)
 
 
 @users_blueprint.route('/', methods=["GET"])
@@ -113,6 +117,10 @@ def department(department):
 @users_blueprint.route('/review/<id>', methods=['GET'])
 def show_review(id):
     user = User.get_or_none(User.id == id)
+    star = Medal.select().where(Medal.medal_caption == "Star").get()
+    gold = Medal.select().where(Medal.medal_caption == "Gold").get()
+    silver = Medal.select().where(Medal.medal_caption == "Silver").get()
+    bronze = Medal.select().where(Medal.medal_caption == "Bronze").get()
     manager = User.get_or_none(User.id == user.manager_id)
     completed_objectives = Objective.select().where(
         (Objective.user_id == user.id) & (Objective.done == True))
@@ -128,7 +136,7 @@ def show_review(id):
                                             & (Review.executive_notes.is_null(False)))
     manager_notes = Review.select().where((Review.executive_id == user.id)
                                           & (Review.manager_notes.is_null(False)))
-    return render_template('users/review.html', user=user, manager=manager, executive_notes=executive_notes, manager_notes=manager_notes, completed_objectives=completed_objectives, incomplete_objectives=incomplete_objectives, progress_percentage=progress_percentage)
+    return render_template('users/review.html', user=user, manager=manager, star=star, gold=gold, silver=silver, bronze=bronze, executive_notes=executive_notes, manager_notes=manager_notes, completed_objectives=completed_objectives, incomplete_objectives=incomplete_objectives, progress_percentage=progress_percentage)
 
 
 @users_blueprint.route('/create-manager-review/<id>', methods=['POST'])
