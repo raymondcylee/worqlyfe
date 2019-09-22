@@ -1,10 +1,12 @@
 {% extends "_layout.html" %} {% block content %}
 <div class="compliments">
-  <!-- Header -->
-  <h1>Wall of Fame</h1>
-
   <!-- New Compliments -->
   <div class="new-compliments">
+    <h1>Wall of Fame</h1>
+    <br/>
+    <h4>Compliments Received: {{ compliments_received }}</h4>
+    <h4>Compliments Given: {{ compliments_given }}</h4>
+    <br/>
     <h3>New Compliment</h3>
 
     <!-- Button trigger modal -->
@@ -25,19 +27,22 @@
         </div>
         <div class="modal-body">
           <form action="{{ url_for('compliments.create') }}" method="POST">
+            
             <div class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" id="badgeMenu" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="true">
                 Choose a badge
                 <span class="caret"></span>
               </button>
-              <ul class="dropdown-menu">
+              <br/>
+              <ul class="dropdown-menu badge-list">
                 {% for badge in badges %}
                 <li onclick="displayBadge(this)">
                   <a href="#">
                     <img alt="{{ badge.badge_caption }}" src="{{ badge.badge }}" width="50px"
                       value="{{ badge.id }}" />{{ badge.badge_caption }}</a>
                 </li>
+                
                 {% endfor %}
               </ul>
             </div>
@@ -46,27 +51,32 @@
               <input type="hidden" name="badgeId" id="badgeId" />
               <img name="badge" id="displayBadgePic" width="50px" />
               <div name="badge_text" id="badgeText"></div>
+              <br/>
             </div>
-
+            
             <div class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" id="recipientMenu" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="true">
                 Choose a recipient
                 <span class="caret"></span>
               </button>
-              <ul class="dropdown-menu">
+              <br/>
+              <ul class="dropdown-menu user-list">
                 {% for u in users %} {% if u.id != current_user.id %}
                 <li onclick="displayRecipient(this)">
                   <a href="#" value="{{ u.id }}">{{ u.name }}</a>
                 </li>
+                
                 {% endif %} {% endfor %}
               </ul>
               <!-- Recipient Container -->
               <div id="recipientResult">
                 <input type="hidden" name="recipientList" id="recipientList" />
                 <div name="recipient_name" id="recipientText"></div>
+                <br/>
               </div>
             </div>
+
             <div class="form-group">
               <label for="complimentFormControlTextarea1">Comment:</label>
               <textarea class="form-control" id="complimentFormControlTextarea1" rows="5" name="comment"></textarea>

@@ -1,7 +1,7 @@
 {% if current_user == user or (current_user.is_manager and current_user.department == user.department) %}
-<div class="all-comments">
+    <div class="manager-comments">
     {% for x in manager_notes %}
-    <div class="manager-comments card" style="width: 18rem;">
+    <div class="card" style="width: 18rem;">
         <h5 class="card-header">Manager's comment:</h5>
         <div class="card-body">
             <h6 class="card-title">{{ x.review_date }}</h6>
@@ -13,9 +13,16 @@
             {% endif %}
         </div>
     </div>
+    <br/>
     {% endfor %}
+</div>
+<div class="my-notes">
     {% for x in executive_notes %}
+<<<<<<< master
     <div data-card="{{ x }}" class="my-notes card" style="width: 18rem;">
+=======
+    <div class="card" style="width: 18rem;">
+>>>>>>> added css to all pages
         <h5 class="card-header">My notes: </h5>
         <div class="card-body">
             <h6 class="card-title">{{ x.review_date }}</h6>
@@ -27,6 +34,7 @@
             {% endif %}
         </div>
     </div>
+    <br />
     {% endfor %}
 </div>
 {% endif %}

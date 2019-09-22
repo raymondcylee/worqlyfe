@@ -1,14 +1,93 @@
 {% extends '_layout.html' %}
 {% block content %}
-<h3>Performance review</h3>
-
-<div>
-    <div>Name: {{user.name}}</div>
-    <div>Role: {{user.role}}</div>
-    <div>Department: {{user.department}}</div>
-    <div>Manager's Name: {{manager.name}}</div>
+<div class="review">
+<div class="personal-details">
+    <img width="400px" src="{{ user.profile_image }}" alt="profile_picture" data-toggle="modal" data-target="#uploadImageModal" />
+    <div class="personal-details-container">
+        <div class="details">
+            <h1><a style="text-decoration: none" href="{{ url_for('users.show', username=user.name) }}">{{ user.name }}</a></h1>
+                <ul>
+                    <li>
+                        <span style="font-weight: bold;">Department:</span>
+                        {{ user.department }}
+                    </li>
+                    <li>
+                        <span style="font-weight: bold;">Position:</span>
+                        {{ user.role }}
+                    </li>
+                    <li>
+                        <span style="font-weight: bold;">Contact:</span>
+                        {{ user.email }}
+                    </li>
+                    <br/>
+                    <li>
+                        <span style="font-weight: bold;">Manager:</span>
+                        {{ manager.name }}
+                    </li>
+                </ul>
+            </div>
+                <div class="medals">
+                        <div>Objectives completion: {{ 100*(user.progress)|round(1) }}%
+                            
+                            {% if user.progress == 1.0 %}
+                            <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+                
+                            {% elif user.progress < 1 and user.progress >=0.5 %}
+                            <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+                
+                            {% elif user.progress >0 and user.progress <=0.5 %}
+                            <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+                
+                            {% else %}
+                            No medal
+                
+                            {% endif %}
+                        </div>
+                
+                        <div>Compliments Received: {{ user.senders|length }}
+                            {% if user.senders|length >= 10 %}
+                            <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+                
+                            {% elif user.senders|length < 10 and user.senders|length >=5 %}
+                            <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+                
+                            {% elif user.senders|length < 5 and user.senders|length > 0 %}
+                            <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+                
+                            {% else %}
+                            No medal
+                
+                            {% endif %}
+                        </div>
+                
+                        <div> Compliments Given: {{ user.recipients|length }}
+                            {% if user.recipients|length >= 10 %}
+                            <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+                
+                            {% elif user.recipients|length < 10 and user.recipients|length >=5 %}
+                            <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+                
+                            {% elif user.recipients|length < 5 and user.recipients|length > 0 %}
+                            <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+                
+                            {% else %}
+                            No medal
+                
+                            {% endif %}
+                        </div>
+                
+                        <div>
+                            {% if user.progress == 1.0 and user.senders|length >= 10 and user.recipients|length >= 10 %}
+                            You are a star!
+                            <img src="{{ star.medal }}" style="width: 50px; height: 50px">
+                            {% endif %}
+                        </div>
+                
+                    </div>
+    </div>
 </div>
-
+<div class="first-container">
+<h1>Performance Review</h1>
 <div>
     Objectives completion:
     <div class="progress" style="width: 25rem">
@@ -16,9 +95,12 @@
             aria-valuemin="0" aria-valuemax="100" style="width: {{progress_percentage}}">{{progress_percentage}}</div>
     </div>
 </div>
-
+<div class="review-btn">
 {% include "users/_reviewBtn.html" %}
-
+</div>
+<div class="nested-container">
 {% include "users/_reviewComment.html" %}
-
+</div>
+</div>
+</div>
 {% endblock %}

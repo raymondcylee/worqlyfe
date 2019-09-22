@@ -1,12 +1,17 @@
 .compliments {
     h1 {
         font-weight: 700;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding-left: 10px;
+        color: $primary-color;
+    }
+    h3 {
+        color: $primary-accent;
+        font-weight: 700;
+    }
+    h4 {
+        color: $primary-accent;
     }
     .modal-header {
-        background-color: $secondary-accent;
+        background-color: $secondary-color;
         h5 {
             color: $primary-accent;
             font-weight: 700;
@@ -15,37 +20,72 @@
     .modal-footer {
         #submit-btn {
             background-color: $primary-accent;
+            color: $secondary-color;
+        }
+        .btn-secondary {
+            color: $secondary-color;
         }
     }
+    .user-list {
+        a {
+            color: $primary-accent;
+            font-weight: 700;
+        }
+    }
+    .badge-list {
+        a {
+            color: $primary-accent;
+            font-weight: 700;
+        }
+    }
+    #badgeResult {
+        color: $primary-accent;
+        font-weight: 700;
+    }
+    #recipientResult {
+        color: $primary-accent;
+        font-weight: 700;
+    }
     .new-compliments {
-        padding-top: 30px;
-        padding-bottom: 30px;
-        padding-left: 10px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
         background-color: $secondary-accent;
         .btn {
             background-color: $primary-accent;
+            border-color: $primary-accent;
+            color: $secondary-color;
         }
     }
     .compliments-cards {
-        padding-top: 30px;
-        padding-left: 10px;
+        margin-left: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
         .card {
             padding: 10px;
             box-shadow: 5px 10px 8px #888888;
-            background-image: linear-gradient($secondary-accent, white);
+            background-image: linear-gradient($secondary-accent, $secondary-color);
             margin-bottom: 20px;
             border-radius: 10px;
             height: 400px;
             h4 {
                 text-align: center;
                 font-weight: 700;
+                color: $primary-color;
+            }
+            .card-body {
+                p {
+                    color: $primary-color;
+                    font-weight: 700;
+                }
             }
             .card-img-top {
                 width: 125px;
                 height: 125px;
                 border-radius: 50%;
                 object-fit: cover;
-                border: 3px solid white;
+                border: 3px solid $secondary-color;
             }
             .img-container {
                 margin-left: auto;
@@ -54,6 +94,7 @@
             .sender {
                 p {
                     margin-bottom: 0;
+                    color: $primary-color;
                 }
                 .sender-container {
                     display: flex;
