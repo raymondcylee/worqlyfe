@@ -3,12 +3,12 @@
         <a style="text-decoration: none" href="{{ url_for('objectives.show') }}">Objectives</a>
     </h1>
     <ul>
-        {% for objective in objectives %}
-        {% if objective.done %}
-        <li><strike>{{ objective.objective }}</strike></li>
-        {% else %}
+        {% for objective in current_user.incomplete_objective %}
         <li>{{ objective.objective }}</li>
-        {% endif %}
+        {% endfor %}
+
+        {% for objective in current_user.completed_objective %}
+        <li><strike>{{ objective.objective }}</strike></li>
         {% endfor %}
     </ul>
 </div>

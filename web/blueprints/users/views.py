@@ -60,7 +60,7 @@ def create():
 @users_blueprint.route('/logout', methods=["POST"])
 def destroy():
     logout_user()
-    return render_template('home.html')
+    return redirect('/')
 
 
 @users_blueprint.route('/<username>', methods=["GET"])
