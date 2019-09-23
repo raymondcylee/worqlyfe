@@ -14,18 +14,47 @@
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(244,235,219)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
         }
+        .dropdown {
+          button {
+            background-color: $primary-accent;
+            color: $secondary-color;
+            border-color: $secondary-color;
+            #unread-notification {
+              margin: 3px;
+            }
+          }
+          .dropdown-menu {
+            background-color: $secondary-color;
+            .dropdown-item {
+              white-space: normal;
+            }
+            .new-notification {
+              background-color: $secondary-accent;
+              a {
+                color: $primary-color;
+              }
+            }
+            .read-notification {
+              a {
+                color: $primary-color;
+              }
+            }
+          }
+        }
     }
     .jumbotron {
         background-color: $secondary-accent;
         h1 {
             color: $primary-color;
+            font-weight: 700;
         }
         p {
-          color: $secondary-color;
+          color: $primary-accent;
         }
         .btn {
             background-color: $primary-accent;
             color: $secondary-color;
+            border-color: $primary-accent;
         }
     }
     #sticky-footer {
