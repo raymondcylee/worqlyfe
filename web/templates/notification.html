@@ -1,39 +1,44 @@
 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
     {% if not current_user.sorted_notification  %}
-    <a class="dropdown-item back" href="#">No notification at this moment</a>
+        <a class="dropdown-item back" href="#">No notification at this moment</a>
     {% else %}
-    {% for notification in current_user.sorted_notification %}
+        {% for notification in current_user.sorted_notification %}
    
-    <div class={{ "read-notification" if notification.read else "new-notification" }}>
-    {% if notification.notification_type == 1 and notification.read == False %}
+        <div class={{ "read-notification" if notification.read else "new-notification" }}>
+            {% if notification.notification_type == 1 and notification.read == False %}
 
-    <a class="dropdown-item back" href="#">{{ notification.sender.name }} set a new
-        objective for you</a>
-    {% elif notification.notification_type == 2 and notification.read == False%}
-    <a class="dropdown-item" href="#">{{ notification.sender.name }} sent you a
-        compliment</a>
-    {% elif notification.notification_type == 3 and notification.read == False %}
-    <a class="dropdown-item" href="#">{{ notification.sender.name }} sent you a
-        feedback</a>
-    {% elif notification.notification_type == 4 and notification.read == False %}
-    <a class="dropdown-item" href="#">{{ notification.sender.name }} sent you a
-        comment</a>
+        <a class="dropdown-item back" href="#">
+            {{ notification.sender.name }} set a new objective for you
+        </a>
+        
+        {% elif notification.notification_type == 2 and notification.read == False%}
+        <a class="dropdown-item" href="#">{{ notification.sender.name }} sent you a
+            compliment</a>
+        {% elif notification.notification_type == 3 and notification.read == False %}
+        <a class="dropdown-item" href="#">{{ notification.sender.name }} sent you a
+            feedback</a>
+        {% elif notification.notification_type == 4 and notification.read == False %}
+        <a class="dropdown-item" href="#">{{ notification.sender.name }} sent you a
+            comment</a>
 
 
-    {% elif notification.notification_type == 1 and notification.read == True %}
+        {% elif notification.notification_type == 1 and notification.read == True %}
 
-    <a class="dropdown-item back" href="#">{{ notification.sender.name }} set a new
-        objective for you</a>
-    {% elif notification.notification_type == 2 and notification.read == True %}
-    <a class="dropdown-item" href="#">{{ notification.sender.name }} sent you a
-        compliment</a>
-    {% elif notification.notification_type == 3 and notification.read == True %}
-    <a class="dropdown-item" href="#">{{ notification.sender.name }} sent you a
-        feedback</a>
-    {% elif notification.notification_type == 4 and notification.read == True %}
-    <a class="dropdown-item" href="#">{{ notification.sender.name }} sent you a
-        comment</a>
+        <a class="dropdown-item back" href="#">{{ notification.sender.name }} set a new
+            objective for you</a>
+        {% elif notification.notification_type == 2 and notification.read == True %}
+        <a class="dropdown-item" href="#">{{ notification.sender.name }} sent you a
+            compliment</a>
+        {% elif notification.notification_type == 3 and notification.read == True %}
+        <a class="dropdown-item" href="#">{{ notification.sender.name }} sent you a
+            feedback</a>
+        {% elif notification.notification_type == 4 and notification.read == True %}
+        <a class="dropdown-item" href="#">{{ notification.sender.name }} sent you a
+            comment</a>
 
-    {% endif %} {% endfor %} {% endif %}
-    </div>
+        {% endif %} 
+        </div>
+    {% endfor %}
+    {% endif %}
+    
 </div>
