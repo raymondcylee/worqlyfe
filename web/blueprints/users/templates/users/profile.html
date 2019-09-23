@@ -3,11 +3,10 @@
 {% if current_user.is_authenticated %}
 <div class="profile">
   <div class="personal-details">
-    <a href="{{ url_for('users.show_review', id=user.id) }}">{{ user.name }}</a>
     <img width="400" height="400" src="{{ user.profile_image }}" alt="profile_picture" />
     <div class="personal-details-container">
         <div class="details">
-        <h1><a style="text-decoration: none" href="{{ url_for('users.show', username=user.name) }}">{{ user.name }}</a></h1>
+        <h1><a style="text-decoration: none" href="{{ url_for('users.show_review', id=user.id) }}">{{ user.name }}</a></h1>
             <ul>
                 <li>
                     <span style="font-weight: bold;">Department:</span>
