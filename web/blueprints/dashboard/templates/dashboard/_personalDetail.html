@@ -75,9 +75,9 @@
                 </div>
         
                 <div>
-                    {% if progress == 1.0 and compliments_received >= 10 and compliments_given >= 10 %}
+                    {% if progress == 1.0 and compliments_received >= 5 and compliments_given >= 5 %}
                     You are a star!
-                    <img src="{{ star.medal }}" style="width: 50px; height: 50px">
+                    <img src="{{ star.medal }}" class="medal" style="width: 50px; height: 50px">
                     {% endif %}
                 </div>
         
