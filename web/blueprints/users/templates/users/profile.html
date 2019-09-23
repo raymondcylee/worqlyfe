@@ -5,179 +5,185 @@
   <div class="personal-details">
     <img width="400" height="400" src="{{ user.profile_image }}" alt="profile_picture" />
     <div class="personal-details-container">
-        <div class="details">
-        <h1><a style="text-decoration: none" href="{{ url_for('users.show_review', id=user.id) }}">{{ user.name }}</a></h1>
-            <ul>
-                <li>
-                    <span style="font-weight: bold;">Department:</span>
-                    {{ user.department }}
-                </li>
-                <li>
-                    <span style="font-weight: bold;">Position:</span>
-                    {{ user.role }}
-                </li>
-                <li>
-                    <span style="font-weight: bold;">Contact:</span>
-                    {{ user.email }}
-                </li>
-            </ul>
+      <div class="details">
+        <h1><a style="text-decoration: none" href="{{ url_for('users.show_review', id=user.id) }}">{{ user.name }}</a>
+        </h1>
+        <ul>
+          <li>
+            <span style="font-weight: bold;">Department:</span>
+            {{ user.department }}
+          </li>
+          <li>
+            <span style="font-weight: bold;">Position:</span>
+            {{ user.role }}
+          </li>
+          <li>
+            <span style="font-weight: bold;">Contact:</span>
+            {{ user.email }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="medals">
+        <div>Objectives completion: {{ 100*(user.progress)|round(1) }}%
+
+          {% if user.progress == 1.0 %}
+          <img src="{{ gold.medal }}" class="medal" style="width: 50px; height: 50px">
+
+          {% elif user.progress < 1 and user.progress >=0.5 %}
+          <img src="{{ silver.medal }}" class="medal" style="width: 50px; height:50px">
+
+          {% elif user.progress >0 and user.progress <=0.5 %}
+          <img src="{{ bronze.medal }}" class="medal" style="width: 50px; height: 50px">
+
+          {% else %}
+          No medal
+
+          {% endif %}
         </div>
-    
-     <div class="medals">
-            <div>Objectives completion: {{ 100*(user.progress)|round(1) }}%
-                
-                {% if user.progress == 1.0 %}
-                <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
-    
-                {% elif user.progress < 1 and user.progress >=0.5 %}
-                <img src="{{ silver.medal }}" style="width: 50px; height:50px">
-    
-                {% elif user.progress >0 and user.progress <=0.5 %}
-                <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
-    
-                {% else %}
-                No medal
-    
-                {% endif %}
-            </div>
-    
-            <div>Compliments Received: {{ user.senders|length }}
-                {% if user.senders|length >= 10 %}
-                <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
-    
-                {% elif user.senders|length < 10 and user.senders|length >=5 %}
-                <img src="{{ silver.medal }}" style="width: 50px; height:50px">
-    
-                {% elif user.senders|length < 5 and user.senders|length > 0 %}
-                <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
-    
-                {% else %}
-                No medal
-    
-                {% endif %}
-            </div>
-    
-            <div> Compliments Given: {{ user.recipients|length }}
-                {% if user.recipients|length >= 10 %}
-                <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
-    
-                {% elif user.recipients|length < 10 and user.recipients|length >=5 %}
-                <img src="{{ silver.medal }}" style="width: 50px; height:50px">
-    
-                {% elif user.recipients|length < 5 and user.recipients|length > 0 %}
-                <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
-    
-                {% else %}
-                No medal
-    
-                {% endif %}
-            </div>
-    
-            <div>
-                {% if user.progress == 1.0 and user.senders|length >= 10 and user.recipients|length >= 10 %}
-                You are a star!
-                <img src="{{ star.medal }}" style="width: 50px; height: 50px">
-                {% endif %}
-            </div>
-    
+
+        <div>Compliments Received: {{ user.senders|length }}
+          {% if user.senders|length >= 10 %}
+          <img src="{{ gold.medal }}" class="medal" style="width: 50px; height: 50px">
+
+          {% elif user.senders|length < 10 and user.senders|length >=5 %}
+          <img src="{{ silver.medal }}" class="medal" style="width: 50px; height:50px">
+
+          {% elif user.senders|length < 5 and user.senders|length > 0 %}
+          <img src="{{ bronze.medal }}" class="medal" style="width: 50px; height: 50px">
+
+          {% else %}
+          No medal
+
+          {% endif %}
         </div>
-</div>
-  
+
+        <div> Compliments Given: {{ user.recipients|length }}
+          {% if user.recipients|length >= 10 %}
+          <img src="{{ gold.medal }}" class="medal" style="width: 50px; height: 50px">
+
+          {% elif user.recipients|length < 10 and user.recipients|length >=5 %}
+          <img src="{{ silver.medal }}" class="medal" style="width: 50px; height:50px">
+
+          {% elif user.recipients|length < 5 and user.recipients|length > 0 %}
+          <img src="{{ bronze.medal }}" class="medal" style="width: 50px; height: 50px">
+
+          {% else %}
+          No medal
+
+          {% endif %}
+        </div>
+
+        <div>
+          {% if user.progress == 1.0 and user.senders|length >= 10 and user.recipients|length >= 10 %}
+          You are a star!
+          <img src="{{ star.medal }}" style="width: 50px; height: 50px">
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
   </div>
   <div class="first-container">
-<h1>Objectives</h1>
-      <div>
-        Objectives completion:
-        <div class="progress" style="width: 25rem">
-          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
-            aria-valuemin="0" aria-valuemax="100" style="width: {{progress_percentage}}">{{progress_percentage}}</div>
-        </div>
+    <h1>Objectives</h1>
+    <div>
+      Objectives completion:
+      <div class="progress" style="width: 25rem">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+          aria-valuemin="0" aria-valuemax="100" style="width: {{progress_percentage}}">{{progress_percentage}}</div>
       </div>
-  {% if current_user.is_manager and current_user.department == user.department %}
-  <form action="{{url_for('objectives.create', username = user.name)}}" method="POST">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-default">Objective:
-        </span>
-      </div>
-      <input name="objective" type="text" class="form-control" aria-label="Sizing example input"
-        aria-describedby="inputGroup-sizing-default" />
-      <button type="submit" class="btn btn-outline-secondary" id="button-addon2">
-        Submit
-      </button>
     </div>
-  </form>
-  {% endif%}
+    {% if current_user.is_manager and current_user.department == user.department %}
+    <form action="{{url_for('objectives.create', username = user.name)}}" method="POST">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Objective:
+          </span>
+        </div>
+        <input name="objective" type="text" class="form-control" aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default" />
+        <button type="submit" class="btn btn-outline-secondary" id="button-addon2">
+          Submit
+        </button>
+      </div>
+    </form>
+    {% endif%}
 
-<div class="nested-container">
-<div class="completed-objective">
-    <h4>Completed Objectives</h4>
-    {% for obs in user.completed_objective %}
-    <div class="objective-{{ obs.id }} input-group mb-3">
-      {% if user == current_user or user.manager_id == current_user.id %}
-      <div class="input-group-prepend">
-        <div class="input-group-text">
-          <input checked class="checkbox-input" id="objective-{{ obs.id }}" type="checkbox"
-            aria-label="Checkbox for following text input" />
+    <div class="nested-container">
+      <div class="completed-objective">
+        <h4>Completed Objectives</h4>
+        {% for obs in user.completed_objective %}
+        <div class="objective-{{ obs.id }} input-group mb-3">
+          {% if user == current_user or user.manager_id == current_user.id %}
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <input checked class="checkbox-input" id="objective-{{ obs.id }}" type="checkbox"
+                aria-label="Checkbox for following text input" />
+            </div>
+          </div>
+          {% endif %}
+          <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{ obs.objective }}" />
+          <div class="input-group-append">
+            <button class="delete-btn btn btn-outline-secondary" type="button" id="delete-btn-{{ obs.id }}">x</button>
+          </div>
         </div>
+        {% endfor %}
       </div>
-      {% endif %}
-      <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{ obs.objective }}" />
-    </div>
-    {% endfor %}
-  </div>
 
-  <div class="incomplete-objective">
-      <h4>Incomplete Objectives</h4>
-    {% for obs in user.incomplete_objective %}
-    <div class="objective-{{ obs.id }} input-group mb-3">
-      {% if user == current_user or user.manager_id == current_user.id %}
-      <div class="input-group-prepend">
-        <div class="input-group-text">
-          <input class="checkbox-input" id="objective-{{ obs.id }}" type="checkbox"
-            aria-label="Checkbox for following text input" />
+      <div class="incomplete-objective">
+        <h4>Incomplete Objectives</h4>
+        {% for obs in user.incomplete_objective %}
+        <div class="objective-{{ obs.id }} input-group mb-3">
+          {% if user == current_user or user.manager_id == current_user.id %}
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <input class="checkbox-input" id="objective-{{ obs.id }}" type="checkbox"
+                aria-label="Checkbox for following text input" />
+            </div>
+          </div>
+          {% endif %}
+          <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{ obs.objective }}" />
+          <div class="input-group-append">
+            <button class="delete-btn btn btn-outline-secondary" type="button" id="delete-btn-{{ obs.id }}">x</button>
+          </div>
         </div>
+        {% endfor %}
       </div>
-      {% endif %}
-      <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{ obs.objective }}" />
     </div>
-    {% endfor %}
   </div>
-</div>
-</div>
 
   {% if current_user.is_manager and user.manager_id == current_user.id %}
   <div class="second-container">
-  <div class="calendar">
-<h1>Set Review Meeting</h1>
-    {% include "dashboard/_calendar.html" %}
-  </div>
-  <div class="review">
-    <form action="{{ url_for('users.calender', username = user.name) }}" method="POST">
-      <div class="form-group">
-        <label for="title">Title:</label>
-        <input name="event-title" type="text" class="form-control" id="event-title" aria-describedby="title"
-          placeholder="Enter event title..." />
-      </div>
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">Description:</label>
-        <textarea name="event-details" class="form-control" placeholder="Enter event details...." id="event-details"
-          rows="2"></textarea>
-      </div>
+    <div class="calendar">
+      <h1>Set Review Meeting</h1>
+      {% include "dashboard/_calendar.html" %}
+    </div>
+    <div class="review">
+      <form action="{{ url_for('users.calender', username = user.name) }}" method="POST">
+        <div class="form-group">
+          <label for="title">Title:</label>
+          <input name="event-title" type="text" class="form-control" id="event-title" aria-describedby="title"
+            placeholder="Enter event title..." />
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Description:</label>
+          <textarea name="event-details" class="form-control" placeholder="Enter event details...." id="event-details"
+            rows="2"></textarea>
+        </div>
 
-      Starting Date and Time of event:
-      <input type="datetime-local" name="startdaytime" /> 
-      <br />
-      <br/>
-      Ending Date and Time
-      of event: <input type="datetime-local" name="enddaytime" />
-      <br/>
-      <br/>
-      <button class="btn btn-primary" type="submit">Create Event</button>
-    </form>
+        Starting Date and Time of event:
+        <input type="datetime-local" name="startdaytime" />
+        <br />
+        <br />
+        Ending Date and Time
+        of event: <input type="datetime-local" name="enddaytime" />
+        <br />
+        <br />
+        <button class="btn btn-primary" type="submit">Create Event</button>
+      </form>
+    </div>
   </div>
-</div>
-{% endif %}
+  {% endif %}
 </div>
 {% endif %}
 
@@ -215,6 +221,22 @@
           }
         });
       }
+    })
+    $(document).on("click", ".delete-btn", function (event) {
+      id = event.target.id.split("-")[2];
+      console.log('delete-btn triggered ', id)
+      $.ajax({
+        url: `/objectives/delete/${id}`,
+        method: "POST",
+        success: function (response) {
+          console.log(response);
+          $(`.objective-${id}`).fadeOut()
+          $(".progress-bar").css('width', response.progress)
+          $(".progress-bar").html(response.progress)
+        }
+      });
+
+
     })
   })
 

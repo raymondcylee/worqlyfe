@@ -49,6 +49,20 @@
 
   <script>
     $(document).ready(function () {
+      const flashes = {{ get_flashed_messages() | tojson }}
+      console.log(flashes)
+      flashes.forEach(flash => {
+        Toastify({
+          text: flash,
+          duration: 3000,
+          close: true,
+          gravity: "top", // `top` or `bottom`
+          position: 'right', // `left`, `center` or `right`
+          backgroundColor: "linear-gradient(to right, #ff7373, #ec1629)",
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+        }).showToast()
+      })
+
       $("#menu-toggle").click(function (e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
