@@ -230,7 +230,7 @@
           method: "POST",
           success: function (response) {
             console.log(response);
-            $(`.objective-${id}`).remove()
+            $(`.objective-${id}`).fadeOut()
             $(".progress-bar").css('width', response.progress)
             $(".progress-bar").html(response.progress)
           }

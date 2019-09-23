@@ -6,3 +6,47 @@
 @import "dashboard";
 @import "profile";
 @import "review";
+
+@keyframes pulseIn {
+  from {
+    transform: scale(1) rotate(0deg);
+  }
+  to {
+    transform: scale(1.5) rotate(180deg);
+  }
+  // 0% {transform: scale(1) rotate(0deg)}
+  // 15% {transform: scale(1.1) rotate(45deg)}
+  // 30% {transform: scale(1.25) rotate(90deg)}
+  // 45% {transform: scale(1.4) rotate(135deg)}
+  // 60% {transform: scale(1.5) rotate(180deg)}
+  // 75% {transform: scale(1.4) rotate(225deg)}
+  // 90% {transform: scale(1.25) rotate(270deg)}
+  // 95% {transform: scale(1.1) rotate(325deg)}
+  // 100% {transform: scale(1) rotate(360deg)}
+}
+
+@keyframes pulseOut {
+  from {
+    transform: scale(1.2);
+  }
+  to {
+    transform: scale(1);
+  }
+  // 0% {transform: scale(1) rotate(0deg)}
+  // 15% {transform: scale(1.1) rotate(45deg)}
+  // 30% {transform: scale(1.25) rotate(90deg)}
+  // 45% {transform: scale(1.4) rotate(135deg)}
+  // 60% {transform: scale(1.5) rotate(180deg)}
+  // 75% {transform: scale(1.4) rotate(225deg)}
+  // 90% {transform: scale(1.25) rotate(270deg)}
+  // 95% {transform: scale(1.1) rotate(325deg)}
+  // 100% {transform: scale(1) rotate(360deg)}
+}
+
+// .medal {
+//   animation: pulseOut 0.5s forwards;
+// }
+
+.medal {
+  animation: pulseOut 1s infinite;
+}
