@@ -8,7 +8,7 @@
             <p class="card-text">{{ x.manager_notes }}</p>
             {% if current_user.is_manager and current_user.department == user.department %}
             <form action="{{ url_for('users.destroy_comment', id=x.id) }}" method='post'>
-                <b'utton type="submit" class="delete-btn' btn btn-primary">Delete</button>
+                <button type="submit" class="delete-btn' btn btn-primary">Delete</button>
             </form>
             {% endif %}
         </div>
@@ -18,18 +18,14 @@
 </div>
 <div class="my-notes">
     {% for x in executive_notes %}
-<<<<<<< master
-    <div data-card="{{ x }}" class="my-notes card" style="width: 18rem;">
-=======
-    <div class="card" style="width: 18rem;">
->>>>>>> added css to all pages
+    <div class="my-notes card {{ x.id }}" style="width: 18rem;">
         <h5 class="card-header">My notes: </h5>
         <div class="card-body">
             <h6 class="card-title">{{ x.review_date }}</h6>
             <p class="card-text">{{ x.executive_notes }}</p>
             {% if current_user == user %}
             <form action="{{ url_for('users.destroy_comment', id=x.id) }}" method='post'>
-                <button type="submit" class="delete-btn btn btn-primary">Delete</button>
+                <button id="{{ x.id }} "type="submit" class="delete-btn btn btn-primary">Delete</button>
             </form>
             {% endif %}
         </div>
@@ -38,3 +34,17 @@
     {% endfor %}
 </div>
 {% endif %}
+
+<script>
+    function deleteComment(e){
+        e.preventDefault()
+        $.ajax({
+            url: `/users/delete-comment/${e.target.id}`,
+            method: 'POST',
+            success: function(response) {
+                $(`.${e.target.id}`).fadeOut();
+            }
+        })
+    }
+    $('.delete-btn').on('click', deleteComment)
+</script>

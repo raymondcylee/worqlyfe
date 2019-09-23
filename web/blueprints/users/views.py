@@ -161,11 +161,15 @@ def create_my_notes(id):
            review_date=review_date).save()
     return redirect(url_for('users.show_review', user=user, manager=manager, id=user.id))
 
-@users_blueprint.route('/delete-comments/<id>',methods=['POST'])
+@users_blueprint.route('/delete-comment/<id>',methods=['POST'])
 def destroy_comment(id):
     selected_review = Review.get_by_id(id)
     Review.delete().where(Review.id == id).execute()
-    return redirect(url_for('users.show_review', id=selected_review.executive_id))
+    response = {
+        "status": "success"
+    }
+    return jsonify(response)
+    # return redirect(url_for('users.show_review', id=selected_review.executive_id))
 
 
 
