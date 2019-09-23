@@ -23,74 +23,46 @@
           </li>
         </ul>
       </div>
-
       <div class="medals">
         <div>Objectives completion: {{ 100*(user.progress)|round(1) }}%
-
           {% if user.progress == 1.0 %}
           <img src="{{ gold.medal }}" class="medal" style="width: 50px; height: 50px">
-
           {% elif user.progress < 1 and user.progress >=0.5 %}
           <img src="{{ silver.medal }}" class="medal" style="width: 50px; height:50px">
-
           {% elif user.progress >0 and user.progress <=0.5 %}
           <img src="{{ bronze.medal }}" class="medal" style="width: 50px; height: 50px">
-
           {% else %}
           No medal
-
           {% endif %}
         </div>
-
         <div>Compliments Received: {{ user.senders|length }}
           {% if user.senders|length >= 10 %}
           <img src="{{ gold.medal }}" class="medal" style="width: 50px; height: 50px">
-
           {% elif user.senders|length < 10 and user.senders|length >=5 %}
           <img src="{{ silver.medal }}" class="medal" style="width: 50px; height:50px">
-
           {% elif user.senders|length < 5 and user.senders|length > 0 %}
           <img src="{{ bronze.medal }}" class="medal" style="width: 50px; height: 50px">
-
           {% else %}
           No medal
-
           {% endif %}
         </div>
-
         <div> Compliments Given: {{ user.recipients|length }}
           {% if user.recipients|length >= 10 %}
           <img src="{{ gold.medal }}" class="medal" style="width: 50px; height: 50px">
-
           {% elif user.recipients|length < 10 and user.recipients|length >=5 %}
           <img src="{{ silver.medal }}" class="medal" style="width: 50px; height:50px">
-
           {% elif user.recipients|length < 5 and user.recipients|length > 0 %}
           <img src="{{ bronze.medal }}" class="medal" style="width: 50px; height: 50px">
-
           {% else %}
           No medal
-
           {% endif %}
-</div>
-  
-  </div>
-  <div class="first-container">
-<h1>Objectives</h1>
-      <div>
-        Objectives completion:
-        <div class="progress" style="width: 25rem">
-          <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" aria-valuenow="75"
-            aria-valuemin="0" aria-valuemax="100" style="width: {{progress_percentage}}">{{progress_percentage}}</div>
         </div>
-
         <div>
           {% if user.progress == 1.0 and user.senders|length >= 10 and user.recipients|length >= 10 %}
           You are a star!
           <img src="{{ star.medal }}" style="width: 50px; height: 50px">
           {% endif %}
         </div>
-
       </div>
     </div>
   </div>
@@ -99,7 +71,7 @@
     <div>
       Objectives completion:
       <div class="progress" style="width: 25rem">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+        <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" aria-valuenow="75"
           aria-valuemin="0" aria-valuemax="100" style="width: {{progress_percentage}}">{{progress_percentage}}</div>
       </div>
     </div>
@@ -118,7 +90,6 @@
       </div>
     </form>
     {% endif%}
-
     <div class="nested-container">
       <div class="completed-objective">
         <h4>Completed Objectives</h4>
@@ -139,7 +110,6 @@
         </div>
         {% endfor %}
       </div>
-
       <div class="incomplete-objective">
         <h4>Incomplete Objectives</h4>
         {% for obs in user.incomplete_objective %}
@@ -161,7 +131,6 @@
       </div>
     </div>
   </div>
-
   {% if current_user.is_manager and user.manager_id == current_user.id %}
   <div class="second-container">
     <div class="calendar">
@@ -180,7 +149,6 @@
           <textarea name="event-details" class="form-control" placeholder="Enter event details...." id="event-details"
             rows="2"></textarea>
         </div>
-
         Starting Date and Time of event:
         <input type="datetime-local" name="startdaytime" />
         <br />
@@ -196,12 +164,10 @@
   {% endif %}
 </div>
 {% endif %}
-
 <script>
   $(function (event) {
     $(document).on("click", ".checkbox-input", function (event) {
       id = event.target.id.split("-")[1];
-
       if ($(this).is(":checked")) {
         console.log("Box is NOW checked");
         $.ajax({
@@ -245,12 +211,7 @@
           $(".progress-bar").html(response.progress)
         }
       });
-
-
     })
   })
-
-
 </script>
-
 {% endblock %}
