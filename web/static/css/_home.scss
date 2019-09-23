@@ -45,15 +45,25 @@
         transition: margin .25s ease-out;
       }
       
-      #sidebar-wrapper .sidebar-heading {
-        padding: 0.875rem 1.25rem;
-        font-size: 1.2rem;
-      }
-      
       #sidebar-wrapper .list-group {
         width: 150px;
       }
-      
+      #sidebar-wrapper .list-group .list-group-item {
+        background-color:$secondary-color;
+
+      }
+
+      #sidebar-wrapper .list-group .list-group-item::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 1px;
+        background: $primary-color;
+        transition: width .3s;
+      }
+      #sidebar-wrapper .list-group .list-group-item:hover::after {
+        width: 50%;
+      }
       #page-content-wrapper {
         min-width: 100vw;
       }
@@ -75,5 +85,9 @@
         #wrapper.toggled #sidebar-wrapper {
           margin-left: -150px;
         }
+      }
+      .d-block {
+        width: 100vw;
+        height: 60vh;
       }
 }

@@ -1,13 +1,13 @@
 {% if current_user.is_authenticated %}
 <!-- Sidebar -->
-<div class="bg-light border-right" id="sidebar-wrapper">
+<div class="border-right" id="sidebar-wrapper">
 
     <div class="list-group list-group-flush">
-        <a href="/dashboard/" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-        <a href="/users/feed" class="list-group-item list-group-item-action bg-light">Employee Directory</a>
-        <a href="/users/{{current_user.name}}" class="list-group-item list-group-item-action bg-light">Objectives</a>
-        <a href="/users/review/{{current_user.id}}" class="list-group-item list-group-item-action bg-light">Reviews</a>
-        <a href="/compliments/new" class="list-group-item list-group-item-action bg-light">Compliments</a>
+        <a href="/dashboard/" class="list-group-item list-group-item-action">Dashboard</a>
+        <a href="/users/feed" class="list-group-item list-group-item-action">Employee Directory</a>
+        <a href="/users/{{current_user.name}}" class="list-group-item list-group-item-action">Objectives</a>
+        <a href="/users/review/{{current_user.id}}" class="list-group-item list-group-item-action">Reviews</a>
+        <a href="/compliments/new" class="list-group-item list-group-item-action">Compliments</a>
     </div>
 </div>
 {% endif %}
