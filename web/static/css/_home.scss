@@ -25,9 +25,6 @@
           }
           .dropdown-menu {
             background-color: $secondary-color;
-            .dropdown-item {
-              white-space: normal;
-            }
             .new-notification {
               background-color: $secondary-accent;
               a {
@@ -35,12 +32,22 @@
               }
             }
             .read-notification {
+              background-color: $secondary-color;
               a {
                 color: $primary-color;
               }
             }
           }
         }
+    }
+    .carousel-inner {
+      h5 {
+        color: $secondary-color;
+        font-weight: 700;
+      }
+      p {
+        color: $secondary-color;
+      }
     }
     .jumbotron {
         background-color: $secondary-accent;
