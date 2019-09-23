@@ -4,22 +4,22 @@
         {% include "dashboard/_feedbackBtn.html" %}
     </div>
 </div>
-<div class="feedback">
-    <div class="feedback-replies">
+<div class="row feedback">
+    <div class=" col-md-6 feedback-replies">
         <h3>Feedback replies:</h3>
         {% if not current_user.my_replies %}
         <h5>You have no feedback replies at the moment</h5>
         {% endif %}
         <ul>
             {% for r in current_user.my_replies %}
-            <li id="list-{{r.id}}">{{ r.reply_message }} from subject {{r.feedback_replied.subject}}<button className
-                    id="reply-{{r.id}}" class="btn btn-danger del-btn">Delete</button></li>
+            <li id="list-{{r.id}}">{{ r.reply_message }} from subject {{r.feedback_replied.subject}}<br/>
+                <button className id="reply-{{r.id}}" class="btn btn-secondary del-btn">Delete</button></li>
             {% endfor %}
         </ul>
     </div>
-
+    <div class="col-md-6">
     {% include "dashboard/_feedbackReceived.html" %}
-
+    </div>
 
 
 </div>

@@ -102,7 +102,7 @@
       <div class="row">
         {% for compliment in compliments %}
         {% if compliment.recipient_id == current_user.id %}
-        <div class="col-4">
+        <div class="col-md-4">
           <div class="card" style="width: 20rem;">
             <h4>{{ compliment.badge.badge_caption }}</h4>
             <div class="img-container">
@@ -132,7 +132,7 @@
     <div class="container">
       <div class="row">
         {% for compliment in compliments %}
-        <div class="col-4">
+        <div class="col-md-4">
           <div class="card" style="width: 20rem;">
             <h4>{{ compliment.badge.badge_caption }}</h4>
             <div class="img-container">

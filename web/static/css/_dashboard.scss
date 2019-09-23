@@ -44,16 +44,15 @@
         }
     }
     .main-container {
-        display: flex;
-        justify-content: space-between;
         margin-top: 20px;
+
         .left-container {
             margin-bottom: 20px;
-            margin-left: 20px;
-            margin-right: 20px;
             padding-left: 20px;
             padding-top: 20px;
-            width: 600px;
+            padding-bottom: 20px;
+            padding-right: 20px;
+            width: auto;
             border-radius: 10px;
             background-color: $secondary-accent;
             .compliments {
@@ -67,6 +66,7 @@
                     padding-inline-start: 30px;
                     li {
                         color: $primary-color;
+                        word-wrap: break-word;
                     }
                     p {
                         color: $primary-color;
@@ -84,11 +84,11 @@
         }
         .right-container {
             margin-bottom: 20px;
-            margin-right: 20px;
             padding-top: 30px;
             padding-left: 20px;
             padding-right: 20px;
-            width: 600px;
+            padding-bottom: 20px;
+            width: auto;
             border-radius: 10px;
             background-color: $secondary-accent;
             .calendar {
@@ -117,12 +117,11 @@
         padding-top: 20px;
         padding-left: 20px;
         padding-right: 20px;
-        width: 1230px;
         border-radius: 10px;
-
         background-color: $secondary-accent;
         .feedback-header {
             display: flex;
+            flex-wrap: wrap;
             margin-bottom: 20px;
             h1 {
                 color: $primary-color;
@@ -161,6 +160,36 @@
             }
             h5 {
                 color: $primary-color;
+            }
+            .feedback-received {
+                .btn-light {
+                    background-color: $primary-accent;
+                    color: $secondary-color;
+                }
+            }
+            .modal-header {
+                background-color: $secondary-color;
+                h5 {
+                    font-weight: 700;
+                    color: $primary-accent;
+                }
+            }
+            .modal-footer {
+                button {
+                    color: $secondary-color;
+                }
+                .btn-primary {
+                    background-color: $primary-accent;
+                    color: $secondary-color;
+                }
+            }
+            .feedback-replies {
+                li {
+                    color: $primary-color;
+                }
+                button {
+                    color: $secondary-color;
+                }
             }
         }
     }
