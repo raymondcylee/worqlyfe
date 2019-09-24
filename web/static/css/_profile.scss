@@ -78,6 +78,9 @@
         display: flex;
         justify-content: space-around;
         color: $primary-accent;
+        .form-control {
+            width: 400px;
+        }
     }
     .second-container {
         margin-bottom: 20px;
