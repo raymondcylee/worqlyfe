@@ -45,13 +45,13 @@
                         </div>
                 
                         <div>Compliments Received: {{ user.senders|length }}
-                            {% if user.senders|length >= 10 %}
+                            {% if user.senders|length >= 5 %}
                             <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
                 
-                            {% elif user.senders|length < 10 and user.senders|length >=5 %}
+                            {% elif user.senders|length < 5 and user.senders|length >=3 %}
                             <img src="{{ silver.medal }}" style="width: 50px; height:50px">
                 
-                            {% elif user.senders|length < 5 and user.senders|length > 0 %}
+                            {% elif user.senders|length < 3 and user.senders|length > 0 %}
                             <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
                 
                             {% else %}
@@ -61,13 +61,13 @@
                         </div>
                 
                         <div> Compliments Given: {{ user.recipients|length }}
-                            {% if user.recipients|length >= 10 %}
+                            {% if user.recipients|length >= 5 %}
                             <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
                 
-                            {% elif user.recipients|length < 10 and user.recipients|length >=5 %}
+                            {% elif user.recipients|length < 5 and user.recipients|length >=3 %}
                             <img src="{{ silver.medal }}" style="width: 50px; height:50px">
                 
-                            {% elif user.recipients|length < 5 and user.recipients|length > 0 %}
+                            {% elif user.recipients|length < 3 and user.recipients|length > 0 %}
                             <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
                 
                             {% else %}
@@ -77,7 +77,7 @@
                         </div>
                 
                         <div>
-                            {% if user.progress == 1.0 and user.senders|length >= 10 and user.recipients|length >= 10 %}
+                            {% if user.progress == 1.0 and user.senders|length >= 5 and user.recipients|length >= 5 %}
                             You are a star!
                             <img src="{{ star.medal }}" style="width: 50px; height: 50px">
                             {% endif %}
