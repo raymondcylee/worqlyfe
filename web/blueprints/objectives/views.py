@@ -69,8 +69,17 @@ def destroy(id):
 
     Objective.delete().where(Objective.id == id).execute()
 
-    progress = len(Objective.select().where((Objective.user_id == obj.user_id) & (Objective.done == True))) / (len(Objective.select().where((Objective.user_id ==
-                                                                                                                                             obj.user_id) & (Objective.done == True))) + len(Objective.select().where((Objective.user_id == obj.user_id) & (Objective.done == False))))
+    trueprogress = len([obj for obj in Objective.select().where(
+        (Objective.user_id == obj.user_id) & (Objective.done == True))])
+
+    falseprogress = len([obj for obj in Objective.select().where(
+        (Objective.user_id == obj.user_id) & (Objective.done == False))])
+
+    try:
+        progress = trueprogress/(trueprogress + falseprogress)
+    except ZeroDivisionError:
+        progress = 0
+
     progress_percentage = "{:.0%}".format(progress)
     response = {
         "success": True,
