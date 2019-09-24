@@ -97,6 +97,20 @@
                         color: $primary-color;
                     }
                 }
+                .team {
+                    .given {
+                        padding-left: 40px;
+                        margin-bottom: 5px;
+                        background-color: $secondary-color;
+                        border-radius: 5px;
+                    }
+                    .received {
+                        padding-left: 40px;
+                        margin-bottom: 5px;
+                        background-color: $secondary-color;
+                        border-radius: 5px;
+                    }
+                }
             }
             .objectives {
                 ul {
