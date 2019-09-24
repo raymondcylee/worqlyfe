@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request, url_for, jsonify
+from flask import Blueprint, render_template, redirect, request, url_for, jsonify, flash
 from models.user import User
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
@@ -16,7 +16,6 @@ def new():
 def create():
     email = request.form.get('email')
     password = request.form.get('password')
-
     user = User.get_or_none(User.email == email)
 
     if user and (user.password == password):
@@ -29,5 +28,5 @@ def create():
         # session["username"] = user.username
         return redirect(url_for('dashboard.index', username=user.name, id=user.id))
     else:
-        print("NOT LOGIN")
-        return redirect(url_for('home', username=user.name))
+        flash('Username or password is incorrect.')
+        return redirect(url_for('home'))
