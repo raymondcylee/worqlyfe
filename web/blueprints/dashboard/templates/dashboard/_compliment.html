@@ -6,24 +6,24 @@
     <div class="team">
         <ul>
             <h3>Compliments Given:</h3>
-            {% for compliment in compliments_received_msg %} 
+            {% for compliment in compliments_received_msg %}
             <div class="given">
-            <li>{{ compliment.compliment }}</li>
-            <p style="font-family: monospace;">
-                -<span style="font-weight: bold;">For</span>
-                {{ compliment.recipient.name }}
-            </p>
+                <li>{{ compliment.compliment }}</li>
+                <p style="font-family: monospace;">
+                    -<span style="font-weight: bold;">For</span>
+                    {{ compliment.recipient.name }}
+                </p>
             </div>
-             {% endfor %}
+            {% endfor %}
 
             <h3>Compliments Received:</h3>
-            {% for compliment in compliments_given_msg %} 
+            {% for compliment in compliments_given_msg %}
             <div class="received">
-            <li>{{ compliment.compliment }}</li>
-            <p style="font-family: monospace;">
-                -<span style="font-weight: bold;">From</span>
-                {{ compliment.sender.name }}
-            </p>
+                <li>{{ compliment.compliment }}</li>
+                <p style="font-family: monospace;">
+                    -<span style="font-weight: bold;">From</span>
+                    {{ compliment.sender.name }}
+                </p>
             </div>
             {% endfor %}
         </ul>
