@@ -1,6 +1,6 @@
 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
     {% if not current_user.sorted_notification  %}
-        <a class="dropdown-item back" href="#">No notification at this moment</a>
+        <a class="dropdown-item back" href="#" style="color: black">No notification at this moment</a>
     {% else %}
         {% for notification in current_user.sorted_notification %}
    

@@ -4,7 +4,7 @@
 <div class="dashboard">
     {% include "dashboard/_personalDetail.html" %}
     <div class="container main-container">
-        <div class="row">
+        <div class="row display-flex">
             <div class="col-md-6">
                 <div class="left-container">
                     {% include "dashboard/_compliment.html" %}
@@ -100,7 +100,8 @@
     })
 
     // function for left and right container same height
-    $('.right-container').css('height', $('.left-container').outerHeight() + 'px')
+    // $('.right-container').css('height', $('.left-container').outerHeight() + 'px')
+    // $('.left-container').css('height', $('.right-container').outerHeight() + 'px')
 
 
     // function replyFunc(e) {

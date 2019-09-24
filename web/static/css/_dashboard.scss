@@ -5,6 +5,7 @@
             color: $primary-color;
         }
     }
+    
     .personal-details {
         display: flex;
         width: 100%;
@@ -42,18 +43,42 @@
                 color: $primary-color;
             }
         }
+        .upload-image {
+            .modal-header {
+                background-color: $secondary-color;
+                h5 {
+                    color: $primary-accent;
+                    font-weight: 700;
+                }
+            }
+            .modal-footer {
+                button {
+                    color: $secondary-color;
+                }
+                .btn-primary {
+                    background-color: $primary-accent;
+                    border-color: $primary-accent;
+                }
+            }
+        }
     }
     .main-container {
         margin-top: 20px;
-
+        margin-bottom: 20px;
+        .row.display-flex {
+            display: flex;
+            flex-wrap: wrap;
+          }
+        .row.display-flex > [class*='col-'] {
+            flex-grow: 1;
+          }
         .left-container {
-            margin-bottom: 20px;
             padding-left: 20px;
             padding-top: 20px;
             padding-bottom: 20px;
             padding-right: 20px;
-            width: auto;
             border-radius: 10px;
+            height: 100%;
             background-color: $secondary-accent;
             .compliments {
                 h1 {
@@ -83,13 +108,12 @@
             }
         }
         .right-container {
-            margin-bottom: 20px;
             padding-top: 30px;
             padding-left: 20px;
             padding-right: 20px;
             padding-bottom: 20px;
-            width: auto;
             border-radius: 10px;
+            height: 100%;
             background-color: $secondary-accent;
             .calendar {
                 margin-bottom: 20px;
