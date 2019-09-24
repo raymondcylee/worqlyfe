@@ -3,31 +3,25 @@
         <a style="text-decoration: none" href="{{ url_for('compliments.new') }}">My Compliments</a>
     </h1>
 
-    
-
     <div class="team">
         <ul>
             <h3>Compliments Given:</h3>
-            {% for compliment in compliments %} {% if compliment.sender_id == current_user.id %}
-            <div class="given">
+            {% for compliment in compliments_received_msg %} 
             <li>{{ compliment.compliment }}</li>
             <p style="font-family: monospace;">
                 -<span style="font-weight: bold;">For</span>
                 {{ compliment.recipient.name }}
             </p>
-            </div>
-            {% endif %} {% endfor %}
+             {% endfor %}
 
             <h3>Compliments Received:</h3>
-            {% for compliment in compliments %} {% if compliment.recipient_id == current_user.id %}
-            <div class="received">
+            {% for compliment in compliments_given_msg %} 
             <li>{{ compliment.compliment }}</li>
             <p style="font-family: monospace;">
                 -<span style="font-weight: bold;">From</span>
                 {{ compliment.sender.name }}
             </p>
-            </div>
-            {% endif %} {% endfor %}
+            {% endfor %}
         </ul>
     </div>
 </div>

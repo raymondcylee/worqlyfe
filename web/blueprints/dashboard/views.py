@@ -23,7 +23,9 @@ dashboard_blueprint = Blueprint('dashboard',
 @dashboard_blueprint.route('/')
 def index():
     objective = Objective.select().where(Objective.user_id == current_user.id)
-    compliments = Compliment.select()
+    compliments_received_msg = Compliment.select().where(Compliment.recipient_id == current_user.id).limit(5)
+    compliments_given_msg = Compliment.select().where(Compliment.sender_id == current_user.id).limit(5)
+
     departments = User.select().where(User.department == current_user.department)
     all_users = User.select()
     compliments_received = Compliment.select().where(Compliment.recipient_id == current_user.id).count()
@@ -44,7 +46,7 @@ def index():
         progress = 0
     progress_percentage = "{:.0%}".format(progress)
 
-    return render_template('dashboard/new.html', objectives=objective, compliments=compliments, departments=departments ,all_users=all_users, user=user, progress_percentage=progress_percentage, progress=progress, compliments_received=compliments_received, compliments_given=compliments_given, gold=gold, silver=silver, bronze=bronze, star=star, feedback_exist=feedback_exist, rep=rep)
+    return render_template('dashboard/new.html', objectives=objective, compliments_received_msg=compliments_received_msg, compliments_given_msg=compliments_given_msg, departments=departments ,all_users=all_users, user=user, progress_percentage=progress_percentage, progress=progress, compliments_received=compliments_received, compliments_given=compliments_given, gold=gold, silver=silver, bronze=bronze, star=star, feedback_exist=feedback_exist, rep=rep)
 
 
 
