@@ -1,5 +1,10 @@
-from models.medal import Medal
+from dotenv import load_dotenv
+load_dotenv()
+import random
+from faker import Faker
+from models.user import User
 from models.badge import Badge
+from models.medal import Medal
 
 Badge(badge = "https://image.flaticon.com/icons/svg/1885/1885634.svg", badge_caption = "Standards raised!").save()  
 Badge(badge = "https://image.flaticon.com/icons/svg/1530/1530884.svg", badge_caption = "Number 1!").save()
@@ -13,3 +18,12 @@ Medal(medal="https://image.flaticon.com/icons/svg/179/179250.svg", medal_caption
 Medal(medal="https://image.flaticon.com/icons/svg/179/179251.svg", medal_caption="Silver").save()
 Medal(medal="https://image.flaticon.com/icons/svg/179/179249.svg", medal_caption="Gold").save()
 Medal(medal="https://image.flaticon.com/icons/svg/167/167747.svg", medal_caption="Star").save()
+
+for _ in range(5):
+    User(name=Faker().name(), 
+        email=Faker().email(),
+        password="Abc123", 
+        role="ABC", 
+        department=random.choice(["Finance", "Human Resource", "Marketing", "Operations", "Sales", "Tech"]),
+        is_manager=random.choice(["True", "False"]), is_executive=random.choice(["True", "False"]),
+        manager_id=3).save()
