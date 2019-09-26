@@ -1,5 +1,5 @@
 {% if current_user == user or (current_user.is_manager and current_user.department == user.department) %}
-    <div class="manager-comments">
+<div class="manager-comments">
     {% for x in manager_notes %}
     <div class="my-notes card {{ x.id }}" style="width: 18rem;">
         <h5 class="card-header">Manager's Comment:</h5>
@@ -7,13 +7,11 @@
             <h6 class="card-title">{{ x.review_date }}</h6>
             <p class="card-text">{{ x.manager_notes }}</p>
             {% if current_user.is_manager and current_user.department == user.department %}
-            <form action="{{ url_for('users.destroy_comment', id=x.id) }}" method='post'>
-                <button type="submit" class="delete-btn' btn btn-primary">Delete</button>
-            </form>
+            <button id="{{ x.id }}" type="button" class="delete-btn btn btn-primary">Delete</button>
             {% endif %}
         </div>
     </div>
-    <br/>
+    <br />
     {% endfor %}
 </div>
 <div class="my-notes">
@@ -24,9 +22,7 @@
             <h6 class="card-title">{{ x.review_date }}</h6>
             <p class="card-text">{{ x.executive_notes }}</p>
             {% if current_user == user %}
-            <form action="{{ url_for('users.destroy_comment', id=x.id) }}" method='post'>
-                <button id="{{ x.id }} "type="submit" class="delete-btn btn btn-primary">Delete</button>
-            </form>
+            <button id="{{ x.id }}" type="button" class="delete-btn btn btn-primary">Delete</button>
             {% endif %}
         </div>
     </div>
@@ -36,12 +32,12 @@
 {% endif %}
 
 <script>
-    function deleteComment(e){
-        e.preventDefault()
+
+    function deleteComment(e) {
         $.ajax({
             url: `/users/delete-comment/${e.target.id}`,
             method: 'POST',
-            success: function(response) {
+            success: function (response) {
                 $(`.${e.target.id}`).fadeOut();
             }
         })
