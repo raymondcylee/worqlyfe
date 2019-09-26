@@ -30,13 +30,13 @@
                         <div>Objectives completion: {{ 100*(user.progress)|round(1) }}%
                             
                             {% if user.progress == 1.0 %}
-                            <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+                            <img class="medal" src="{{ gold.medal }}" style="width: 50px; height: 50px">
                 
                             {% elif user.progress < 1 and user.progress >=0.5 %}
-                            <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+                            <img class="medal" src="{{ silver.medal }}" style="width: 50px; height:50px">
                 
                             {% elif user.progress >0 and user.progress <=0.5 %}
-                            <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+                            <img class="medal" src="{{ bronze.medal }}" style="width: 50px; height: 50px">
                 
                             {% else %}
                             No medal
@@ -46,13 +46,13 @@
                 
                         <div>Compliments Received: {{ user.senders|length }}
                             {% if user.senders|length >= 5 %}
-                            <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+                            <img class="medal" src="{{ gold.medal }}" style="width: 50px; height: 50px">
                 
                             {% elif user.senders|length < 5 and user.senders|length >=3 %}
-                            <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+                            <img class="medal" src="{{ silver.medal }}" style="width: 50px; height:50px">
                 
                             {% elif user.senders|length < 3 and user.senders|length > 0 %}
-                            <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+                            <img class="medal" src="{{ bronze.medal }}" style="width: 50px; height: 50px">
                 
                             {% else %}
                             No medal
@@ -62,13 +62,13 @@
                 
                         <div> Compliments Given: {{ user.recipients|length }}
                             {% if user.recipients|length >= 5 %}
-                            <img src="{{ gold.medal }}" style="width: 50px; height: 50px">
+                            <img class="medal" src="{{ gold.medal }}" style="width: 50px; height: 50px">
                 
                             {% elif user.recipients|length < 5 and user.recipients|length >=3 %}
-                            <img src="{{ silver.medal }}" style="width: 50px; height:50px">
+                            <img class="medal" src="{{ silver.medal }}" style="width: 50px; height:50px">
                 
                             {% elif user.recipients|length < 3 and user.recipients|length > 0 %}
-                            <img src="{{ bronze.medal }}" style="width: 50px; height: 50px">
+                            <img class="medal" src="{{ bronze.medal }}" style="width: 50px; height: 50px">
                 
                             {% else %}
                             No medal
@@ -79,7 +79,7 @@
                         <div>
                             {% if user.progress == 1.0 and user.senders|length >= 5 and user.recipients|length >= 5 %}
                             Star Employee!
-                            <img src="{{ star.medal }}" style="width: 50px; height: 50px">
+                            <img class="medal" src="{{ star.medal }}" style="width: 50px; height: 50px">
                             {% endif %}
                         </div>
                 

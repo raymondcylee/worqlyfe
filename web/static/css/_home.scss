@@ -56,6 +56,9 @@
     }
     .jumbotron {
         background-color: $secondary-accent;
+        padding-bottom: 30px;
+        padding-top: 20px;
+        margin-bottom: 0;
         h1 {
             color: $primary-color;
             font-weight: 700;
